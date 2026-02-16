@@ -1,0 +1,14 @@
+[43620:33476:0209/232141.316:WARNING:chrome_main_delegate.cc(745)] This is Chrome version 128.0.6613.138 (not a warning)
+[43620:48948:0209/232141.345:ERROR:google_update_settings.cc(265)] Failed opening key Software\Chromium to set usagestats; result: 5
+[43620:33476:0209/232141.367:WARNING:account_consistency_mode_manager.cc(77)] Desktop Identity Consistency cannot be enabled as no OAuth client ID and client secret have been configured.
+[43620:33476:0209/232147.698:ERROR:device_event_log_impl.cc(196)] [23:21:46.541] USB: usb_service_win.cc:105 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: Element not found. (0x490)
+[55460:55620:0209/232148.043:WARNING:frame_impl.cc(430)] virtual CefFrameImpl::SendProcessMessage sent to detached frame 5-246746ED8391ECDA005DF95278AE3BD1 will be ignored
+[43620:57036:0209/232148.488:WARNING:browser_info.cc(345)] Returning a speculative frame for [10,9]
+[43620:33476:0209/232148.578:WARNING:browser_info.cc(345)] Returning a speculative frame for [12,9]
+[43620:33476:0209/232148.578:WARNING:browser_info.cc(345)] Returning a speculative frame for [12,9]
+[43620:33476:0209/232148.578:WARNING:browser_info.cc(345)] Returning a speculative frame for [12,9]
+[43620:33476:0209/232148.578:WARNING:browser_info.cc(345)] Returning a speculative frame for [12,9]
+[43620:57036:0209/232148.583:WARNING:browser_info.cc(345)] Returning a speculative frame for [12,9]
+[49632:55500:0209/232354.242:ERROR:shared_image_manager.cc(224)] SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+[49632:55500:0209/232354.242:ERROR:shared_image_manager.cc(224)] SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+[43620:33476:0209/232452.607:WARNING:pref_notifier_impl.cc(41)] Pref observer for media_router.cast_allow_all_ips found at shutdown.
