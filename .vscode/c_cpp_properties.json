@@ -10,7 +10,7 @@
 			"cStandard": "c17",
 			"cppStandard": "c++20",
 			"intelliSenseMode": "clang-x64",
-			"compileCommands": "/media/daltz/Tank/TUA_GIT/PPR301_FPS/.vscode/compileCommands_PPR301_FPS.json"
+			"compileCommands": "/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/.vscode/compileCommands_PPR301_FPS.json"
 		},
 		{
 			"name": "Linux",
@@ -22,7 +22,7 @@
 			"cStandard": "c17",
 			"cppStandard": "c++20",
 			"intelliSenseMode": "clang-x64",
-			"compileCommands": "/media/daltz/Tank/TUA_GIT/PPR301_FPS/.vscode/compileCommands_Default.json"
+			"compileCommands": "/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/.vscode/compileCommands_Default.json"
 		}
 	]
 }

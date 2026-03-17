@@ -1,17 +1,46 @@
 #include "WaveManager.h"
+#include "BaseEnemy.h"
 #include "TimerManager.h"
 #include "Engine/World.h"
+#include "Blueprint/UserWidget.h"
+#include "WaveUI.h"
 
 AWaveManager::AWaveManager()
 {
-    PrimaryActorTick.bCanEverTick = false;
+    PrimaryActorTick.bCanEverTick = true;
 }
 
 void AWaveManager::BeginPlay()
 {
     Super::BeginPlay();
 
+    // Create UI
+    if (GetWorld())
+    {
+        WaveUI = CreateWidget<UWaveUI>(GetWorld(), UWaveUI::StaticClass());
+
+        if (WaveUI)
+        {
+            WaveUI->AddToViewport();
+        }
+    }
+
     StartNextWave();
+}
+
+void AWaveManager::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+
+    if (CountdownTimeRemaining > 0)
+    {
+        CountdownTimeRemaining -= DeltaTime;
+    }
+
+    if (WaveUI)
+    {
+        WaveUI->UpdateWave(CurrentWaveIndex, CountdownTimeRemaining);
+    }
 }
 
 void AWaveManager::StartNextWave()
@@ -26,6 +55,8 @@ void AWaveManager::StartNextWave()
 
     SpawnedCount = 0;
 
+    UE_LOG(LogTemp, Warning, TEXT("Starting Wave %d"), CurrentWaveIndex + 1);
+
     GetWorld()->GetTimerManager().SetTimer(
         SpawnTimerHandle,
         this,
@@ -34,11 +65,31 @@ void AWaveManager::StartNextWave()
         true,
         Wave.StartDelay
     );
+
+    CountdownTimeRemaining = Wave.TimeUntilNextWave;
+
+    GetWorld()->GetTimerManager().SetTimer(
+        NextWaveTimerHandle,
+        this,
+        &AWaveManager::HandleNextWave,
+        Wave.TimeUntilNextWave,
+        false
+    );
+}
+
+void AWaveManager::HandleNextWave()
+{
+    GetWorld()->GetTimerManager().ClearTimer(SpawnTimerHandle);
+
+    CurrentWaveIndex++;
+
+    StartNextWave();
 }
 
 void AWaveManager::SpawnEnemy()
 {
     if (!Waves.IsValidIndex(CurrentWaveIndex)) return;
+    if (SpawnPoints.Num() == 0) return;
 
     FWaveData& Wave = Waves[CurrentWaveIndex];
 
@@ -48,25 +99,35 @@ void AWaveManager::SpawnEnemy()
         return;
     }
 
-    FVector SpawnLocation = GetActorLocation();
+    int32 Index = FMath::RandRange(0, SpawnPoints.Num() - 1);
+
+    FVector SpawnLocation = SpawnPoints[Index]->GetActorLocation();
     FRotator SpawnRotation = FRotator::ZeroRotator;
 
     if (Wave.EnemyClass)
     {
-        GetWorld()->SpawnActor<APawn>(Wave.EnemyClass, SpawnLocation, SpawnRotation);
-        EnemiesAlive++;
+        APawn* SpawnedPawn = GetWorld()->SpawnActor<APawn>(
+            Wave.EnemyClass,
+            SpawnLocation,
+            SpawnRotation
+        );
+
+        if (SpawnedPawn)
+        {
+            // ✅ SAFE CAST (NO CRASH)
+            ABaseEnemy* Enemy = Cast<ABaseEnemy>(SpawnedPawn);
+
+            if (Enemy)
+            {
+                Enemy->WaveManagerRef = this;
+                Enemy->EndPoint = EndPoint;
+            }
+            else
+            {
+                UE_LOG(LogTemp, Error, TEXT("Enemy is not BaseEnemy! FIX YOUR BP"));
+            }
+        }
     }
 
     SpawnedCount++;
-}
-
-void AWaveManager::EnemyDied()
-{
-    EnemiesAlive--;
-
-    if (EnemiesAlive <= 0)
-    {
-        CurrentWaveIndex++;
-        StartNextWave();
-    }
 }

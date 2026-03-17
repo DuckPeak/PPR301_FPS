@@ -37,7 +37,7 @@
 					"PPR301_FPS",
 					"Linux",
 					"Debug",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -54,7 +54,7 @@
 					"PPR301_FPS",
 					"Linux",
 					"Debug",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -74,7 +74,7 @@
 					"PPR301_FPS",
 					"Linux",
 					"Debug",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -92,7 +92,7 @@
 					"PPR301_FPS",
 					"Linux",
 					"DebugGame",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -109,7 +109,7 @@
 					"PPR301_FPS",
 					"Linux",
 					"DebugGame",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -129,7 +129,7 @@
 					"PPR301_FPS",
 					"Linux",
 					"DebugGame",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -147,7 +147,7 @@
 					"PPR301_FPS",
 					"Linux",
 					"Development",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -164,7 +164,7 @@
 					"PPR301_FPS",
 					"Linux",
 					"Development",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -184,7 +184,7 @@
 					"PPR301_FPS",
 					"Linux",
 					"Development",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -202,7 +202,7 @@
 					"PPR301_FPS",
 					"Linux",
 					"Test",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -219,7 +219,7 @@
 					"PPR301_FPS",
 					"Linux",
 					"Test",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -239,7 +239,7 @@
 					"PPR301_FPS",
 					"Linux",
 					"Test",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -257,7 +257,7 @@
 					"PPR301_FPS",
 					"Linux",
 					"Shipping",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -274,7 +274,7 @@
 					"PPR301_FPS",
 					"Linux",
 					"Shipping",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -294,7 +294,7 @@
 					"PPR301_FPS",
 					"Linux",
 					"Shipping",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -312,7 +312,7 @@
 					"PPR301_FPS",
 					"LinuxArm64",
 					"Debug",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -329,7 +329,7 @@
 					"PPR301_FPS",
 					"LinuxArm64",
 					"Debug",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -349,7 +349,7 @@
 					"PPR301_FPS",
 					"LinuxArm64",
 					"Debug",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -367,7 +367,7 @@
 					"PPR301_FPS",
 					"LinuxArm64",
 					"DebugGame",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -384,7 +384,7 @@
 					"PPR301_FPS",
 					"LinuxArm64",
 					"DebugGame",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -404,7 +404,7 @@
 					"PPR301_FPS",
 					"LinuxArm64",
 					"DebugGame",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -422,7 +422,7 @@
 					"PPR301_FPS",
 					"LinuxArm64",
 					"Development",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -439,7 +439,7 @@
 					"PPR301_FPS",
 					"LinuxArm64",
 					"Development",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -459,7 +459,7 @@
 					"PPR301_FPS",
 					"LinuxArm64",
 					"Development",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -477,7 +477,7 @@
 					"PPR301_FPS",
 					"LinuxArm64",
 					"Test",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -494,7 +494,7 @@
 					"PPR301_FPS",
 					"LinuxArm64",
 					"Test",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -514,7 +514,7 @@
 					"PPR301_FPS",
 					"LinuxArm64",
 					"Test",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -532,7 +532,7 @@
 					"PPR301_FPS",
 					"LinuxArm64",
 					"Shipping",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -549,7 +549,7 @@
 					"PPR301_FPS",
 					"LinuxArm64",
 					"Shipping",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -569,7 +569,7 @@
 					"PPR301_FPS",
 					"LinuxArm64",
 					"Shipping",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -587,7 +587,7 @@
 					"PPR301_FPSEditor",
 					"Linux",
 					"Debug",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -604,7 +604,7 @@
 					"PPR301_FPSEditor",
 					"Linux",
 					"Debug",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -624,7 +624,7 @@
 					"PPR301_FPSEditor",
 					"Linux",
 					"Debug",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -642,7 +642,7 @@
 					"PPR301_FPSEditor",
 					"Linux",
 					"DebugGame",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -659,7 +659,7 @@
 					"PPR301_FPSEditor",
 					"Linux",
 					"DebugGame",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -679,7 +679,7 @@
 					"PPR301_FPSEditor",
 					"Linux",
 					"DebugGame",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -697,7 +697,7 @@
 					"PPR301_FPSEditor",
 					"Linux",
 					"Development",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -714,7 +714,7 @@
 					"PPR301_FPSEditor",
 					"Linux",
 					"Development",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -734,7 +734,7 @@
 					"PPR301_FPSEditor",
 					"Linux",
 					"Development",
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -752,7 +752,7 @@
 			{
 				"name": "Launch PPR301_FPS (Debug)",
 				"request": "launch",
-				"program": "/media/daltz/Tank/TUA_GIT/PPR301_FPS/Binaries/Linux/UnrealGame-Linux-Debug",
+				"program": "/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/Binaries/Linux/UnrealGame-Linux-Debug",
 				"preLaunchTask": "PPR301_FPS Linux Debug Build",
 				"args": [
 				],
@@ -764,7 +764,7 @@
 			{
 				"name": "Launch PPR301_FPS (DebugGame)",
 				"request": "launch",
-				"program": "/media/daltz/Tank/TUA_GIT/PPR301_FPS/Binaries/Linux/UnrealGame-Linux-DebugGame",
+				"program": "/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/Binaries/Linux/UnrealGame-Linux-DebugGame",
 				"preLaunchTask": "PPR301_FPS Linux DebugGame Build",
 				"args": [
 				],
@@ -776,7 +776,7 @@
 			{
 				"name": "Launch PPR301_FPS (Development)",
 				"request": "launch",
-				"program": "/media/daltz/Tank/TUA_GIT/PPR301_FPS/Binaries/Linux/UnrealGame",
+				"program": "/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/Binaries/Linux/UnrealGame",
 				"preLaunchTask": "PPR301_FPS Linux Development Build",
 				"args": [
 				],
@@ -788,7 +788,7 @@
 			{
 				"name": "Launch PPR301_FPS (Test)",
 				"request": "launch",
-				"program": "/media/daltz/Tank/TUA_GIT/PPR301_FPS/Binaries/Linux/UnrealGame-Linux-Test",
+				"program": "/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/Binaries/Linux/UnrealGame-Linux-Test",
 				"preLaunchTask": "PPR301_FPS Linux Test Build",
 				"args": [
 				],
@@ -800,7 +800,7 @@
 			{
 				"name": "Launch PPR301_FPS (Shipping)",
 				"request": "launch",
-				"program": "/media/daltz/Tank/TUA_GIT/PPR301_FPS/Binaries/Linux/UnrealGame-Linux-Shipping",
+				"program": "/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/Binaries/Linux/UnrealGame-Linux-Shipping",
 				"preLaunchTask": "PPR301_FPS Linux Shipping Build",
 				"args": [
 				],
@@ -815,7 +815,7 @@
 				"program": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/Linux/UnrealEditor-Linux-Debug",
 				"preLaunchTask": "PPR301_FPSEditor Linux Debug Build",
 				"args": [
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject"
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject"
 				],
 				"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3",
 				"type": "cppdbg",
@@ -828,7 +828,7 @@
 				"program": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/Linux/UnrealEditor-Linux-DebugGame",
 				"preLaunchTask": "PPR301_FPSEditor Linux DebugGame Build",
 				"args": [
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject"
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject"
 				],
 				"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3",
 				"type": "cppdbg",
@@ -841,7 +841,7 @@
 				"program": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/Linux/UnrealEditor",
 				"preLaunchTask": "PPR301_FPSEditor Linux Development Build",
 				"args": [
-					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject"
+					"/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject"
 				],
 				"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3",
 				"type": "cppdbg",
@@ -857,7 +857,7 @@
 				"args": [
 					"-projectfiles",
 					"-vscode",
-					"-project=/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-project=/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
 					"-game",
 					"-engine",
 					"-dotnet"

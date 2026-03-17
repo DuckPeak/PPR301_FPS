@@ -19,11 +19,14 @@ struct FWaveData
     float SpawnDelay = 1.0f;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float StartDelay = 2.0f;
+    float StartDelay = 0.0f;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    float TimeUntilNextWave = 10.0f;
 };
 
 UCLASS()
-class PPR301_FPS AWaveManager : public AActor
+class PPR301_FPS_API AWaveManager : public AActor
 {
     GENERATED_BODY()
 
@@ -32,25 +35,33 @@ public:
 
 protected:
     virtual void BeginPlay() override;
-
-public:
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Waves")
-    TArray<FWaveData> Waves;
-
-    UPROPERTY(BlueprintReadOnly)
-    int32 CurrentWaveIndex = 0;
-
-    UPROPERTY(BlueprintReadOnly)
-    int32 EnemiesAlive = 0;
-
-private:
-    FTimerHandle SpawnTimerHandle;
-    int32 SpawnedCount = 0;
+    virtual void Tick(float DeltaTime) override;
 
     void StartNextWave();
     void SpawnEnemy();
+    void HandleNextWave();
 
 public:
-    UFUNCTION(BlueprintCallable)
-    void EnemyDied();
+
+    // 🔥 Wave settings
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Waves")
+    TArray<FWaveData> Waves;
+
+    // 🔥 TD Setup
+    UPROPERTY(EditAnywhere, Category="TD Setup")
+    TArray<AActor*> SpawnPoints;
+
+    UPROPERTY(EditAnywhere, Category="TD Setup")
+    AActor* EndPoint;
+
+private:
+    int32 CurrentWaveIndex = 0;
+    int32 SpawnedCount = 0;
+
+    float CountdownTimeRemaining = 0.0f;
+
+    FTimerHandle SpawnTimerHandle;
+    FTimerHandle NextWaveTimerHandle;
+
+    class UWaveUI* WaveUI;
 };

@@ -4,6 +4,19 @@
 UNREALROOTPATH = /home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3
 
 TARGETS = \
+	PPR301_FPS-Android-DebugGame  \
+	PPR301_FPS-Android-Development  \
+	PPR301_FPS-Android-Shipping  \
+	PPR301_FPS-Linux-DebugGame  \
+	PPR301_FPS-Linux-Development  \
+	PPR301_FPS-Linux-Shipping  \
+	PPR301_FPS-LinuxArm64-DebugGame  \
+	PPR301_FPS-LinuxArm64-Development  \
+	PPR301_FPS-LinuxArm64-Shipping  \
+	PPR301_FPS \
+	PPR301_FPSEditor-Linux-DebugGame  \
+	PPR301_FPSEditor-Linux-Development  \
+	PPR301_FPSEditor \
 	LiveLinkHub-Linux-DebugGame  \
 	LiveLinkHub-Linux-Development  \
 	LiveLinkHub \
@@ -22,20 +35,7 @@ TARGETS = \
 	UnrealGame-LinuxArm64-DebugGame  \
 	UnrealGame-LinuxArm64-Development  \
 	UnrealGame-LinuxArm64-Shipping  \
-	UnrealGame \
-	PPR301_FPS-Android-DebugGame  \
-	PPR301_FPS-Android-Development  \
-	PPR301_FPS-Android-Shipping  \
-	PPR301_FPS-Linux-DebugGame  \
-	PPR301_FPS-Linux-Development  \
-	PPR301_FPS-Linux-Shipping  \
-	PPR301_FPS-LinuxArm64-DebugGame  \
-	PPR301_FPS-LinuxArm64-Development  \
-	PPR301_FPS-LinuxArm64-Shipping  \
-	PPR301_FPS \
-	PPR301_FPSEditor-Linux-DebugGame  \
-	PPR301_FPSEditor-Linux-Development  \
-	PPR301_FPSEditor\
+	UnrealGame\
 	configure
 
 BUILD = "$(UNREALROOTPATH)/Engine/Build/BatchFiles/RunUBT.sh"
@@ -48,6 +48,43 @@ StandardSet: RequiredTools UnrealFrontend PPR301_FPSEditor UnrealInsights
 
 DebugSet: RequiredTools UnrealFrontend-Linux-Debug PPR301_FPSEditor-Linux-Debug
 
+
+PPR301_FPS-Android-DebugGame:
+	 $(BUILD) PPR301_FPS Android DebugGame  -Project="/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
+
+PPR301_FPS-Android-Development:
+	 $(BUILD) PPR301_FPS Android Development  -Project="/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
+
+PPR301_FPS-Android-Shipping:
+	 $(BUILD) PPR301_FPS Android Shipping  -Project="/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
+
+PPR301_FPS-Linux-DebugGame:
+	 $(BUILD) PPR301_FPS Linux DebugGame  -Project="/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
+
+PPR301_FPS-Linux-Development:
+	 $(BUILD) PPR301_FPS Linux Development  -Project="/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
+
+PPR301_FPS-Linux-Shipping:
+	 $(BUILD) PPR301_FPS Linux Shipping  -Project="/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
+
+PPR301_FPS-LinuxArm64-DebugGame:
+	 $(BUILD) PPR301_FPS LinuxArm64 DebugGame  -Project="/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
+
+PPR301_FPS-LinuxArm64-Development:
+	 $(BUILD) PPR301_FPS LinuxArm64 Development  -Project="/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
+
+PPR301_FPS-LinuxArm64-Shipping:
+	 $(BUILD) PPR301_FPS LinuxArm64 Shipping  -Project="/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
+
+PPR301_FPS: PPR301_FPS-Linux-Development
+
+PPR301_FPSEditor-Linux-DebugGame:
+	 $(BUILD) PPR301_FPSEditor Linux DebugGame  -Project="/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
+
+PPR301_FPSEditor-Linux-Development:
+	 $(BUILD) PPR301_FPSEditor Linux Development  -Project="/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
+
+PPR301_FPSEditor: PPR301_FPSEditor-Linux-Development
 
 LiveLinkHub-Linux-DebugGame:
 	 $(BUILD) LiveLinkHub Linux DebugGame  $(ARGS)
@@ -100,44 +137,7 @@ UnrealGame-LinuxArm64-Shipping:
 
 UnrealGame: UnrealGame-Linux-Development
 
-PPR301_FPS-Android-DebugGame:
-	 $(BUILD) PPR301_FPS Android DebugGame  -Project="/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
-
-PPR301_FPS-Android-Development:
-	 $(BUILD) PPR301_FPS Android Development  -Project="/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
-
-PPR301_FPS-Android-Shipping:
-	 $(BUILD) PPR301_FPS Android Shipping  -Project="/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
-
-PPR301_FPS-Linux-DebugGame:
-	 $(BUILD) PPR301_FPS Linux DebugGame  -Project="/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
-
-PPR301_FPS-Linux-Development:
-	 $(BUILD) PPR301_FPS Linux Development  -Project="/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
-
-PPR301_FPS-Linux-Shipping:
-	 $(BUILD) PPR301_FPS Linux Shipping  -Project="/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
-
-PPR301_FPS-LinuxArm64-DebugGame:
-	 $(BUILD) PPR301_FPS LinuxArm64 DebugGame  -Project="/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
-
-PPR301_FPS-LinuxArm64-Development:
-	 $(BUILD) PPR301_FPS LinuxArm64 Development  -Project="/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
-
-PPR301_FPS-LinuxArm64-Shipping:
-	 $(BUILD) PPR301_FPS LinuxArm64 Shipping  -Project="/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
-
-PPR301_FPS: PPR301_FPS-Linux-Development
-
-PPR301_FPSEditor-Linux-DebugGame:
-	 $(BUILD) PPR301_FPSEditor Linux DebugGame  -Project="/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
-
-PPR301_FPSEditor-Linux-Development:
-	 $(BUILD) PPR301_FPSEditor Linux Development  -Project="/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" $(ARGS)
-
-PPR301_FPSEditor: PPR301_FPSEditor-Linux-Development
-
 configure:
-	$(BUILD) -ProjectFiles -Project="/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" -Game 
+	$(BUILD) -ProjectFiles -Project="/home/daltz/Documents/TUA/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject" -Game 
 
 .PHONY: $(TARGETS)
