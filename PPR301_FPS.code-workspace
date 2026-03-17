@@ -1,0 +1,879 @@
+{
+	"folders": [
+		{
+			"name": "PPR301_FPS",
+			"path": "."
+		},
+		{
+			"name": "UE5",
+			"path": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+		}
+	],
+	"settings": {
+		"typescript.tsc.autoDetect": "off",
+		"npm.autoDetect": "off",
+		"terminal.integrated.env.linux": {
+			"PATH": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/ThirdParty/DotNet/8.0.412/linux-x64:${env:PATH}",
+			"DOTNET_ROOT": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/ThirdParty/DotNet/8.0.412/linux-x64",
+			"DOTNET_HOST_PATH": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/ThirdParty/DotNet/8.0.412/linux-x64/dotnet",
+			"DOTNET_MULTILEVEL_LOOKUP": "0",
+			"DOTNET_ROLL_FORWARD": "LatestMajor"
+		}
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.cpptools",
+			"ms-dotnettools.csharp"
+		]
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "PPR301_FPS Linux Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"Linux",
+					"Debug",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS Linux Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"Linux",
+					"Debug",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"PPR301_FPS Linux Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS Linux Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"Linux",
+					"Debug",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS Linux DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"Linux",
+					"DebugGame",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS Linux DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"Linux",
+					"DebugGame",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"PPR301_FPS Linux DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS Linux DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"Linux",
+					"DebugGame",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS Linux Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"Linux",
+					"Development",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS Linux Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"Linux",
+					"Development",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"PPR301_FPS Linux Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS Linux Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"Linux",
+					"Development",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS Linux Test Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"Linux",
+					"Test",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS Linux Test Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"Linux",
+					"Test",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"PPR301_FPS Linux Test Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS Linux Test Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"Linux",
+					"Test",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS Linux Shipping Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"Linux",
+					"Shipping",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS Linux Shipping Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"Linux",
+					"Shipping",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"PPR301_FPS Linux Shipping Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS Linux Shipping Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"Linux",
+					"Shipping",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS LinuxArm64 Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"LinuxArm64",
+					"Debug",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS LinuxArm64 Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"LinuxArm64",
+					"Debug",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"PPR301_FPS LinuxArm64 Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS LinuxArm64 Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"LinuxArm64",
+					"Debug",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS LinuxArm64 DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"LinuxArm64",
+					"DebugGame",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS LinuxArm64 DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"LinuxArm64",
+					"DebugGame",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"PPR301_FPS LinuxArm64 DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS LinuxArm64 DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"LinuxArm64",
+					"DebugGame",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS LinuxArm64 Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"LinuxArm64",
+					"Development",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS LinuxArm64 Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"LinuxArm64",
+					"Development",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"PPR301_FPS LinuxArm64 Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS LinuxArm64 Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"LinuxArm64",
+					"Development",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS LinuxArm64 Test Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"LinuxArm64",
+					"Test",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS LinuxArm64 Test Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"LinuxArm64",
+					"Test",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"PPR301_FPS LinuxArm64 Test Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS LinuxArm64 Test Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"LinuxArm64",
+					"Test",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS LinuxArm64 Shipping Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"LinuxArm64",
+					"Shipping",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS LinuxArm64 Shipping Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"LinuxArm64",
+					"Shipping",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"PPR301_FPS LinuxArm64 Shipping Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPS LinuxArm64 Shipping Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPS",
+					"LinuxArm64",
+					"Shipping",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPSEditor Linux Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPSEditor",
+					"Linux",
+					"Debug",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPSEditor Linux Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPSEditor",
+					"Linux",
+					"Debug",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"PPR301_FPSEditor Linux Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPSEditor Linux Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPSEditor",
+					"Linux",
+					"Debug",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPSEditor Linux DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPSEditor",
+					"Linux",
+					"DebugGame",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPSEditor Linux DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPSEditor",
+					"Linux",
+					"DebugGame",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"PPR301_FPSEditor Linux DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPSEditor Linux DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPSEditor",
+					"Linux",
+					"DebugGame",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPSEditor Linux Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPSEditor",
+					"Linux",
+					"Development",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPSEditor Linux Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPSEditor",
+					"Linux",
+					"Development",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"PPR301_FPSEditor Linux Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			},
+			{
+				"label": "PPR301_FPSEditor Linux Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"PPR301_FPSEditor",
+					"Linux",
+					"Development",
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+				}
+			}
+		]
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Launch PPR301_FPS (Debug)",
+				"request": "launch",
+				"program": "/media/daltz/Tank/TUA_GIT/PPR301_FPS/Binaries/Linux/UnrealGame-Linux-Debug",
+				"preLaunchTask": "PPR301_FPS Linux Debug Build",
+				"args": [
+				],
+				"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3",
+				"type": "cppdbg",
+				"visualizerFile": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch PPR301_FPS (DebugGame)",
+				"request": "launch",
+				"program": "/media/daltz/Tank/TUA_GIT/PPR301_FPS/Binaries/Linux/UnrealGame-Linux-DebugGame",
+				"preLaunchTask": "PPR301_FPS Linux DebugGame Build",
+				"args": [
+				],
+				"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3",
+				"type": "cppdbg",
+				"visualizerFile": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch PPR301_FPS (Development)",
+				"request": "launch",
+				"program": "/media/daltz/Tank/TUA_GIT/PPR301_FPS/Binaries/Linux/UnrealGame",
+				"preLaunchTask": "PPR301_FPS Linux Development Build",
+				"args": [
+				],
+				"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3",
+				"type": "cppdbg",
+				"visualizerFile": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch PPR301_FPS (Test)",
+				"request": "launch",
+				"program": "/media/daltz/Tank/TUA_GIT/PPR301_FPS/Binaries/Linux/UnrealGame-Linux-Test",
+				"preLaunchTask": "PPR301_FPS Linux Test Build",
+				"args": [
+				],
+				"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3",
+				"type": "cppdbg",
+				"visualizerFile": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch PPR301_FPS (Shipping)",
+				"request": "launch",
+				"program": "/media/daltz/Tank/TUA_GIT/PPR301_FPS/Binaries/Linux/UnrealGame-Linux-Shipping",
+				"preLaunchTask": "PPR301_FPS Linux Shipping Build",
+				"args": [
+				],
+				"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3",
+				"type": "cppdbg",
+				"visualizerFile": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch PPR301_FPSEditor (Debug)",
+				"request": "launch",
+				"program": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/Linux/UnrealEditor-Linux-Debug",
+				"preLaunchTask": "PPR301_FPSEditor Linux Debug Build",
+				"args": [
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject"
+				],
+				"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3",
+				"type": "cppdbg",
+				"visualizerFile": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch PPR301_FPSEditor (DebugGame)",
+				"request": "launch",
+				"program": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/Linux/UnrealEditor-Linux-DebugGame",
+				"preLaunchTask": "PPR301_FPSEditor Linux DebugGame Build",
+				"args": [
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject"
+				],
+				"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3",
+				"type": "cppdbg",
+				"visualizerFile": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch PPR301_FPSEditor (Development)",
+				"request": "launch",
+				"program": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/Linux/UnrealEditor",
+				"preLaunchTask": "PPR301_FPSEditor Linux Development Build",
+				"args": [
+					"/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject"
+				],
+				"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3",
+				"type": "cppdbg",
+				"visualizerFile": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Generate Project Files",
+				"type": "coreclr",
+				"request": "launch",
+				"preLaunchTask": "UnrealBuildTool Linux Development Build",
+				"program": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Build/BatchFiles/RunUBT.bat",
+				"args": [
+					"-projectfiles",
+					"-vscode",
+					"-project=/media/daltz/Tank/TUA_GIT/PPR301_FPS/PPR301_FPS.uproject",
+					"-game",
+					"-engine",
+					"-dotnet"
+				],
+				"env": {
+					"PATH": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/ThirdParty/DotNet/8.0.412/linux-x64:${env:PATH}",
+					"DOTNET_ROOT": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/ThirdParty/DotNet/8.0.412/linux-x64",
+					"DOTNET_HOST_PATH": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/ThirdParty/DotNet/8.0.412/linux-x64/dotnet",
+					"DOTNET_MULTILEVEL_LOOKUP": "0",
+					"DOTNET_ROLL_FORWARD": "LatestMajor"
+				},
+				"console": "internalConsole",
+				"internalConsoleOptions": "openOnSessionStart",
+				"stopAtEntry": false,
+				"cwd": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3"
+			}
+		]
+	}
+}

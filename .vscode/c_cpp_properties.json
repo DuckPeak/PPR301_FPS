@@ -1,0 +1,28 @@
+{
+	"configurations": [
+		{
+			"name": "PPR301_FPSEditor Editor Linux Development (PPR301_FPS)",
+			"compilerPath": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++",
+			"compilerArgs": [
+				"-isysroot",
+				"/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu"
+			],
+			"cStandard": "c17",
+			"cppStandard": "c++20",
+			"intelliSenseMode": "clang-x64",
+			"compileCommands": "/media/daltz/Tank/TUA_GIT/PPR301_FPS/.vscode/compileCommands_PPR301_FPS.json"
+		},
+		{
+			"name": "Linux",
+			"compilerPath": "/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++",
+			"compilerArgs": [
+				"-isysroot",
+				"/home/daltz/Documents/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu"
+			],
+			"cStandard": "c17",
+			"cppStandard": "c++20",
+			"intelliSenseMode": "clang-x64",
+			"compileCommands": "/media/daltz/Tank/TUA_GIT/PPR301_FPS/.vscode/compileCommands_Default.json"
+		}
+	]
+}
