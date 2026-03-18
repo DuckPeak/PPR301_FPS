@@ -14,14 +14,19 @@ void AWaveManager::BeginPlay()
 {
     Super::BeginPlay();
 
-    // Create UI
-    if (GetWorld())
+    UE_LOG(LogTemp, Warning, TEXT("WaveManager BeginPlay running"));
+
+    if (WaveUIClass && GetWorld() && GetWorld()->GetFirstPlayerController())
     {
-        WaveUI = CreateWidget<UWaveUI>(GetWorld(), UWaveUI::StaticClass());
+        WaveUI = CreateWidget<UWaveUI>(
+            GetWorld()->GetFirstPlayerController(),
+            WaveUIClass
+        );
 
         if (WaveUI)
         {
-            WaveUI->AddToViewport();
+            WaveUI->AddToViewport(9999);
+            UE_LOG(LogTemp, Warning, TEXT("Wave UI Created"));
         }
     }
 
@@ -114,7 +119,6 @@ void AWaveManager::SpawnEnemy()
 
         if (SpawnedPawn)
         {
-            // ✅ SAFE CAST (NO CRASH)
             ABaseEnemy* Enemy = Cast<ABaseEnemy>(SpawnedPawn);
 
             if (Enemy)

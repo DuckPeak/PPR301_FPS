@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "WaveUI.h"
 #include "WaveManager.generated.h"
 
 USTRUCT(BlueprintType)
@@ -43,11 +44,11 @@ protected:
 
 public:
 
-    // 🔥 Wave settings
+    // Wave settings
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Waves")
     TArray<FWaveData> Waves;
 
-    // 🔥 TD Setup
+    // TD Setup
     UPROPERTY(EditAnywhere, Category="TD Setup")
     TArray<AActor*> SpawnPoints;
 
@@ -63,5 +64,10 @@ private:
     FTimerHandle SpawnTimerHandle;
     FTimerHandle NextWaveTimerHandle;
 
-    class UWaveUI* WaveUI;
+    // UI
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="UI", meta=(AllowPrivateAccess="true"))
+    TSubclassOf<UWaveUI> WaveUIClass;
+
+    UPROPERTY()
+    UWaveUI* WaveUI;
 };

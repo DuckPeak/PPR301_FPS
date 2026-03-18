@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/TextBlock.h"
 #include "WaveUI.generated.h"
 
 UCLASS()
@@ -15,5 +16,7 @@ public:
 	void UpdateWave(int32 Wave, float Countdown);
 
 private:
-	class UTextBlock* WaveText;
+	// Bind to TextBlock in Blueprint
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* WaveText;
 };

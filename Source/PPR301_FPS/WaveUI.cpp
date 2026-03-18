@@ -1,23 +1,17 @@
 #include "WaveUI.h"
-#include "Components/TextBlock.h"
-#include "Blueprint/WidgetTree.h"
 #include "Components/CanvasPanel.h"
+#include "Components/TextBlock.h"
+#include "Components/CanvasPanelSlot.h"
+#include "Blueprint/WidgetTree.h"
 
 void UWaveUI::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	UCanvasPanel* Root = WidgetTree->ConstructWidget<UCanvasPanel>(UCanvasPanel::StaticClass());
-
-	WaveText = WidgetTree->ConstructWidget<UTextBlock>(UTextBlock::StaticClass(), TEXT("WaveText"));
-
-	if (WaveText && Root)
+	if (WaveText)
 	{
-		WaveText->SetText(FText::FromString("Wave UI"));
-
-		Root->AddChild(WaveText);
-
-		WidgetTree->RootWidget = Root;
+		WaveText->SetText(FText::FromString("WAVE UI WORKING"));
+		WaveText->SetColorAndOpacity(FSlateColor(FLinearColor::White));
 	}
 }
 
