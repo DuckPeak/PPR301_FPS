@@ -13,7 +13,8 @@ public class PPR301_FPS : ModuleRules
 			"CoreUObject",
 			"Engine",
 			"InputCore",
-			"UMG"
+			"UMG",
+			"EnhancedInput" 
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {
