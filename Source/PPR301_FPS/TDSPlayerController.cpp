@@ -4,41 +4,50 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputAction.h"
+#include "Blueprint/UserWidget.h"
+#include "Kismet/GameplayStatics.h"
 
 ATDSPlayerController::ATDSPlayerController()
 {
 	bShowMouseCursor = false;
 	bIsBuildMode = false;
-
-	CameraSpeed = 2000.f;
-	EdgeScrollThreshold = 20.f;
-	GridSize = 200.f;
-
-	PlayerMoney = 1000;
-	TurretCost = 200;
 }
 
 void ATDSPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// Spawn build camera
-	FVector Location = FVector(0, 0, 1500);
-	FRotator Rotation = FRotator(-90, 0, 0);
+	BuildCamera = GetWorld()->SpawnActor<ACameraActor>(
+		FVector(0,0,1500),
+		FRotator(-90,0,0)
+	);
 
-	BuildCamera = GetWorld()->SpawnActor<ACameraActor>(Location, Rotation);
-
-	// Add Enhanced Input Mapping
-	if (ULocalPlayer* LocalPlayer = GetLocalPlayer())
+	if (ULocalPlayer* LP = GetLocalPlayer())
 	{
-		if (UEnhancedInputLocalPlayerSubsystem* Subsystem =
-			LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
+		if (auto* Subsystem = LP->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
 		{
 			if (InputMapping)
-			{
 				Subsystem->AddMappingContext(InputMapping, 0);
-			}
 		}
+	}
+
+	SelectedBuildClass = TurretClass; // default
+}
+
+void ATDSPlayerController::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+
+	if (auto* EIC = Cast<UEnhancedInputComponent>(InputComponent))
+	{
+		if (ToggleBuildAction)
+			EIC->BindAction(ToggleBuildAction, ETriggerEvent::Triggered, this, &ATDSPlayerController::ToggleBuildMode);
+
+		if (PlaceTurretAction)
+			EIC->BindAction(PlaceTurretAction, ETriggerEvent::Triggered, this, &ATDSPlayerController::PlaceTurret);
+
+		if (ZoomAction)
+			EIC->BindAction(ZoomAction, ETriggerEvent::Triggered, this, &ATDSPlayerController::ZoomCamera);
 	}
 }
 
@@ -53,24 +62,9 @@ void ATDSPlayerController::Tick(float DeltaTime)
 	}
 }
 
-void ATDSPlayerController::SetupInputComponent()
-{
-	Super::SetupInputComponent();
+// ===== BUILD MODE =====
 
-	UEnhancedInputComponent* EIC = Cast<UEnhancedInputComponent>(InputComponent);
-
-	if (EIC)
-	{
-		if (ToggleBuildAction)
-			EIC->BindAction(ToggleBuildAction, ETriggerEvent::Started, this, &ATDSPlayerController::ToggleBuildMode);
-
-		if (PlaceTurretAction)
-			EIC->BindAction(PlaceTurretAction, ETriggerEvent::Started, this, &ATDSPlayerController::PlaceTurret);
-
-		if (ZoomAction)
-			EIC->BindAction(ZoomAction, ETriggerEvent::Triggered, this, &ATDSPlayerController::ZoomCamera);
-	}
-}
+// ===== BUILD MODE =====
 
 void ATDSPlayerController::ToggleBuildMode()
 {
@@ -80,117 +74,145 @@ void ATDSPlayerController::ToggleBuildMode()
 
 	if (bIsBuildMode)
 	{
+		// Switch camera and enable mouse
 		SetViewTargetWithBlend(BuildCamera, 0.3f);
 		bShowMouseCursor = true;
 		SetInputMode(FInputModeGameAndUI());
+
+		// Spawn & show UI
+		if (BuildMenuClass && !BuildMenuInstance)
+		{
+			// Create the widget from the Blueprint class
+			BuildMenuInstance = CreateWidget<UUserWidget>(this, BuildMenuClass);
+
+			if (BuildMenuInstance)
+			{
+				BuildMenuInstance->AddToViewport(); // Show the widget
+			}
+		}
 	}
 	else
 	{
+		// Switch back to player camera
 		SetViewTargetWithBlend(GetPawn(), 0.3f);
 		bShowMouseCursor = false;
 		SetInputMode(FInputModeGameOnly());
+
+		// Remove UI
+		if (BuildMenuInstance)
+		{
+			BuildMenuInstance->RemoveFromParent(); // Correct API
+			BuildMenuInstance = nullptr;
+		}
 	}
 }
 
-// ================= CAMERA =================
+// ===== CAMERA =====
 
 void ATDSPlayerController::MoveCamera(float DeltaTime)
 {
-	FVector MoveDir = FVector::ZeroVector;
+	FVector Dir = FVector::ZeroVector;
 
-	if (IsInputKeyDown(EKeys::W)) MoveDir.X += 1;
-	if (IsInputKeyDown(EKeys::S)) MoveDir.X -= 1;
-	if (IsInputKeyDown(EKeys::D)) MoveDir.Y += 1;
-	if (IsInputKeyDown(EKeys::A)) MoveDir.Y -= 1;
+	if (IsInputKeyDown(EKeys::W)) Dir.X += 1;
+	if (IsInputKeyDown(EKeys::S)) Dir.X -= 1;
+	if (IsInputKeyDown(EKeys::D)) Dir.Y += 1;
+	if (IsInputKeyDown(EKeys::A)) Dir.Y -= 1;
 
-	float MouseX, MouseY;
-	GetMousePosition(MouseX, MouseY);
-
-	int32 SizeX, SizeY;
-	GetViewportSize(SizeX, SizeY);
-
-	if (MouseX <= EdgeScrollThreshold) MoveDir.Y -= 1;
-	if (MouseX >= SizeX - EdgeScrollThreshold) MoveDir.Y += 1;
-	if (MouseY <= EdgeScrollThreshold) MoveDir.X += 1;
-	if (MouseY >= SizeY - EdgeScrollThreshold) MoveDir.X -= 1;
-
-	FVector NewLocation = BuildCamera->GetActorLocation() + (MoveDir * CameraSpeed * DeltaTime);
-	BuildCamera->SetActorLocation(NewLocation);
+	FVector NewLoc = BuildCamera->GetActorLocation() + Dir * CameraSpeed * DeltaTime;
+	BuildCamera->SetActorLocation(NewLoc);
 }
 
 void ATDSPlayerController::ZoomCamera(const FInputActionValue& Value)
 {
-	if (!BuildCamera) return;
-
-	float AxisValue = Value.Get<float>();
+	float Axis = Value.Get<float>();
 
 	FVector Loc = BuildCamera->GetActorLocation();
-	Loc.Z -= AxisValue * 300.f;
-	Loc.Z = FMath::Clamp(Loc.Z, 600.f, 3000.f);
+	Loc.Z = FMath::Clamp(Loc.Z - Axis * 300.f, 600.f, 3000.f);
 
 	BuildCamera->SetActorLocation(Loc);
 }
 
-// ================= GRID =================
+// ===== GRID =====
 
 FVector ATDSPlayerController::GetMouseWorldPosition()
 {
-	FVector WorldPos, WorldDir;
+	FVector Pos, Dir;
 
-	if (DeprojectMousePositionToWorld(WorldPos, WorldDir))
+	if (DeprojectMousePositionToWorld(Pos, Dir))
 	{
 		FHitResult Hit;
-		FVector End = WorldPos + (WorldDir * 10000);
-
-		GetWorld()->LineTraceSingleByChannel(Hit, WorldPos, End, ECC_Visibility);
+		GetWorld()->LineTraceSingleByChannel(Hit, Pos, Pos + Dir*10000, ECC_Visibility);
 
 		if (Hit.bBlockingHit)
-		{
 			return Hit.Location;
-		}
 	}
 
 	return FVector::ZeroVector;
 }
 
-FVector ATDSPlayerController::SnapToGrid(FVector Location)
+FVector ATDSPlayerController::SnapToGrid(FVector L)
 {
 	return FVector(
-		FMath::GridSnap(Location.X, GridSize),
-		FMath::GridSnap(Location.Y, GridSize),
-		Location.Z
+		FMath::GridSnap(L.X, GridSize),
+		FMath::GridSnap(L.Y, GridSize),
+		L.Z
 	);
 }
 
-// ================= BUILD =================
+// ===== BUILD =====
+
+bool ATDSPlayerController::CheckValidPlacement(FVector Pos)
+{
+	FCollisionShape Box = FCollisionShape::MakeBox(FVector(100));
+
+	return !GetWorld()->OverlapAnyTestByChannel(
+		Pos,
+		FQuat::Identity,
+		ECC_WorldStatic,
+		Box
+	);
+}
 
 void ATDSPlayerController::UpdatePreview()
 {
-	if (!TurretClass) return;
+	if (!SelectedBuildClass) return;
 
 	FVector Pos = SnapToGrid(GetMouseWorldPosition());
+	bool bValid = CheckValidPlacement(Pos);
 
 	if (!PreviewActor)
 	{
-		PreviewActor = GetWorld()->SpawnActor<AActor>(TurretClass, Pos, FRotator::ZeroRotator);
+		PreviewActor = GetWorld()->SpawnActor<AActor>(SelectedBuildClass, Pos, FRotator(0, CurrentRotation, 0));
+		PreviewActor->SetActorEnableCollision(false);
 	}
 
 	if (PreviewActor)
 	{
 		PreviewActor->SetActorLocation(Pos);
+		PreviewActor->SetActorRotation(FRotator(0, CurrentRotation, 0));
+
+		// TODO: swap material (green/red)
 	}
 }
 
 void ATDSPlayerController::PlaceTurret()
 {
-	if (!TurretClass) return;
-	if (PlayerMoney < TurretCost) return;
+	if (!SelectedBuildClass) return;
 
 	FVector Pos = SnapToGrid(GetMouseWorldPosition());
 
-	GetWorld()->SpawnActor<AActor>(TurretClass, Pos, FRotator::ZeroRotator);
+	if (!CheckValidPlacement(Pos)) return;
 
-	PlayerMoney -= TurretCost;
+	GetWorld()->SpawnActor<AActor>(SelectedBuildClass, Pos, FRotator(0, CurrentRotation, 0));
+}
 
-	UE_LOG(LogTemp, Warning, TEXT("Placed Turret. Money Left: %d"), PlayerMoney);
+void ATDSPlayerController::SetSelectedBuild(TSubclassOf<AActor> NewClass)
+{
+	SelectedBuildClass = NewClass;
+
+	if (PreviewActor)
+	{
+		PreviewActor->Destroy();
+		PreviewActor = nullptr;
+	}
 }
