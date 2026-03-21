@@ -46,9 +46,28 @@ void ATDSPlayerController::SetupInputComponent()
     {
         // Hard-coded toggle build mode to TAB
         InputComponent->BindKey(EKeys::Tab, IE_Pressed, this, &ATDSPlayerController::ToggleBuildMode);
+        
+        InputComponent->BindKey(EKeys::Q, IE_Pressed, this, &ATDSPlayerController::RotatePreviewLeft);
+        InputComponent->BindKey(EKeys::E, IE_Pressed, this, &ATDSPlayerController::RotatePreviewRight);
+    }
+}
+void ATDSPlayerController::RotatePreviewLeft()
+{
+    CurrentRotation -= 90.f; // rotate 90 degrees left
+    if (PreviewActor)
+    {
+        PreviewActor->SetActorRotation(FRotator(0.f, CurrentRotation, 0.f));
     }
 }
 
+void ATDSPlayerController::RotatePreviewRight()
+{
+    CurrentRotation += 90.f; // rotate 90 degrees right
+    if (PreviewActor)
+    {
+        PreviewActor->SetActorRotation(FRotator(0.f, CurrentRotation, 0.f));
+    }
+}
 void ATDSPlayerController::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
@@ -200,6 +219,18 @@ void ATDSPlayerController::UpdatePreview()
     {
         PreviewActor->SetActorLocation(Pos);
         PreviewActor->SetActorRotation(FRotator(0.f, CurrentRotation, 0.f));
+
+        // Apply ghost material
+        TArray<UStaticMeshComponent*> MeshComponents;
+        PreviewActor->GetComponents<UStaticMeshComponent>(MeshComponents);
+        for (UStaticMeshComponent* MeshComp : MeshComponents)
+        {
+            if (GhostMaterial)
+            {
+                MeshComp->SetMaterial(0, GhostMaterial);
+                MeshComp->SetRenderCustomDepth(true); // optional for outline
+            }
+        }
     }
 }
 
@@ -262,6 +293,26 @@ void ATDSPlayerController::SetSelectedBuild(TSubclassOf<AActor> NewClass)
     {
         PreviewActor->Destroy();
         PreviewActor = nullptr;
+    }
+
+    if (SelectedBuildClass && bIsBuildMode)
+    {
+        // Spawn preview immediately at current mouse location
+        FVector Pos = SnapToGrid(GetMouseWorldPosition());
+        PreviewActor = GetWorld()->SpawnActor<AActor>(SelectedBuildClass, Pos, FRotator(0.f, CurrentRotation, 0.f));
+        if (SelectedBuildClass && bIsBuildMode)
+        {
+            UpdatePreview();
+        }
+        if (PreviewActor)
+        {
+            PreviewActor->SetActorEnableCollision(false);
+            UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Preview actor spawned immediately after selection"));
+        }
+        else
+        {
+            UE_LOG(LogTemp, Error, TEXT("[BuildMode] Failed to spawn preview actor on selection!"));
+        }
     }
 
     UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Selected build class set: %s"), *GetNameSafe(NewClass));

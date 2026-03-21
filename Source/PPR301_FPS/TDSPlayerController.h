@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Materials/MaterialInterface.h"
 #include "GameFramework/PlayerController.h"
 #include "Camera/CameraActor.h"
 #include "InputActionValue.h"
@@ -30,7 +31,10 @@ public:
 	// Build menu widget
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="UI")
 	TSubclassOf<UUserWidget> BuildMenuClass;
-
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="BuildMode|Preview")
+	UMaterialInterface* GhostMaterial;
+	
 private:
 
 	// ===== CAMERA =====
@@ -103,6 +107,9 @@ private:
 	bool CheckValidPlacement(FVector Pos);
 	void UpdatePreview();
 	void PlaceTurret();
+	// Build mode rotation
+	void RotatePreviewLeft();
+	void RotatePreviewRight();
 	
 	UPROPERTY()
 	UUserWidget* BuildMenu;
