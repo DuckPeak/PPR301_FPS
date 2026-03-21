@@ -198,8 +198,12 @@ bool ATDSPlayerController::CheckValidPlacement(FVector Pos)
 void ATDSPlayerController::UpdatePreview()
 {
     if (!SelectedBuildClass) return;
-
-    FVector Pos = SnapToGrid(GetMouseWorldPosition());
+    
+    // Snap to grid
+    //FVector Pos = SnapToGrid(GetMouseWorldPosition());
+    
+    // Non SNap
+    FVector Pos = GetMouseWorldPosition();
 
     if (!PreviewActor)
     {
@@ -298,7 +302,11 @@ void ATDSPlayerController::SetSelectedBuild(TSubclassOf<AActor> NewClass)
     if (SelectedBuildClass && bIsBuildMode)
     {
         // Spawn preview immediately at current mouse location
-        FVector Pos = SnapToGrid(GetMouseWorldPosition());
+        //FVector Pos = SnapToGrid(GetMouseWorldPosition()); // Snap
+        
+        //Non Snap
+        FVector Pos = GetMouseWorldPosition();
+        
         PreviewActor = GetWorld()->SpawnActor<AActor>(SelectedBuildClass, Pos, FRotator(0.f, CurrentRotation, 0.f));
         if (SelectedBuildClass && bIsBuildMode)
         {
