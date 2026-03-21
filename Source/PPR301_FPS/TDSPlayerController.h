@@ -91,7 +91,11 @@ private:
 	UPROPERTY(EditAnywhere, Category="Build")
 	int32 WallCost = 50;
 	
-
+	UPROPERTY(EditAnywhere, Category="Input")
+	UInputAction* PlaceActionEnter;
+	
+	UFUNCTION()
+	void PlacePreviewedObject();
 
 	UPROPERTY()
 	UUserWidget* BuildMenuInstance;

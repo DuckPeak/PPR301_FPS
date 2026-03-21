@@ -58,7 +58,7 @@ void ATurret::Tick(float DeltaTime)
             );
         }
 
-        if (FireCooldown <= 0.f && IsAimedAtTarget())
+        if (FireCooldown <= 0.f) // && IsAimedAtTarget()
         {
             Fire();
             FireCooldown = FireRate;

@@ -1,229 +1,215 @@
 #include "TDSPlayerController.h"
 #include "Engine/World.h"
 #include "GameFramework/Pawn.h"
-#include "EnhancedInputComponent.h"
-#include "EnhancedInputSubsystems.h"
-#include "InputAction.h"
 #include "Blueprint/UserWidget.h"
+#include "Camera/CameraActor.h"
 #include "Kismet/GameplayStatics.h"
 
 ATDSPlayerController::ATDSPlayerController()
 {
-	bShowMouseCursor = false;
-	bIsBuildMode = false;
+    bShowMouseCursor = false;
+    bIsBuildMode = false;
+    SelectedBuildClass = nullptr; // default: nothing selected
+    PreviewActor = nullptr;
+    CameraSpeed = 2000.f;
+    GridSize = 200.f;
+    CurrentRotation = 0.f;
 }
 
 void ATDSPlayerController::BeginPlay()
 {
-	Super::BeginPlay();
+    Super::BeginPlay();
 
-	BuildCamera = GetWorld()->SpawnActor<ACameraActor>(
-		FVector(0,0,1500),
-		FRotator(-90,0,0)
-	);
-
-	if (ULocalPlayer* LP = GetLocalPlayer())
-	{
-		if (auto* Subsystem = LP->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
-		{
-			if (InputMapping)
-				Subsystem->AddMappingContext(InputMapping, 0);
-		}
-	}
-
-	SelectedBuildClass = TurretClass; // default
+    // Spawn build camera
+    BuildCamera = GetWorld()->SpawnActor<ACameraActor>(
+        FVector(0, 0, 1500),
+        FRotator(-90, 0, 0)
+    );
 }
 
 void ATDSPlayerController::SetupInputComponent()
 {
-	Super::SetupInputComponent();
+    Super::SetupInputComponent();
 
-	if (auto* EIC = Cast<UEnhancedInputComponent>(InputComponent))
-	{
-		if (ToggleBuildAction)
-			EIC->BindAction(ToggleBuildAction, ETriggerEvent::Triggered, this, &ATDSPlayerController::ToggleBuildMode);
-
-		if (PlaceTurretAction)
-			EIC->BindAction(PlaceTurretAction, ETriggerEvent::Triggered, this, &ATDSPlayerController::PlaceTurret);
-
-		if (ZoomAction)
-			EIC->BindAction(ZoomAction, ETriggerEvent::Triggered, this, &ATDSPlayerController::ZoomCamera);
-	}
+    // Toggle build mode (hard-coded to Tab in editor Input)
+    if (InputComponent)
+    {
+        InputComponent->BindKey(EKeys::Tab, IE_Pressed, this, &ATDSPlayerController::ToggleBuildMode);
+    }
 }
 
 void ATDSPlayerController::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
+    Super::Tick(DeltaTime);
 
-	if (bIsBuildMode && BuildCamera)
-	{
-		MoveCamera(DeltaTime);
-		UpdatePreview();
-	}
+    if (bIsBuildMode && BuildCamera)
+    {
+        MoveCamera(DeltaTime);
+        UpdatePreview();
+
+        // Hard-coded Enter key placement
+        if (WasInputKeyJustPressed(EKeys::Enter))
+        {
+            PlacePreviewedObject();
+        }
+    }
 }
-
-// ===== BUILD MODE =====
 
 // ===== BUILD MODE =====
 
 void ATDSPlayerController::ToggleBuildMode()
 {
-	bIsBuildMode = !bIsBuildMode;
+    bIsBuildMode = !bIsBuildMode;
+    UE_LOG(LogTemp, Warning, TEXT("TOGGLE BUILD MODE"));
 
-	UE_LOG(LogTemp, Warning, TEXT("TOGGLE BUILD MODE"));
+    if (bIsBuildMode)
+    {
+        // Switch to build camera
+        SetViewTargetWithBlend(BuildCamera, 0.3f);
+        bShowMouseCursor = true;
+        SetInputMode(FInputModeGameAndUI());
 
-	if (bIsBuildMode)
-	{
-		// Switch camera and enable mouse
-		SetViewTargetWithBlend(BuildCamera, 0.3f);
-		bShowMouseCursor = true;
-		SetInputMode(FInputModeGameAndUI());
+        // Show build menu
+        if (BuildMenuClass && !BuildMenuInstance)
+        {
+            BuildMenuInstance = CreateWidget<UUserWidget>(this, BuildMenuClass);
+            if (BuildMenuInstance)
+            {
+                BuildMenuInstance->AddToViewport();
+            }
+        }
+    }
+    else
+    {
+        // Switch back to player camera
+        SetViewTargetWithBlend(GetPawn(), 0.3f);
+        bShowMouseCursor = false;
+        SetInputMode(FInputModeGameOnly());
 
-		// Spawn & show UI
-		if (BuildMenuClass && !BuildMenuInstance)
-		{
-			// Create the widget from the Blueprint class
-			BuildMenuInstance = CreateWidget<UUserWidget>(this, BuildMenuClass);
+        // Remove build menu
+        if (BuildMenuInstance)
+        {
+            BuildMenuInstance->RemoveFromParent();
+            BuildMenuInstance = nullptr;
+        }
 
-			if (BuildMenuInstance)
-			{
-				BuildMenuInstance->AddToViewport(); // Show the widget
-			}
-		}
-	}
-	else
-	{
-		// Switch back to player camera
-		SetViewTargetWithBlend(GetPawn(), 0.3f);
-		bShowMouseCursor = false;
-		SetInputMode(FInputModeGameOnly());
+        // Destroy any preview actor when exiting build mode
+        if (PreviewActor)
+        {
+            PreviewActor->Destroy();
+            PreviewActor = nullptr;
+        }
 
-		// Remove UI
-		if (BuildMenuInstance)
-		{
-			BuildMenuInstance->RemoveFromParent(); // Correct API
-			BuildMenuInstance = nullptr;
-		}
-	}
+        SelectedBuildClass = nullptr;
+    }
 }
 
 // ===== CAMERA =====
 
 void ATDSPlayerController::MoveCamera(float DeltaTime)
 {
-	FVector Dir = FVector::ZeroVector;
+    FVector Dir = FVector::ZeroVector;
 
-	if (IsInputKeyDown(EKeys::W)) Dir.X += 1;
-	if (IsInputKeyDown(EKeys::S)) Dir.X -= 1;
-	if (IsInputKeyDown(EKeys::D)) Dir.Y += 1;
-	if (IsInputKeyDown(EKeys::A)) Dir.Y -= 1;
+    if (IsInputKeyDown(EKeys::W)) Dir.X += 1;
+    if (IsInputKeyDown(EKeys::S)) Dir.X -= 1;
+    if (IsInputKeyDown(EKeys::D)) Dir.Y += 1;
+    if (IsInputKeyDown(EKeys::A)) Dir.Y -= 1;
 
-	FVector NewLoc = BuildCamera->GetActorLocation() + Dir * CameraSpeed * DeltaTime;
-	BuildCamera->SetActorLocation(NewLoc);
+    FVector NewLoc = BuildCamera->GetActorLocation() + Dir * CameraSpeed * DeltaTime;
+    BuildCamera->SetActorLocation(NewLoc);
 }
 
 void ATDSPlayerController::ZoomCamera(const FInputActionValue& Value)
 {
-	float Axis = Value.Get<float>();
-
-	FVector Loc = BuildCamera->GetActorLocation();
-	Loc.Z = FMath::Clamp(Loc.Z - Axis * 300.f, 600.f, 3000.f);
-
-	BuildCamera->SetActorLocation(Loc);
+    float Axis = Value.Get<float>();
+    FVector Loc = BuildCamera->GetActorLocation();
+    Loc.Z = FMath::Clamp(Loc.Z - Axis * 300.f, 600.f, 3000.f);
+    BuildCamera->SetActorLocation(Loc);
 }
 
 // ===== GRID =====
 
 FVector ATDSPlayerController::GetMouseWorldPosition()
 {
-	FVector Pos, Dir;
-
-	if (DeprojectMousePositionToWorld(Pos, Dir))
-	{
-		FHitResult Hit;
-		GetWorld()->LineTraceSingleByChannel(Hit, Pos, Pos + Dir*10000, ECC_Visibility);
-
-		if (Hit.bBlockingHit)
-			return Hit.Location;
-	}
-
-	return FVector::ZeroVector;
+    FVector Pos, Dir;
+    if (DeprojectMousePositionToWorld(Pos, Dir))
+    {
+        FHitResult Hit;
+        GetWorld()->LineTraceSingleByChannel(Hit, Pos, Pos + Dir * 10000.f, ECC_Visibility);
+        if (Hit.bBlockingHit)
+            return Hit.Location;
+    }
+    return FVector::ZeroVector;
 }
 
 FVector ATDSPlayerController::SnapToGrid(FVector L)
 {
-	return FVector(
-		FMath::GridSnap(L.X, GridSize),
-		FMath::GridSnap(L.Y, GridSize),
-		L.Z
-	);
+    return FVector(
+        FMath::GridSnap(L.X, GridSize),
+        FMath::GridSnap(L.Y, GridSize),
+        L.Z
+    );
 }
 
-// ===== BUILD =====
+// ===== BUILD SYSTEM =====
 
 bool ATDSPlayerController::CheckValidPlacement(FVector Pos)
 {
-	FCollisionShape Box = FCollisionShape::MakeBox(FVector(100));
-
-	return !GetWorld()->OverlapAnyTestByChannel(
-		Pos,
-		FQuat::Identity,
-		ECC_WorldStatic,
-		Box
-	);
+    FCollisionShape Box = FCollisionShape::MakeBox(FVector(100.f));
+    return !GetWorld()->OverlapAnyTestByChannel(Pos, FQuat::Identity, ECC_WorldStatic, Box);
 }
 
 void ATDSPlayerController::UpdatePreview()
 {
-	if (!SelectedBuildClass) return;
+    if (!SelectedBuildClass) return;
 
-	FVector Pos = SnapToGrid(GetMouseWorldPosition());
-	bool bValid = CheckValidPlacement(Pos);
+    FVector Pos = SnapToGrid(GetMouseWorldPosition());
+    if (!PreviewActor)
+    {
+        PreviewActor = GetWorld()->SpawnActor<AActor>(SelectedBuildClass, Pos, FRotator(0.f, CurrentRotation, 0.f));
+        PreviewActor->SetActorEnableCollision(false);
+    }
 
-	if (!PreviewActor)
-	{
-		PreviewActor = GetWorld()->SpawnActor<AActor>(SelectedBuildClass, Pos, FRotator(0, CurrentRotation, 0));
-		PreviewActor->SetActorEnableCollision(false);
-	}
+    if (PreviewActor)
+    {
+        PreviewActor->SetActorLocation(Pos);
+        PreviewActor->SetActorRotation(FRotator(0.f, CurrentRotation, 0.f));
+    }
+}
 
-	if (PreviewActor)
-	{
-		PreviewActor->SetActorLocation(Pos);
-		PreviewActor->SetActorRotation(FRotator(0, CurrentRotation, 0));
-
-		// TODO: swap material (green/red)
-	}
+void ATDSPlayerController::PlacePreviewedObject()
+{
+    if (PreviewActor && SelectedBuildClass)
+    {
+        PlaceTurret();
+    }
 }
 
 void ATDSPlayerController::PlaceTurret()
 {
-	if (!SelectedBuildClass) return;
+    if (!SelectedBuildClass) return;
 
-	FVector Pos = SnapToGrid(GetMouseWorldPosition());
+    FVector Pos = SnapToGrid(GetMouseWorldPosition());
+    if (!CheckValidPlacement(Pos)) return;
 
-	if (!CheckValidPlacement(Pos)) return;
+    GetWorld()->SpawnActor<AActor>(SelectedBuildClass, Pos, FRotator(0.f, CurrentRotation, 0.f));
 
-	// Spawn the actual turret
-	GetWorld()->SpawnActor<AActor>(SelectedBuildClass, Pos, FRotator(0, CurrentRotation, 0));
+    if (PreviewActor)
+    {
+        PreviewActor->Destroy();
+        PreviewActor = nullptr;
+    }
 
-	// Destroy the preview actor so you can't move it anymore
-	if (PreviewActor)
-	{
-		PreviewActor->Destroy();
-		PreviewActor = nullptr;
-	}
-
-	// deselect the turret so you have to choose again
-	SelectedBuildClass = nullptr;
+    SelectedBuildClass = nullptr;
 }
 
 void ATDSPlayerController::SetSelectedBuild(TSubclassOf<AActor> NewClass)
 {
-	SelectedBuildClass = NewClass;
+    SelectedBuildClass = NewClass;
 
-	if (PreviewActor)
-	{
-		PreviewActor->Destroy();
-		PreviewActor = nullptr;
-	}
+    if (PreviewActor)
+    {
+        PreviewActor->Destroy();
+        PreviewActor = nullptr;
+    }
 }
