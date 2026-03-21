@@ -203,7 +203,18 @@ void ATDSPlayerController::PlaceTurret()
 
 	if (!CheckValidPlacement(Pos)) return;
 
+	// Spawn the actual turret
 	GetWorld()->SpawnActor<AActor>(SelectedBuildClass, Pos, FRotator(0, CurrentRotation, 0));
+
+	// Destroy the preview actor so you can't move it anymore
+	if (PreviewActor)
+	{
+		PreviewActor->Destroy();
+		PreviewActor = nullptr;
+	}
+
+	// deselect the turret so you have to choose again
+	SelectedBuildClass = nullptr;
 }
 
 void ATDSPlayerController::SetSelectedBuild(TSubclassOf<AActor> NewClass)
