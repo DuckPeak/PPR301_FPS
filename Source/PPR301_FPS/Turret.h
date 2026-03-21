@@ -17,6 +17,9 @@ public:
 	ATurret();
 
 	virtual void Tick(float DeltaTime) override;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bIsPreview = false;
 
 protected:
 	virtual void BeginPlay() override;
@@ -33,6 +36,7 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* MuzzlePoint;
+	
 
 	// ===== TURRET SETTINGS =====
 	UPROPERTY(EditAnywhere, Category="Turret")

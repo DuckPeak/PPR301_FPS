@@ -1,5 +1,6 @@
 #include "TDSPlayerController.h"
 #include "Engine/World.h"
+#include "Turret.h"
 #include "GameFramework/Pawn.h"
 #include "Blueprint/UserWidget.h"
 #include "Camera/CameraActor.h"
@@ -24,7 +25,7 @@ void ATDSPlayerController::BeginPlay()
     UE_LOG(LogTemp, Warning, TEXT("[BuildMode] BeginPlay"));
 
     BuildCamera = GetWorld()->SpawnActor<ACameraActor>(
-        FVector(0, 0, 1500),
+        FVector(-6450.0, 0, 1500),
         FRotator(-90, 0, 0)
     );
 
@@ -207,11 +208,30 @@ void ATDSPlayerController::UpdatePreview()
 
     if (!PreviewActor)
     {
-        PreviewActor = GetWorld()->SpawnActor<AActor>(SelectedBuildClass, Pos, FRotator(0.f, CurrentRotation, 0.f));
-        if (PreviewActor)
+        FTransform SpawnTransform(FRotator(0.f, CurrentRotation, 0.f), Pos);
+
+        AActor* Spawned = GetWorld()->SpawnActorDeferred<AActor>(
+            SelectedBuildClass,
+            SpawnTransform,
+            nullptr,
+            nullptr,
+            ESpawnActorCollisionHandlingMethod::AlwaysSpawn
+        );
+
+        if (Spawned)
         {
-            PreviewActor->SetActorEnableCollision(false);
-            //UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Preview actor spawned at: %s"), *Pos.ToString());
+            // 🔥 SET BEFORE BEGINPLAY
+            ATurret* Turret = Cast<ATurret>(Spawned);
+            if (Turret)
+            {
+                Turret->bIsPreview = true;
+            }
+
+            Spawned->SetActorEnableCollision(false);
+            Spawned->SetActorTickEnabled(false);
+
+            // 🔥 THIS FINALIZES SPAWN
+            PreviewActor = UGameplayStatics::FinishSpawningActor(Spawned, SpawnTransform);
         }
         else
         {
@@ -307,7 +327,29 @@ void ATDSPlayerController::SetSelectedBuild(TSubclassOf<AActor> NewClass)
         //Non Snap
         FVector Pos = GetMouseWorldPosition();
         
-        PreviewActor = GetWorld()->SpawnActor<AActor>(SelectedBuildClass, Pos, FRotator(0.f, CurrentRotation, 0.f));
+        FTransform SpawnTransform(FRotator(0.f, CurrentRotation, 0.f), Pos);
+
+        AActor* Spawned = GetWorld()->SpawnActorDeferred<AActor>(
+            SelectedBuildClass,
+            SpawnTransform,
+            nullptr,
+            nullptr,
+            ESpawnActorCollisionHandlingMethod::AlwaysSpawn
+        );
+
+        if (Spawned)
+        {
+            ATurret* Turret = Cast<ATurret>(Spawned);
+            if (Turret)
+            {
+                Turret->bIsPreview = true;
+            }
+
+            Spawned->SetActorEnableCollision(false);
+            Spawned->SetActorTickEnabled(false);
+
+            PreviewActor = UGameplayStatics::FinishSpawningActor(Spawned, SpawnTransform);
+        }
         if (SelectedBuildClass && bIsBuildMode)
         {
             UpdatePreview();

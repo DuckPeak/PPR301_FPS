@@ -32,8 +32,12 @@ void ATurret::BeginPlay()
 
 void ATurret::Tick(float DeltaTime)
 {
+    
     Super::Tick(DeltaTime);
-
+    
+    if (bIsPreview) return;
+    
+    
     if (FireCooldown > 0.f)
         FireCooldown -= DeltaTime;
 
