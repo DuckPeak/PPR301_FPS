@@ -24,10 +24,6 @@
 		{
 			"Name": "MetaHumanRuntime",
 			"Enabled": true
-		},
-		{
-			"Name": "GaeaUnrealTools",
-			"Enabled": true
 		}
 	]
 }
