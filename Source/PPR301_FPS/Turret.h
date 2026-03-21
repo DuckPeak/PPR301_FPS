@@ -45,6 +45,9 @@ protected:
 	float FireAngleThreshold = 20.0f;
 
 	float FireCooldown = 0.f;
+	
+	UPROPERTY(EditAnywhere, Category="Turret")
+	FRotator GunRotationOffset = FRotator(0, 0, 0);
 
 	// Projectile to spawn
 	UPROPERTY(EditAnywhere, Category="Turret")
