@@ -53,6 +53,26 @@ void AWaveManager::StartNextWave()
     if (!Waves.IsValidIndex(CurrentWaveIndex))
     {
         UE_LOG(LogTemp, Warning, TEXT("All waves complete!"));
+
+        if (GameCompleteUIClass && GetWorld())
+        {
+            APlayerController* PC = GetWorld()->GetFirstPlayerController();
+
+            if (PC)
+            {
+                GameCompleteUI = CreateWidget<UUserWidget>(PC, GameCompleteUIClass);
+
+                if (GameCompleteUI)
+                {
+                    GameCompleteUI->AddToViewport(9999);
+
+                    // Optional: lock input to UI
+                    PC->SetInputMode(FInputModeUIOnly());
+                    PC->bShowMouseCursor = true;
+                }
+            }
+        }
+
         return;
     }
 

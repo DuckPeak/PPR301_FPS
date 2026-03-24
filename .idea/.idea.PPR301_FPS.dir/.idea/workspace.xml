@@ -7,7 +7,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b3110b6-6ed4-4bb7-a6c8-b1d178ef7446" name="Changes" comment="" />
+    <list default="true" id="2b3110b6-6ed4-4bb7-a6c8-b1d178ef7446" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FPSTest/Core/BP_Character.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FPSTest/Core/BP_Character.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FPSTest/Core/WBP_PlayerUI.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FPSTest/Core/WBP_PlayerUI.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UI/BP_EndScreen.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/BP_EndScreen.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UI/BP_WaveUI.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/BP_WaveUI.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/Turret.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/Turret.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/WaveManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/WaveManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/WaveManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/WaveManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/WaveUI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/WaveUI.cpp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,21 +43,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Dalton&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "Dalton__2",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="PPR301_FPS" type="Uproject" factoryName="rider.uproject">
       <configuration_1 setup="1">
@@ -196,6 +208,7 @@
       <workItem from="1773748277542" duration="3268000" />
       <workItem from="1773776484423" duration="19604000" />
       <workItem from="1774046944285" duration="7543000" />
+      <workItem from="1774311158936" duration="2722000" />
     </task>
     <servers />
   </component>

@@ -54,6 +54,13 @@ public:
 
     UPROPERTY(EditAnywhere, Category="TD Setup")
     AActor* EndPoint;
+    
+    // Game Complete UI
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="UI", meta=(AllowPrivateAccess="true"))
+    TSubclassOf<UUserWidget> GameCompleteUIClass;
+
+    UPROPERTY()
+    UUserWidget* GameCompleteUI;
 
 private:
     int32 CurrentWaveIndex = 0;

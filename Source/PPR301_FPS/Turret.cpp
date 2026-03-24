@@ -53,12 +53,12 @@ void ATurret::Tick(float DeltaTime)
             DrawDebugLine(
                 GetWorld(),
                 MuzzlePoint->GetComponentLocation(),
-                MuzzlePoint->GetComponentLocation() + MuzzlePoint->GetForwardVector() * 1500,
+                MuzzlePoint->GetComponentLocation() + MuzzlePoint->GetForwardVector() * 100,
                 FColor::Red,
                 false,
                 0.f,
                 0,
-                0.25f
+                0.1f
             );
         }
 

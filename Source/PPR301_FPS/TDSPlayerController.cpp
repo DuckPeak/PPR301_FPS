@@ -220,7 +220,7 @@ void ATDSPlayerController::UpdatePreview()
 
         if (Spawned)
         {
-            // 🔥 SET BEFORE BEGINPLAY
+            // SET BEFORE BEGINPLAY
             ATurret* Turret = Cast<ATurret>(Spawned);
             if (Turret)
             {
@@ -289,7 +289,7 @@ void ATDSPlayerController::PlaceTurret()
 
     UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Attempting to place at: %s"), *Pos.ToString());
 
-    DrawDebugBox(GetWorld(), Pos, FVector(50.f,50.f,50.f), FColor::Red, false, 5.f);
+    //DrawDebugBox(GetWorld(), Pos, FVector(50.f,50.f,50.f), FColor::Red, false, 5.f);
 
     AActor* Placed = GetWorld()->SpawnActor<AActor>(SelectedBuildClass, Pos, FRotator(0.f, CurrentRotation, 0.f));
     if (Placed)

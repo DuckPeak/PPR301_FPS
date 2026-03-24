@@ -11,7 +11,7 @@ void UWaveUI::NativeConstruct()
 	if (WaveText)
 	{
 		WaveText->SetText(FText::FromString("WAVE UI WORKING"));
-		WaveText->SetColorAndOpacity(FSlateColor(FLinearColor::White));
+		//WaveText->SetColorAndOpacity(FSlateColor(FLinearColor::White));
 	}
 }
 
