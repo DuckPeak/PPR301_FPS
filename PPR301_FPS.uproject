@@ -23,7 +23,10 @@
 		},
 		{
 			"Name": "MetaHumanRuntime",
-			"Enabled": true
+			"Enabled": false
 		}
+	],
+	"TargetPlatforms": [
+		"Windows"
 	]
 }
