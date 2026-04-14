@@ -48,6 +48,9 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Waves")
     TArray<FWaveData> Waves;
 
+    UFUNCTION(BlueprintCallable)
+    void OnEnemyKilled();
+
     // TD Setup
     UPROPERTY(EditAnywhere, Category="TD Setup")
     TArray<AActor*> SpawnPoints;
@@ -65,6 +68,9 @@ public:
 private:
     int32 CurrentWaveIndex = 0;
     int32 SpawnedCount = 0;
+    int32 AliveEnemies = 0;
+	bool bWaveCountdownActive = false;
+	bool bWaveActive = false;
 
     float CountdownTimeRemaining = 0.0f;
 

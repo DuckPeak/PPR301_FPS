@@ -13,7 +13,7 @@ class PPR301_FPS_API UWaveUI : public UUserWidget
 public:
 	virtual void NativeConstruct() override;
 
-	void UpdateWave(int32 Wave, float Countdown);
+	void UpdateWave(int32 Wave, float Countdown, bool bWaveActive);
 
 private:
 	// Bind to TextBlock in Blueprint

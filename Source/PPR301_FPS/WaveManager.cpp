@@ -37,14 +37,19 @@ void AWaveManager::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 
-    if (CountdownTimeRemaining > 0)
+    if (bWaveCountdownActive && CountdownTimeRemaining > 0)
     {
         CountdownTimeRemaining -= DeltaTime;
+
+        if (CountdownTimeRemaining < 0)
+        {
+            CountdownTimeRemaining = 0;
+        }
     }
 
     if (WaveUI)
     {
-        WaveUI->UpdateWave(CurrentWaveIndex, CountdownTimeRemaining);
+        WaveUI->UpdateWave(CurrentWaveIndex, CountdownTimeRemaining, bWaveActive);
     }
 }
 
@@ -65,8 +70,6 @@ void AWaveManager::StartNextWave()
                 if (GameCompleteUI)
                 {
                     GameCompleteUI->AddToViewport(9999);
-
-                    // Optional: lock input to UI
                     PC->SetInputMode(FInputModeUIOnly());
                     PC->bShowMouseCursor = true;
                 }
@@ -79,6 +82,10 @@ void AWaveManager::StartNextWave()
     FWaveData& Wave = Waves[CurrentWaveIndex];
 
     SpawnedCount = 0;
+	AliveEnemies = 0;
+    bWaveActive = true;
+    bWaveCountdownActive = false;
+    CountdownTimeRemaining = 0.0f;
 
     UE_LOG(LogTemp, Warning, TEXT("Starting Wave %d"), CurrentWaveIndex + 1);
 
@@ -90,26 +97,22 @@ void AWaveManager::StartNextWave()
         true,
         Wave.StartDelay
     );
-
-    CountdownTimeRemaining = Wave.TimeUntilNextWave;
-
-    GetWorld()->GetTimerManager().SetTimer(
-        NextWaveTimerHandle,
-        this,
-        &AWaveManager::HandleNextWave,
-        Wave.TimeUntilNextWave,
-        false
-    );
 }
 
 void AWaveManager::HandleNextWave()
 {
     GetWorld()->GetTimerManager().ClearTimer(SpawnTimerHandle);
+    GetWorld()->GetTimerManager().ClearTimer(NextWaveTimerHandle);
+
+	bWaveActive = false;
+    bWaveCountdownActive = false;
+    CountdownTimeRemaining = 0.0f;
 
     CurrentWaveIndex++;
 
     StartNextWave();
 }
+
 
 void AWaveManager::SpawnEnemy()
 {
@@ -117,13 +120,6 @@ void AWaveManager::SpawnEnemy()
     if (SpawnPoints.Num() == 0) return;
 
     FWaveData& Wave = Waves[CurrentWaveIndex];
-
-    if (SpawnedCount >= Wave.EnemyCount)
-    {
-        GetWorld()->GetTimerManager().ClearTimer(SpawnTimerHandle);
-        return;
-    }
-
     int32 Index = FMath::RandRange(0, SpawnPoints.Num() - 1);
 
     FVector SpawnLocation = SpawnPoints[Index]->GetActorLocation();
@@ -154,4 +150,42 @@ void AWaveManager::SpawnEnemy()
     }
 
     SpawnedCount++;
+	AliveEnemies++;
+
+    if (SpawnedCount >= Wave.EnemyCount)
+    {
+        GetWorld()->GetTimerManager().ClearTimer(SpawnTimerHandle);
+    }
+}
+
+void AWaveManager::OnEnemyKilled()
+{
+    AliveEnemies--;
+
+    if (AliveEnemies < 0)
+    {
+        AliveEnemies = 0;
+    }
+
+    if (Waves.IsValidIndex(CurrentWaveIndex))
+    {
+        FWaveData& Wave = Waves[CurrentWaveIndex];
+
+        if (SpawnedCount >= Wave.EnemyCount && AliveEnemies == 0)
+        {
+            bWaveActive = false;
+            bWaveCountdownActive = true;
+
+            float NextWaveDelay = 10.0f + (CurrentWaveIndex * 2.0f);
+            CountdownTimeRemaining = NextWaveDelay;
+
+            GetWorld()->GetTimerManager().SetTimer(
+                NextWaveTimerHandle,
+                this,
+                &AWaveManager::HandleNextWave,
+                NextWaveDelay,
+                false
+            );
+        }
+    }
 }

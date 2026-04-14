@@ -11,9 +11,9 @@ class PPR301_FPS_API ABaseEnemy : public ACharacter
 
 public:
 
-	UPROPERTY(BlueprintReadWrite, Category="TD")
+	UPROPERTY(BlueprintReadWrite, BlueprintReadWrite, Category="TD")
 	class AWaveManager* WaveManagerRef;
 
-	UPROPERTY(BlueprintReadWrite, Category="TD")
+	UPROPERTY(BlueprintReadWrite, BlueprintReadWrite, Category="TD")
 	AActor* EndPoint;
 };

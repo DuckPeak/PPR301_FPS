@@ -15,15 +15,27 @@ void UWaveUI::NativeConstruct()
 	}
 }
 
-void UWaveUI::UpdateWave(int32 Wave, float Countdown)
+void UWaveUI::UpdateWave(int32 Wave, float Countdown, bool bWaveActive)
 {
 	if (WaveText)
 	{
-		FString Text = FString::Printf(
-			TEXT("Wave: %d\nNext Wave In: %.1f"),
-			Wave + 1,
-			FMath::Max(0.0f, Countdown)
-		);
+		FString Text;
+
+		if (bWaveActive)
+		{
+			Text = FString::Printf(
+				TEXT("Wave: %d\nWave Active"),
+				Wave + 1
+			);
+		}
+		else
+		{
+			Text = FString::Printf(
+				TEXT("Wave: %d\nNext Wave In: %.1f"),
+				Wave + 1,
+				FMath::Max(0.0f, Countdown)
+			);
+		}
 
 		WaveText->SetText(FText::FromString(Text));
 	}
