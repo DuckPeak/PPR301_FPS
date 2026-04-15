@@ -47,6 +47,11 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "UI")
 	UTextBlock* CashTextBlock = nullptr;
 	
+	/** Add money to the player and update UI */
+	UFUNCTION(BlueprintCallable, Category = "Build | Cash")
+	void AddPlayerCash(int32 Amount);
+
+	
 private:
 
 	// ===== CAMERA =====
@@ -122,6 +127,10 @@ private:
 	// Build mode rotation
 	void RotatePreviewLeft();
 	void RotatePreviewRight();
+	
+	// Quick reference to cash text (for direct update)
+	//UPROPERTY(BlueprintReadOnly, Category = "UI")
+	//UTextBlock* CashTextBlock = nullptr;
 	
 	UPROPERTY()
 	UUserWidget* BuildMenu;

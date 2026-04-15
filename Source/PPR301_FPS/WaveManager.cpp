@@ -107,6 +107,9 @@ void AWaveManager::HandleNextWave()
 	bWaveActive = false;
     bWaveCountdownActive = false;
     CountdownTimeRemaining = 0.0f;
+    
+    // === ADD CASH REWARD HERE ===
+    AddCashForWaveComplete();
 
     CurrentWaveIndex++;
 
@@ -187,5 +190,33 @@ void AWaveManager::OnEnemyKilled()
                 false
             );
         }
+    }
+}
+
+
+void AWaveManager::AddCashForWaveComplete()
+{
+    if (!GetWorld()) return;
+
+    APlayerController* PC = GetWorld()->GetFirstPlayerController();
+    if (!PC) 
+    {
+        UE_LOG(LogTemp, Warning, TEXT("WaveManager: No PlayerController found!"));
+        return;
+    }
+
+    ATDSPlayerController* TDSPC = Cast<ATDSPlayerController>(PC);
+    if (TDSPC)
+    {
+        int32 Reward = 25 + (CurrentWaveIndex * 25);
+
+        TDSPC->AddPlayerCash(Reward);
+
+        UE_LOG(LogTemp, Warning, TEXT("Wave %d completed! +%d cash awarded. Total cash now: %d"), 
+               CurrentWaveIndex + 1, Reward, TDSPC->PlayerCash);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("WaveManager: PlayerController is not ATDSPlayerController!"));
     }
 }

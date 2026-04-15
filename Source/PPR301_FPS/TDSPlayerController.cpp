@@ -449,3 +449,15 @@ void ATDSPlayerController::UpdateCashUI()
         UE_LOG(LogTemp, Warning, TEXT("[BuildMode] CashTextBlock is null!"));
     }
 }
+
+
+void ATDSPlayerController::AddPlayerCash(int32 Amount)
+{
+    if (Amount <= 0) return;
+
+    PlayerCash += Amount;
+
+    UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Added %d cash. New total: %d"), Amount, PlayerCash);
+
+    UpdateCashUI();   // Update the UI immediately
+}

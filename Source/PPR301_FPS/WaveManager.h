@@ -3,7 +3,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "WaveUI.h"
+#include "TDSPlayerController.h"
 #include "WaveManager.generated.h"
+
 
 USTRUCT(BlueprintType)
 struct FWaveData
@@ -41,6 +43,7 @@ protected:
     void StartNextWave();
     void SpawnEnemy();
     void HandleNextWave();
+    void AddCashForWaveComplete();
 
 public:
 
