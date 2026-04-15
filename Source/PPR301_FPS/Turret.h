@@ -20,6 +20,9 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bIsPreview = false;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Build")
+	int32 Cost = 100;
 
 protected:
 	virtual void BeginPlay() override;

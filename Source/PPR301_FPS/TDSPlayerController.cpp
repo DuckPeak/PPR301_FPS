@@ -2,6 +2,7 @@
 #include "Engine/World.h"
 #include "Turret.h"
 #include "GameFramework/Pawn.h"
+#include "Components/TextBlock.h"
 #include "Blueprint/UserWidget.h"
 #include "Camera/CameraActor.h"
 #include "Kismet/GameplayStatics.h"
@@ -106,6 +107,18 @@ void ATDSPlayerController::ToggleBuildMode()
             if (BuildMenuInstance)
             {
                 BuildMenuInstance->AddToViewport();
+                CashTextBlock = Cast<UTextBlock>(BuildMenuInstance->GetWidgetFromName(FName("CashText")));
+
+                if (CashTextBlock)
+                {
+                    UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Successfully bound CashTextBlock"));
+                    UpdateCashUI();        // Initial update
+                }
+                else
+                {
+                    UE_LOG(LogTemp, Error, TEXT("[BuildMode] Could not find TextBlock named 'CashText' in the widget!"));
+                }
+            
                 UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Build menu added to viewport"));
             }
         }
@@ -230,7 +243,7 @@ void ATDSPlayerController::UpdatePreview()
             Spawned->SetActorEnableCollision(false);
             Spawned->SetActorTickEnabled(false);
 
-            // 🔥 THIS FINALIZES SPAWN
+            // final spawn
             PreviewActor = UGameplayStatics::FinishSpawningActor(Spawned, SpawnTransform);
         }
         else
@@ -291,7 +304,41 @@ void ATDSPlayerController::PlaceTurret()
 
     //DrawDebugBox(GetWorld(), Pos, FVector(50.f,50.f,50.f), FColor::Red, false, 5.f);
 
-    AActor* Placed = GetWorld()->SpawnActor<AActor>(SelectedBuildClass, Pos, FRotator(0.f, CurrentRotation, 0.f));
+    //AActor* Placed = GetWorld()->SpawnActor<AActor>(SelectedBuildClass, Pos, FRotator(0.f, CurrentRotation, 0.f));
+    
+    // Get cost from class default object
+    AActor* DefaultObj = SelectedBuildClass->GetDefaultObject<AActor>();
+    ATurret* TurretCDO = Cast<ATurret>(DefaultObj);
+
+    int32 Cost = 0;
+
+    if (TurretCDO)
+    {
+        Cost = TurretCDO->Cost;
+    }else
+    {
+        Cost = 50;
+    }
+
+    // Check if player can afford
+    if (PlayerCash < Cost)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Not enough money! Need %d, have %d"), Cost, PlayerCash);
+        return;
+    }
+
+    // Deduct money
+    PlayerCash -= Cost;
+    UpdateCashUI();
+    UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Spent %d, Remaining: %d"), Cost, PlayerCash);
+
+    // Spawn actor
+    AActor* Placed = GetWorld()->SpawnActor<AActor>(
+        SelectedBuildClass,
+        Pos,
+        FRotator(0.f, CurrentRotation, 0.f)
+    );
+    
     if (Placed)
     {
         UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Successfully placed actor at: %s"), *Placed->GetActorLocation().ToString());
@@ -366,4 +413,39 @@ void ATDSPlayerController::SetSelectedBuild(TSubclassOf<AActor> NewClass)
     }
 
     UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Selected build class set: %s"), *GetNameSafe(NewClass));
+}
+
+
+void ATDSPlayerController::UpdateBuildMenuCash()
+{
+    if (!BuildMenuInstance)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("[BuildMode] UpdateBuildMenuCash: BuildMenuInstance is NULL"));
+        return;
+    }
+
+    UFunction* UpdateFunc = BuildMenuInstance->FindFunction(FName("UpdateCash"));
+    if (UpdateFunc)
+    {
+        BuildMenuInstance->ProcessEvent(UpdateFunc, nullptr);
+        UE_LOG(LogTemp, Warning, TEXT("[BuildMode] UpdateCash function FOUND and called! Current PlayerCash = %d"), PlayerCash);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("[BuildMode] UpdateCash function NOT FOUND on the widget! Check the exact function name in Blueprint."));
+    }
+}
+
+void ATDSPlayerController::UpdateCashUI()
+{
+    if (CashTextBlock)
+    {
+        FText NewText = FText::Format(FText::FromString(TEXT("${0}")), FText::AsNumber(PlayerCash));
+        CashTextBlock->SetText(NewText);
+        UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Cash UI updated directly to %d"), PlayerCash);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("[BuildMode] CashTextBlock is null!"));
+    }
 }

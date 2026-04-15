@@ -4,6 +4,7 @@
 #include "Materials/MaterialInterface.h"
 #include "GameFramework/PlayerController.h"
 #include "Camera/CameraActor.h"
+#include "Components/TextBlock.h"
 #include "InputActionValue.h"
 #include "Blueprint/UserWidget.h"
 
@@ -34,6 +35,17 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="BuildMode|Preview")
 	UMaterialInterface* GhostMaterial;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Build Mode")
+	int32 PlayerCash = 250;
+	
+	UFUNCTION(BlueprintCallable, Category = "Build | UI")
+	void UpdateBuildMenuCash();
+	void UpdateCashUI();
+
+
+	UPROPERTY(BlueprintReadOnly, Category = "UI")
+	UTextBlock* CashTextBlock = nullptr;
 	
 private:
 
