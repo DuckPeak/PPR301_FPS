@@ -44,6 +44,7 @@ protected:
     void SpawnEnemy();
     void HandleNextWave();
     void AddCashForWaveComplete();
+    void GiveKillReward();
 
 public:
 

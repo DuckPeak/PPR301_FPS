@@ -166,9 +166,10 @@ void AWaveManager::OnEnemyKilled()
     AliveEnemies--;
 
     if (AliveEnemies < 0)
-    {
         AliveEnemies = 0;
-    }
+
+    // ADD KILL REWARD HERE 
+    GiveKillReward();
 
     if (Waves.IsValidIndex(CurrentWaveIndex))
     {
@@ -192,7 +193,14 @@ void AWaveManager::OnEnemyKilled()
         }
     }
 }
-
+void AWaveManager::GiveKillReward()
+{
+    APlayerController* PC = GetWorld()->GetFirstPlayerController();
+    if (ATDSPlayerController* TDSPC = Cast<ATDSPlayerController>(PC))
+    {
+        TDSPC->AddPlayerCash(2);   // 2
+    }
+}
 
 void AWaveManager::AddCashForWaveComplete()
 {
