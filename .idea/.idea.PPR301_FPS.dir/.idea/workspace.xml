@@ -15,10 +15,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2b3110b6-6ed4-4bb7-a6c8-b1d178ef7446" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/WBP_BuildMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/WBP_BuildMenu.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/Turret.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/Turret.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,7 +214,7 @@
       <workItem from="1773776484423" duration="19604000" />
       <workItem from="1774046944285" duration="7543000" />
       <workItem from="1774311158936" duration="2722000" />
-      <workItem from="1776209449866" duration="5704000" />
+      <workItem from="1776209449866" duration="6688000" />
     </task>
     <servers />
   </component>

@@ -440,7 +440,7 @@ void ATDSPlayerController::UpdateCashUI()
 {
     if (CashTextBlock)
     {
-        FText NewText = FText::Format(FText::FromString(TEXT("${0}")), FText::AsNumber(PlayerCash));
+        FText NewText = FText::Format(FText::FromString(TEXT(":{0}")), FText::AsNumber(PlayerCash));
         CashTextBlock->SetText(NewText);
         UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Cash UI updated directly to %d"), PlayerCash);
     }
