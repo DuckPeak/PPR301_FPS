@@ -3,8 +3,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "WaveUI.h"
-#include "Sound/SoundBase.h"     
-#include "Kismet/GameplayStatics.h"
 #include "TDSPlayerController.h"
 #include "WaveManager.generated.h"
 
@@ -37,9 +35,6 @@ class PPR301_FPS_API AWaveManager : public AActor
 
 public:
     AWaveManager();
-    /** Sound that plays when a new wave starts */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
-    USoundBase* WaveStartSound = nullptr;
 
 protected:
     virtual void BeginPlay() override;
@@ -50,7 +45,6 @@ protected:
     void HandleNextWave();
     void AddCashForWaveComplete();
     void GiveKillReward();
-    void PlayWaveStartSound();
 
 public:
 

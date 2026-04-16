@@ -86,7 +86,7 @@ void AWaveManager::StartNextWave()
     bWaveActive = true;
     bWaveCountdownActive = false;
     CountdownTimeRemaining = 0.0f;
-    PlayWaveStartSound();
+
     UE_LOG(LogTemp, Warning, TEXT("Starting Wave %d"), CurrentWaveIndex + 1);
 
     GetWorld()->GetTimerManager().SetTimer(
@@ -226,20 +226,5 @@ void AWaveManager::AddCashForWaveComplete()
     else
     {
         UE_LOG(LogTemp, Error, TEXT("WaveManager: PlayerController is not ATDSPlayerController!"));
-    }
-}
-
-void AWaveManager::PlayWaveStartSound()
-{
-    if (WaveStartSound && GetWorld())
-    {
-        // Play as 2D sound (global / UI-style, perfect for wave announcements)
-        UGameplayStatics::PlaySound2D(this, WaveStartSound, 1.0f, 1.0f, 0.0f);
-
-        UE_LOG(LogTemp, Warning, TEXT("Wave %d started - Playing WaveStartSound"), CurrentWaveIndex + 1);
-    }
-    else if (!WaveStartSound)
-    {
-        UE_LOG(LogTemp, Warning, TEXT("WaveStartSound is not assigned!"));
     }
 }
