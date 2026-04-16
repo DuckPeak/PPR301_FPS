@@ -234,7 +234,7 @@ void AWaveManager::PlayWaveStartSound()
     if (WaveStartSound && GetWorld())
     {
         // Play as 2D sound (global / UI-style, perfect for wave announcements)
-        UGameplayStatics::PlaySound2D(this, WaveStartSound, 0.5f, 1.0f, 0.0f);
+        UGameplayStatics::PlaySound2D(this, WaveStartSound, 0.4f, 1.0f, 0.0f);
 
         UE_LOG(LogTemp, Warning, TEXT("Wave %d started - Playing WaveStartSound"), CurrentWaveIndex + 1);
     }
