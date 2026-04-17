@@ -50,6 +50,9 @@ public:
 	/** Add money to the player and update UI */
 	UFUNCTION(BlueprintCallable, Category = "Build | Cash")
 	void AddPlayerCash(int32 Amount);
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+	USoundBase* PlaceTurretSound = nullptr;
 
 	
 private:

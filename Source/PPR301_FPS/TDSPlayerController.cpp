@@ -342,7 +342,12 @@ void ATDSPlayerController::PlaceTurret()
     if (Placed)
     {
         UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Successfully placed actor at: %s"), *Placed->GetActorLocation().ToString());
-
+        // === PLAY PLACEMENT SFX ===
+        if (PlaceTurretSound)
+        {
+            UGameplayStatics::PlaySound2D(this, PlaceTurretSound, 1.0f, 1.0f);
+            UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Played turret placement sound"));
+        }
         if (PreviewActor)
         {
             PreviewActor->Destroy();
