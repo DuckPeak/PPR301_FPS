@@ -14,8 +14,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b3110b6-6ed4-4bb7-a6c8-b1d178ef7446" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Source/PPR301_FPS/AmbientLayeredSound.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/PPR301_FPS/AmbientLayeredSound.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/WaveManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/WaveManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +29,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/AmbientLayeredSound.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/AmbientLayeredSound.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/BaseEnemy.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/BaseEnemy.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" root0="FORCE_HIGHLIGHTING" />
