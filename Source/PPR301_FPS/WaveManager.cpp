@@ -119,46 +119,97 @@ void AWaveManager::HandleNextWave()
 
 void AWaveManager::SpawnEnemy()
 {
-    if (!Waves.IsValidIndex(CurrentWaveIndex)) return;
-    if (SpawnPoints.Num() == 0) return;
+    if (!Waves.IsValidIndex(CurrentWaveIndex) || SpawnPoints.Num() == 0)
+    {
+        GetWorld()->GetTimerManager().ClearTimer(SpawnTimerHandle);
+        return;
+    }
 
     FWaveData& Wave = Waves[CurrentWaveIndex];
-    int32 Index = FMath::RandRange(0, SpawnPoints.Num() - 1);
 
-    FVector SpawnLocation = SpawnPoints[Index]->GetActorLocation();
-    FRotator SpawnRotation = FRotator::ZeroRotator;
+    int32 TotalToSpawn = GetTotalEnemiesForCurrentWave();
 
-    if (Wave.EnemyClass)
+    if (SpawnedCount >= TotalToSpawn)
     {
-        APawn* SpawnedPawn = GetWorld()->SpawnActor<APawn>(
-            Wave.EnemyClass,
-            SpawnLocation,
-            SpawnRotation
-        );
+        GetWorld()->GetTimerManager().ClearTimer(SpawnTimerHandle);
+        return;
+    }
 
-        if (SpawnedPawn)
+    // === Choose enemy type (Improved & Fairer) ===
+    TSubclassOf<APawn> ChosenClass = nullptr;
+
+    // Build a list of valid enemy types with their counts
+    TArray<FEnemySpawnInfo> ValidEnemies;
+    for (const FEnemySpawnInfo& Info : Wave.Enemies)
+    {
+        if (Info.EnemyClass != nullptr && Info.Count > 0)
         {
-            ABaseEnemy* Enemy = Cast<ABaseEnemy>(SpawnedPawn);
+            ValidEnemies.Add(Info);
+        }
+    }
 
-            if (Enemy)
+    if (ValidEnemies.Num() == 0)
+    {
+        UE_LOG(LogTemp, Error, TEXT("WaveManager: No valid enemy classes in wave!"));
+        GetWorld()->GetTimerManager().ClearTimer(SpawnTimerHandle);
+        return;
+    }
+
+    // Simple and reliable random selection
+    if (ValidEnemies.Num() == 1)
+    {
+        ChosenClass = ValidEnemies[0].EnemyClass;
+    }
+    else
+    {
+        // Weighted random based on Count
+        int32 TotalWeight = 0;
+        for (const FEnemySpawnInfo& Info : ValidEnemies)
+        {
+            TotalWeight += Info.Count;
+        }
+
+        int32 Roll = FMath::RandRange(0, TotalWeight - 1);
+        int32 Accum = 0;
+
+        for (const FEnemySpawnInfo& Info : ValidEnemies)
+        {
+            Accum += Info.Count;
+            if (Roll < Accum)
             {
-                Enemy->WaveManagerRef = this;
-                Enemy->EndPoint = EndPoint;
-            }
-            else
-            {
-                UE_LOG(LogTemp, Error, TEXT("Enemy is not BaseEnemy! FIX YOUR BP"));
+                ChosenClass = Info.EnemyClass;
+                break;
             }
         }
     }
 
-    SpawnedCount++;
-	AliveEnemies++;
-
-    if (SpawnedCount >= Wave.EnemyCount)
+    if (ChosenClass == nullptr)
     {
-        GetWorld()->GetTimerManager().ClearTimer(SpawnTimerHandle);
+        UE_LOG(LogTemp, Warning, TEXT("Failed to choose enemy class"));
+        return;
     }
+
+    // === Spawn the enemy ===
+    int32 SpawnIndex = FMath::RandRange(0, SpawnPoints.Num() - 1);
+    FVector SpawnLoc = SpawnPoints[SpawnIndex]->GetActorLocation();
+
+    APawn* SpawnedPawn = GetWorld()->SpawnActor<APawn>(ChosenClass, SpawnLoc, FRotator::ZeroRotator);
+
+    if (SpawnedPawn)
+    {
+        if (ABaseEnemy* Enemy = Cast<ABaseEnemy>(SpawnedPawn))
+        {
+            Enemy->WaveManagerRef = this;
+            Enemy->EndPoint = EndPoint;
+        }
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Failed to spawn actor of class %s"), *ChosenClass->GetName());
+    }
+
+    SpawnedCount++;
+    AliveEnemies++;
 }
 
 void AWaveManager::OnEnemyKilled()
@@ -175,7 +226,7 @@ void AWaveManager::OnEnemyKilled()
     {
         FWaveData& Wave = Waves[CurrentWaveIndex];
 
-        if (SpawnedCount >= Wave.EnemyCount && AliveEnemies == 0)
+        if (SpawnedCount >= GetTotalEnemiesForCurrentWave() && AliveEnemies == 0)
         {
             bWaveActive = false;
             bWaveCountdownActive = true;
@@ -242,4 +293,16 @@ void AWaveManager::PlayWaveStartSound()
     {
         UE_LOG(LogTemp, Warning, TEXT("WaveStartSound is not assigned!"));
     }
+}
+
+int32 AWaveManager::GetTotalEnemiesForCurrentWave() const
+{
+    if (!Waves.IsValidIndex(CurrentWaveIndex)) return 0;
+
+    int32 Total = 0;
+    for (const FEnemySpawnInfo& Info : Waves[CurrentWaveIndex].Enemies)
+    {
+        Total += Info.Count;
+    }
+    return Total;
 }

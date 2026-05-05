@@ -9,25 +9,32 @@
 #include "WaveManager.generated.h"
 
 
+
+USTRUCT(BlueprintType)
+struct FEnemySpawnInfo
+{
+    GENERATED_BODY()
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
+    TSubclassOf<APawn> EnemyClass;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy", meta = (ClampMin = 1))
+    int32 Count = 5;
+};
+
 USTRUCT(BlueprintType)
 struct FWaveData
 {
     GENERATED_BODY()
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    TSubclassOf<APawn> EnemyClass;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wave")
+    TArray<FEnemySpawnInfo> Enemies;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    int32 EnemyCount = 5;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wave")
     float SpawnDelay = 1.0f;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wave")
     float StartDelay = 0.0f;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float TimeUntilNextWave = 10.0f;
 };
 
 UCLASS()
@@ -51,6 +58,7 @@ protected:
     void AddCashForWaveComplete();
     void GiveKillReward();
     void PlayWaveStartSound();
+    int32 GetTotalEnemiesForCurrentWave() const;
 
 public:
 
