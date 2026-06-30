@@ -15,8 +15,11 @@
   <component name="ChangeListManager">
     <list default="true" id="2b3110b6-6ed4-4bb7-a6c8-b1d178ef7446" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Build_Objects/MicroWaveTurret.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Build_Objects/MicroWaveTurret.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/Meshes/communication_shack/Materials/Ground_material_Particals.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelPrototyping/Meshes/communication_shack/Materials/Ground_material_Particals.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TurretMicrowave.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TurretMicrowave.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TurretMicrowave.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TurretMicrowave.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -227,7 +230,7 @@
       <workItem from="1776294749084" duration="289000" />
       <workItem from="1776490095872" duration="668000" />
       <workItem from="1777975829345" duration="1244000" />
-      <workItem from="1782782995641" duration="1551000" />
+      <workItem from="1782782995641" duration="4639000" />
     </task>
     <servers />
   </component>
