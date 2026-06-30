@@ -15,9 +15,8 @@
   <component name="ChangeListManager">
     <list default="true" id="2b3110b6-6ed4-4bb7-a6c8-b1d178ef7446" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/Meshes/communication_shack/Materials/Ground_material_Particals.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelPrototyping/Meshes/communication_shack/Materials/Ground_material_Particals.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/WBP_BuildMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/WBP_BuildMenu.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +39,10 @@
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/WaveUI.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/UMG/Public/Blueprint/UserWidget.h" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -52,6 +55,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -223,6 +227,7 @@
       <workItem from="1776294749084" duration="289000" />
       <workItem from="1776490095872" duration="668000" />
       <workItem from="1777975829345" duration="1244000" />
+      <workItem from="1782782995641" duration="1551000" />
     </task>
     <servers />
   </component>
@@ -249,11 +254,6 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h</url>
-          <line>2</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

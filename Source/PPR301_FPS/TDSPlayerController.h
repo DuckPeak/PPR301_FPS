@@ -1,5 +1,4 @@
 #pragma once
-
 #include "CoreMinimal.h"
 #include "Materials/MaterialInterface.h"
 #include "GameFramework/PlayerController.h"
@@ -7,7 +6,6 @@
 #include "Components/TextBlock.h"
 #include "InputActionValue.h"
 #include "Blueprint/UserWidget.h"
-
 #include "TDSPlayerController.generated.h"
 
 class UInputMappingContext;
@@ -20,7 +18,6 @@ class PPR301_FPS_API ATDSPlayerController : public APlayerController
 
 public:
 	ATDSPlayerController();
-
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupInputComponent() override;
@@ -28,35 +25,32 @@ public:
 	// UI CALL
 	UFUNCTION(BlueprintCallable)
 	void SetSelectedBuild(TSubclassOf<AActor> NewClass);
-	
+
 	// Build menu widget
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="UI")
 	TSubclassOf<UUserWidget> BuildMenuClass;
-	
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="BuildMode|Preview")
 	UMaterialInterface* GhostMaterial;
-	
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Build Mode")
 	int32 PlayerCash = 250;
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Build | UI")
 	void UpdateBuildMenuCash();
 	void UpdateCashUI();
 
-
 	UPROPERTY(BlueprintReadOnly, Category = "UI")
 	UTextBlock* CashTextBlock = nullptr;
-	
+
 	/** Add money to the player and update UI */
 	UFUNCTION(BlueprintCallable, Category = "Build | Cash")
 	void AddPlayerCash(int32 Amount);
-	
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
 	USoundBase* PlaceTurretSound = nullptr;
 
-	
 private:
-
 	// ===== CAMERA =====
 	UPROPERTY()
 	ACameraActor* BuildCamera;
@@ -67,11 +61,20 @@ private:
 	float CameraSpeed = 2000.f;
 
 	UPROPERTY(EditAnywhere, Category="Camera")
+	float ZoomSpeed = 200.f;
+
+	UPROPERTY(EditAnywhere, Category="Camera")
+	float MinCameraHeight = 400.f;
+
+	UPROPERTY(EditAnywhere, Category="Camera")
+	float MaxCameraHeight = 3000.f;
+
+	UPROPERTY(EditAnywhere, Category="Camera")
 	float EdgeScrollThreshold = 20.f;
 
 	void ToggleBuildMode();
 	void MoveCamera(float DeltaTime);
-	void ZoomCamera(const FInputActionValue& Value);
+	void HandleZoom();
 
 	// ===== INPUT =====
 	UPROPERTY(EditAnywhere, Category="Input")
@@ -114,10 +117,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category="Build")
 	int32 WallCost = 50;
-	
-	UPROPERTY(EditAnywhere, Category="Input")
-	UInputAction* PlaceActionEnter;
-	
+
 	UFUNCTION()
 	void PlacePreviewedObject();
 
@@ -127,14 +127,11 @@ private:
 	bool CheckValidPlacement(FVector Pos);
 	void UpdatePreview();
 	void PlaceTurret();
+
 	// Build mode rotation
 	void RotatePreviewLeft();
 	void RotatePreviewRight();
-	
-	// Quick reference to cash text (for direct update)
-	//UPROPERTY(BlueprintReadOnly, Category = "UI")
-	//UTextBlock* CashTextBlock = nullptr;
-	
+
 	UPROPERTY()
 	UUserWidget* BuildMenu;
 

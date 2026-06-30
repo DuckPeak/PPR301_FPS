@@ -25,9 +25,11 @@ void ATDSPlayerController::BeginPlay()
 
     UE_LOG(LogTemp, Warning, TEXT("[BuildMode] BeginPlay"));
 
+    // Spawn the build camera — position will be set properly in ToggleBuildMode
+    // when we actually have a valid pawn. Use a fallback location for now.
     BuildCamera = GetWorld()->SpawnActor<ACameraActor>(
-        FVector(-6450.0, 0, 1500),
-        FRotator(-90, 0, 0)
+        FVector(0.f, 0.f, 1500.f),
+        FRotator(-90.f, 0.f, 0.f)
     );
 
     if (!BuildCamera)
@@ -46,16 +48,21 @@ void ATDSPlayerController::SetupInputComponent()
 
     if (InputComponent)
     {
-        // Hard-coded toggle build mode to TAB
+        // Toggle build mode
         InputComponent->BindKey(EKeys::Tab, IE_Pressed, this, &ATDSPlayerController::ToggleBuildMode);
-        
+
+        // Rotate preview
         InputComponent->BindKey(EKeys::Q, IE_Pressed, this, &ATDSPlayerController::RotatePreviewLeft);
         InputComponent->BindKey(EKeys::E, IE_Pressed, this, &ATDSPlayerController::RotatePreviewRight);
+
+        // Left mouse button places the selected object
+        InputComponent->BindKey(EKeys::LeftMouseButton, IE_Pressed, this, &ATDSPlayerController::PlacePreviewedObject);
     }
 }
+
 void ATDSPlayerController::RotatePreviewLeft()
 {
-    CurrentRotation -= 90.f; // rotate 90 degrees left
+    CurrentRotation -= 90.f;
     if (PreviewActor)
     {
         PreviewActor->SetActorRotation(FRotator(0.f, CurrentRotation, 0.f));
@@ -64,12 +71,13 @@ void ATDSPlayerController::RotatePreviewLeft()
 
 void ATDSPlayerController::RotatePreviewRight()
 {
-    CurrentRotation += 90.f; // rotate 90 degrees right
+    CurrentRotation += 90.f;
     if (PreviewActor)
     {
         PreviewActor->SetActorRotation(FRotator(0.f, CurrentRotation, 0.f));
     }
 }
+
 void ATDSPlayerController::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
@@ -78,13 +86,26 @@ void ATDSPlayerController::Tick(float DeltaTime)
     {
         MoveCamera(DeltaTime);
         UpdatePreview();
+        HandleZoom();
+    }
+}
 
-        // Hard-coded Enter key placement
-        if (WasInputKeyJustPressed(EKeys::Enter))
-        {
-            UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Enter pressed"));
-            PlacePreviewedObject();
-        }
+// ===== CAMERA =====
+
+void ATDSPlayerController::HandleZoom()
+{
+    float ScrollDelta = GetInputAnalogKeyState(EKeys::MouseWheelAxis);
+
+    if (FMath::Abs(ScrollDelta) > 0.01f)
+    {
+        FVector CamLoc = BuildCamera->GetActorLocation();
+
+        // Scroll up (positive) zooms in by lowering Z; scroll down raises Z
+        CamLoc.Z = FMath::Clamp(CamLoc.Z - ScrollDelta * ZoomSpeed, MinCameraHeight, MaxCameraHeight);
+
+        BuildCamera->SetActorLocation(CamLoc);
+
+        UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Camera zoom - new height: %.1f"), CamLoc.Z);
     }
 }
 
@@ -97,6 +118,22 @@ void ATDSPlayerController::ToggleBuildMode()
 
     if (bIsBuildMode)
     {
+        // Reposition build camera directly above the player's current XY position
+        if (BuildCamera && GetPawn())
+        {
+            FVector PawnLoc = GetPawn()->GetActorLocation();
+            BuildCamera->SetActorLocation(FVector(PawnLoc.X, PawnLoc.Y, 1500.f));
+            BuildCamera->SetActorRotation(FRotator(-90.f, 0.f, 0.f));
+            UE_LOG(LogTemp, Warning, TEXT("[BuildMode] BuildCamera repositioned above player at: %s"), *BuildCamera->GetActorLocation().ToString());
+        }
+
+        // Disable pawn input so the shoot binding on the pawn never sees mouse clicks
+        if (GetPawn())
+        {
+            GetPawn()->DisableInput(this);
+            UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Pawn input disabled"));
+        }
+
         SetViewTargetWithBlend(BuildCamera, 0.3f);
         bShowMouseCursor = true;
         SetInputMode(FInputModeGameAndUI());
@@ -112,13 +149,13 @@ void ATDSPlayerController::ToggleBuildMode()
                 if (CashTextBlock)
                 {
                     UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Successfully bound CashTextBlock"));
-                    UpdateCashUI();        // Initial update
+                    UpdateCashUI();
                 }
                 else
                 {
                     UE_LOG(LogTemp, Error, TEXT("[BuildMode] Could not find TextBlock named 'CashText' in the widget!"));
                 }
-            
+
                 UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Build menu added to viewport"));
             }
         }
@@ -128,6 +165,13 @@ void ATDSPlayerController::ToggleBuildMode()
         SetViewTargetWithBlend(GetPawn(), 0.3f);
         bShowMouseCursor = false;
         SetInputMode(FInputModeGameOnly());
+
+        // Re-enable pawn input so the player can shoot again
+        if (GetPawn())
+        {
+            GetPawn()->EnableInput(this);
+            UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Pawn input restored"));
+        }
 
         if (BuildMenuInstance)
         {
@@ -146,8 +190,6 @@ void ATDSPlayerController::ToggleBuildMode()
         SelectedBuildClass = nullptr;
     }
 }
-
-// ===== CAMERA =====
 
 void ATDSPlayerController::MoveCamera(float DeltaTime)
 {
@@ -173,12 +215,6 @@ FVector ATDSPlayerController::GetMouseWorldPosition()
         GetWorld()->LineTraceSingleByChannel(Hit, Pos, Pos + Dir * 10000.f, ECC_Visibility);
         if (Hit.bBlockingHit)
         {
-            //UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Mouse world hit at: %s"), *Hit.Location.ToString());
-
-            // Draw debug line
-            //DrawDebugLine(GetWorld(), Pos, Hit.Location, FColor::Green, false, 1.f, 0, 2.f);
-            //DrawDebugSphere(GetWorld(), Hit.Location, 25.f, 12, FColor::Green, false, 1.f);
-
             return Hit.Location;
         }
     }
@@ -194,7 +230,6 @@ FVector ATDSPlayerController::SnapToGrid(FVector L)
         FMath::GridSnap(L.Y, GridSize),
         L.Z
     );
-    //UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Snapped position: %s"), *Snapped.ToString());
     return Snapped;
 }
 
@@ -202,22 +237,19 @@ FVector ATDSPlayerController::SnapToGrid(FVector L)
 
 bool ATDSPlayerController::CheckValidPlacement(FVector Pos)
 {
-    //FCollisionShape Box = FCollisionShape::MakeBox(FVector(100.f));
-    //bool bValid = !GetWorld()->OverlapAnyTestByChannel(Pos, FQuat::Identity, ECC_WorldStatic, Box);
-    //UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Placement at %s is %s"), *Pos.ToString(), bValid ? TEXT("VALID") : TEXT("INVALID"));
-    //return bValid;
     return true;
 }
 
 void ATDSPlayerController::UpdatePreview()
 {
+    // Guard against null or GC'd UClass pointer — the source of the segfault.
+    // IsValidLowLevel() checks the UObject header is intact before we dereference.
     if (!SelectedBuildClass) return;
-    
-    // Snap to grid
-    //FVector Pos = SnapToGrid(GetMouseWorldPosition());
-    
-    // Non SNap
+    if (!IsValid(SelectedBuildClass)) { SelectedBuildClass = nullptr; return; }
+
     FVector Pos = GetMouseWorldPosition();
+    // If the mouse didn't hit anything, don't try to move/spawn the preview
+    if (Pos.IsZero()) return;
 
     if (!PreviewActor)
     {
@@ -233,7 +265,6 @@ void ATDSPlayerController::UpdatePreview()
 
         if (Spawned)
         {
-            // SET BEFORE BEGINPLAY
             ATurret* Turret = Cast<ATurret>(Spawned);
             if (Turret)
             {
@@ -243,7 +274,6 @@ void ATDSPlayerController::UpdatePreview()
             Spawned->SetActorEnableCollision(false);
             Spawned->SetActorTickEnabled(false);
 
-            // final spawn
             PreviewActor = UGameplayStatics::FinishSpawningActor(Spawned, SpawnTransform);
         }
         else
@@ -257,7 +287,7 @@ void ATDSPlayerController::UpdatePreview()
         PreviewActor->SetActorLocation(Pos);
         PreviewActor->SetActorRotation(FRotator(0.f, CurrentRotation, 0.f));
 
-        // Apply ghost material
+        // Apply ghost material to all static mesh components
         TArray<UStaticMeshComponent*> MeshComponents;
         PreviewActor->GetComponents<UStaticMeshComponent>(MeshComponents);
         for (UStaticMeshComponent* MeshComp : MeshComponents)
@@ -265,7 +295,7 @@ void ATDSPlayerController::UpdatePreview()
             if (GhostMaterial)
             {
                 MeshComp->SetMaterial(0, GhostMaterial);
-                MeshComp->SetRenderCustomDepth(true); // optional for outline
+                MeshComp->SetRenderCustomDepth(true);
             }
         }
     }
@@ -273,15 +303,20 @@ void ATDSPlayerController::UpdatePreview()
 
 void ATDSPlayerController::PlacePreviewedObject()
 {
-    if (!PreviewActor)
+    // Only place if we are in build mode
+    if (!bIsBuildMode) return;
+
+    if (!PreviewActor || !IsValid(PreviewActor))
     {
-        UE_LOG(LogTemp, Warning, TEXT("[BuildMode] No preview actor to place!"));
+        UE_LOG(LogTemp, Warning, TEXT("[BuildMode] No valid preview actor to place!"));
+        PreviewActor = nullptr;
         return;
     }
 
-    if (!SelectedBuildClass)
+    if (!SelectedBuildClass || !IsValid(SelectedBuildClass))
     {
-        UE_LOG(LogTemp, Warning, TEXT("[BuildMode] No selected build class!"));
+        UE_LOG(LogTemp, Warning, TEXT("[BuildMode] No valid selected build class!"));
+        SelectedBuildClass = nullptr;
         return;
     }
 
@@ -291,9 +326,10 @@ void ATDSPlayerController::PlacePreviewedObject()
 
 void ATDSPlayerController::PlaceTurret()
 {
-    if (!SelectedBuildClass)
+    if (!SelectedBuildClass || !IsValid(SelectedBuildClass))
     {
-        UE_LOG(LogTemp, Error, TEXT("[BuildMode] No SelectedBuildClass!"));
+        UE_LOG(LogTemp, Error, TEXT("[BuildMode] No valid SelectedBuildClass!"));
+        SelectedBuildClass = nullptr;
         return;
     }
 
@@ -302,20 +338,16 @@ void ATDSPlayerController::PlaceTurret()
 
     UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Attempting to place at: %s"), *Pos.ToString());
 
-    //DrawDebugBox(GetWorld(), Pos, FVector(50.f,50.f,50.f), FColor::Red, false, 5.f);
-
-    //AActor* Placed = GetWorld()->SpawnActor<AActor>(SelectedBuildClass, Pos, FRotator(0.f, CurrentRotation, 0.f));
-    
     // Get cost from class default object
     AActor* DefaultObj = SelectedBuildClass->GetDefaultObject<AActor>();
     ATurret* TurretCDO = Cast<ATurret>(DefaultObj);
 
     int32 Cost = 0;
-
     if (TurretCDO)
     {
         Cost = TurretCDO->Cost;
-    }else
+    }
+    else
     {
         Cost = 50;
     }
@@ -327,27 +359,28 @@ void ATDSPlayerController::PlaceTurret()
         return;
     }
 
-    // Deduct money
+    // Deduct money and update UI
     PlayerCash -= Cost;
     UpdateCashUI();
     UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Spent %d, Remaining: %d"), Cost, PlayerCash);
 
-    // Spawn actor
+    // Spawn the real actor
     AActor* Placed = GetWorld()->SpawnActor<AActor>(
         SelectedBuildClass,
         Pos,
         FRotator(0.f, CurrentRotation, 0.f)
     );
-    
+
     if (Placed)
     {
         UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Successfully placed actor at: %s"), *Placed->GetActorLocation().ToString());
-        // === PLAY PLACEMENT SFX ===
+
         if (PlaceTurretSound)
         {
             UGameplayStatics::PlaySound2D(this, PlaceTurretSound, 1.0f, 1.0f);
             UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Played turret placement sound"));
         }
+
         if (PreviewActor)
         {
             PreviewActor->Destroy();
@@ -363,6 +396,13 @@ void ATDSPlayerController::PlaceTurret()
 
 void ATDSPlayerController::SetSelectedBuild(TSubclassOf<AActor> NewClass)
 {
+    // Validate before storing — never store a stale/invalid UClass
+    if (NewClass && !IsValid(NewClass))
+    {
+        UE_LOG(LogTemp, Error, TEXT("[BuildMode] SetSelectedBuild received invalid class, ignoring!"));
+        return;
+    }
+
     SelectedBuildClass = NewClass;
 
     if (PreviewActor)
@@ -371,14 +411,9 @@ void ATDSPlayerController::SetSelectedBuild(TSubclassOf<AActor> NewClass)
         PreviewActor = nullptr;
     }
 
-    if (SelectedBuildClass && bIsBuildMode)
+    if (SelectedBuildClass && IsValid(SelectedBuildClass) && bIsBuildMode)
     {
-        // Spawn preview immediately at current mouse location
-        //FVector Pos = SnapToGrid(GetMouseWorldPosition()); // Snap
-        
-        //Non Snap
         FVector Pos = GetMouseWorldPosition();
-        
         FTransform SpawnTransform(FRotator(0.f, CurrentRotation, 0.f), Pos);
 
         AActor* Spawned = GetWorld()->SpawnActorDeferred<AActor>(
@@ -402,10 +437,12 @@ void ATDSPlayerController::SetSelectedBuild(TSubclassOf<AActor> NewClass)
 
             PreviewActor = UGameplayStatics::FinishSpawningActor(Spawned, SpawnTransform);
         }
-        if (SelectedBuildClass && bIsBuildMode)
+
+        if (SelectedBuildClass && IsValid(SelectedBuildClass) && bIsBuildMode)
         {
             UpdatePreview();
         }
+
         if (PreviewActor)
         {
             PreviewActor->SetActorEnableCollision(false);
@@ -419,7 +456,6 @@ void ATDSPlayerController::SetSelectedBuild(TSubclassOf<AActor> NewClass)
 
     UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Selected build class set: %s"), *GetNameSafe(NewClass));
 }
-
 
 void ATDSPlayerController::UpdateBuildMenuCash()
 {
@@ -437,7 +473,7 @@ void ATDSPlayerController::UpdateBuildMenuCash()
     }
     else
     {
-        UE_LOG(LogTemp, Error, TEXT("[BuildMode] UpdateCash function NOT FOUND on the widget! Check the exact function name in Blueprint."));
+        UE_LOG(LogTemp, Error, TEXT("[BuildMode] UpdateCash function NOT FOUND on the widget!"));
     }
 }
 
@@ -455,7 +491,6 @@ void ATDSPlayerController::UpdateCashUI()
     }
 }
 
-
 void ATDSPlayerController::AddPlayerCash(int32 Amount)
 {
     if (Amount <= 0) return;
@@ -464,5 +499,5 @@ void ATDSPlayerController::AddPlayerCash(int32 Amount)
 
     UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Added %d cash. New total: %d"), Amount, PlayerCash);
 
-    UpdateCashUI();   // Update the UI immediately
+    UpdateCashUI();
 }
