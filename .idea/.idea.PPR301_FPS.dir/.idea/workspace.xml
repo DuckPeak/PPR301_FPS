@@ -14,15 +14,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b3110b6-6ed4-4bb7-a6c8-b1d178ef7446" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/PPR301_FPS/HealthBarComponent.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/PPR301_FPS/HealthBarComponent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Build_Objects/MyTurret.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Build_Objects/MyTurret.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Build_Objects/Wall.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Build_Objects/Wall.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FPSTest/Core/BP_Bullet.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FPSTest/Core/BP_Bullet.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/WBP_BuildMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/WBP_BuildMenu.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -294,7 +290,7 @@
       <workItem from="1776294749084" duration="289000" />
       <workItem from="1776490095872" duration="668000" />
       <workItem from="1777975829345" duration="1244000" />
-      <workItem from="1782782995641" duration="10324000" />
+      <workItem from="1782782995641" duration="11335000" />
     </task>
     <servers />
   </component>
