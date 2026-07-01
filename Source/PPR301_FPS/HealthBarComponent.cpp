@@ -7,10 +7,10 @@ UHealthBarComponent::UHealthBarComponent()
 	SetDrawSize(FVector2D(100.f, 12.f));
 	SetRelativeLocation(FVector(0.f, 0.f, 120.f));
 	//SetVisibility(false);
-	SetBlendMode(EWidgetBlendMode::Transparent);
+	//SetBlendMode(EWidgetBlendMode::Transparent);
 }
 
-void UHealthBarComponent::UpdateHealthBar(float CurrentHealth, float MaxHealth)
+/*/void UHealthBarComponent::UpdateHealthBar(float CurrentHealth, float MaxHealth)
 {
 	UUserWidget* Widget = GetUserWidgetObject();
 	if (!Widget) return;
@@ -28,3 +28,5 @@ void UHealthBarComponent::UpdateHealthBar(float CurrentHealth, float MaxHealth)
 	// Hide when full health, show when damaged
 	//SetVisibility(Percent < 1.f);
 }
+
+*/

@@ -12,6 +12,6 @@ public:
 	UHealthBarComponent();
 
 	// Call whenever the obj takes damage
-	UFUNCTION(BlueprintCallable, Category = "Health UI")
-	void UpdateHealthBar(float CurrentHealth, float MaxHealth);
+	//UFUNCTION(BlueprintCallable, Category = "Health UI")
+	//void UpdateHealthBar(float CurrentHealth, float MaxHealth);
 };
