@@ -1,6 +1,7 @@
 #include "TDSPlayerController.h"
 #include "Engine/World.h"
 #include "Turret.h"
+#include "ISellable.h"
 #include "GameFramework/Pawn.h"
 #include "Components/TextBlock.h"
 #include "Blueprint/UserWidget.h"
@@ -536,7 +537,7 @@ void ATDSPlayerController::ToggleSellMode()
 }
 
 
-// New function — traces the mouse ray, finds a sellable actor, refunds and destroys it
+// Traces the mouse ray, finds a sellable actor, refunds and destroys it
 void ATDSPlayerController::SellActorUnderCursor()
 {
     FVector RayOrigin, RayDir;
@@ -548,7 +549,7 @@ void ATDSPlayerController::SellActorUnderCursor()
 
     FHitResult Hit;
     FCollisionQueryParams Params;
-    Params.AddIgnoredActor(GetPawn());   // never accidentally sell the player
+    Params.AddIgnoredActor(GetPawn());
 
     const bool bHit = GetWorld()->LineTraceSingleByChannel(
         Hit,
@@ -566,23 +567,19 @@ void ATDSPlayerController::SellActorUnderCursor()
 
     AActor* HitActor = Hit.GetActor();
 
-    // Only sell actors that are Turrets (or your Wall class — extend the cast list as needed)
-    ATurret* HitTurret = Cast<ATurret>(HitActor);
-    if (!HitTurret)
+    // Works for any actor that implements ISellable — turrets, walls, microwave, anything
+    if (!HitActor->Implements<USellable>())
     {
         UE_LOG(LogTemp, Warning, TEXT("[SellMode] Hit actor '%s' is not sellable"), *GetNameSafe(HitActor));
         return;
     }
 
-    // Refund 75 % of the turret's cost (rounded down)
-    const int32 Refund = FMath::FloorToInt(HitTurret->Cost * 0.75f);
+    int32 Cost = ISellable::Execute_GetSellCost(HitActor);
+    const int32 Refund = FMath::FloorToInt(Cost * 0.75f);
+
     UE_LOG(LogTemp, Warning, TEXT("[SellMode] Selling '%s' for %d (cost was %d)"),
-        *GetNameSafe(HitTurret), Refund, HitTurret->Cost);
+        *GetNameSafe(HitActor), Refund, Cost);
 
-    AddPlayerCash(Refund);  // updates UI automatically
-
-    // play a sound here
-    // if (SellTurretSound) UGameplayStatics::PlaySound2D(this, SellTurretSound);
-
-    HitTurret->Destroy();
+    AddPlayerCash(Refund);
+    HitActor->Destroy();
 }

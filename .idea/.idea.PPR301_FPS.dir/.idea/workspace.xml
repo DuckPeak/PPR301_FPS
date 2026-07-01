@@ -14,16 +14,61 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b3110b6-6ed4-4bb7-a6c8-b1d178ef7446" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Source/PPR301_FPS/ISellable.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Build_Objects/MicroWaveTurret.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Build_Objects/MicroWaveTurret.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Build_Objects/MyTurret.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Build_Objects/MyTurret.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Build_Objects/WBP_HealthBar.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Build_Objects/WBP_HealthBar.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Build_Objects/W_HealthBar.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Build_Objects/W_HealthBar.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Build_Objects/Wall.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Build_Objects/Wall.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Animations/Jog_Fwd.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Materials/Layers/ML_Latex_Black.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Materials/Layers/ML_ShinyPlastic_Beige.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Materials/Layers/ML_ShinyPlastic_Beige_Logo.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Materials/Layers/ML_SoftMetal.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Materials/M_MannequinUE4_Body.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Materials/M_MannequinUE4_ChestLogo.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Meshes/SK_Mannequin.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Meshes/SK_Mannequin_PhysicsAsset.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Meshes/SK_Mannequin_Skeleton.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Rigs/IK_UE4_Mannequin.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Rigs/RTG_UE4Manny_UE5Manny.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Rigs/RTG_UE5Manny_UE4Manny.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_ML_Aluminum01.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_ML_Aluminum01_N.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_ML_Rubber_Blue_01_D.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_ML_Rubber_Blue_01_N.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_UE4_Mannequin_MAT_MASKA.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_UE4_Mannequin__normals.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_UELogo_Mask.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Textures/T_UELogo_N_TGA.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemy_Zombie/ABP_Zombie.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemy_Zombie/ABP_Zombie.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemy_Zombie/ABP_ZombieLarge.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemy_Zombie/ABP_ZombieLarge.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemy_Zombie/ABP_Zombie_Fast.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemy_Zombie/ABP_Zombie_Fast.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Enemy_Zombie/BP_Zombie_Logic_Rework.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemy_Zombie/BP_Zombie_Logic_Rework.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Enemy_Zombie/BP_Zombie_Logic_Rework_Fast.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemy_Zombie/BP_Zombie_Logic_Rework_Fast.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Enemy_Zombie/BP_Zombie_Logic_Rework_Large.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemy_Zombie/BP_Zombie_Logic_Rework_Large.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FPSTest/Core/DefencePoint.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FPSTest/Core/DefencePoint.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemy_Zombie/Old/BP_Zombie.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemy_Zombie/Old/BP_Zombie.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemy_Zombie/Old/BP_Zombie_Large.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemy_Zombie/Old/BP_Zombie_Large.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemy_Zombie/ZombieBlendSpace.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemy_Zombie/ZombieBlendSpace.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FPSTest/Core/Turret_mat.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FPSTest/Core/Turret_mat.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/Meshes/SM_ChamferCube.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/Meshes/SM_Cube.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/Meshes/SM_Cylinder.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/Meshes/SM_QuarterCylinder.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/Meshes/SM_Ramp.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/Meshes/communication_shack/Materials/Ground_material_Particals.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelPrototyping/Meshes/communication_shack/Materials/Ground_material_Particals.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MWLandscapeAutoMaterial/Meshes/Plants/SM_MWAM_GrassA.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MWLandscapeAutoMaterial/Meshes/Plants/SM_MWAM_GrassB.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MWLandscapeAutoMaterial/Meshes/Plants/SM_MWAM_GrassC.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MWLandscapeAutoMaterial/Meshes/Plants/SM_MWAM_GrassD.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MWLandscapeAutoMaterial/Procedurals/LGT_MWAM_Grass.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MWLandscapeAutoMaterial/Procedurals/LGT_MWAM_Grass.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ZombieAnimationPack/Animations/Mannequin_UE4/anim_Attack_D.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ZombieAnimationPack/Animations/Mannequin_UE4/anim_Attack_D.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ZombieAnimationPack/Animations/Mannequin_UE4/anim_Attack_D_Montage.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ZombieAnimationPack/Animations/Mannequin_UE4/anim_Attack_D_Montage.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ZombieAnimationPack/Animations/Mannequin_UE4/anim_Idle_A.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ZombieAnimationPack/Animations/Mannequin_UE4/anim_Idle_A.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ZombieAnimationPack/Animations/Mannequin_UE4/anim_Walk_B.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ZombieAnimationPack/Animations/Mannequin_UE4/anim_Walk_B.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/Turret.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/Turret.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/Turret.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/Turret.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +91,8 @@
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/WaveManager.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/WaveUI.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/WaveUI.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/Engine/Classes/Animation/AnimInstance.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/Engine/Classes/GameFramework/Character.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/UMG/Public/Blueprint/UserWidget.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="McpProjectServerCommands">
@@ -55,23 +102,23 @@
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0" />
-      <entry key="S5" value="1.0" />
-      <entry key="S10" value="1.0" />
-      <entry key="S30" value="1.0000000000717217" />
-      <entry key="S60" value="1.0000084688646318" />
-      <entry key="M2" value="1.0029101313770554" />
-      <entry key="M5" value="1.096730857608338" />
-      <entry key="M10" value="1.311015847841132" />
-      <entry key="M15" value="1.4590447372287865" />
-      <entry key="M30" value="1.6775284032634987" />
-      <entry key="H1" value="1.8231211352307137" />
-      <entry key="H2" value="1.9072602356715045" />
-      <entry key="H4" value="1.9525020922137148" />
-      <entry key="D1" value="1.9919223054280102" />
-      <entry key="W1" value="1.9988420286945607" />
+      <entry key="MS100" value="1.0075988667766584" />
+      <entry key="MS500" value="1.3768337273895952" />
+      <entry key="S2" value="1.7834971869493406" />
+      <entry key="S5" value="1.907016059342825" />
+      <entry key="S10" value="1.952373907319402" />
+      <entry key="S30" value="1.9838657208767017" />
+      <entry key="S60" value="1.9919084561227978" />
+      <entry key="M2" value="1.9988401148700896" />
+      <entry key="M5" value="2.094948381293448" />
+      <entry key="M10" value="2.3099500416980954" />
+      <entry key="M15" value="2.458253864703856" />
+      <entry key="M30" value="2.677073691038386" />
+      <entry key="H1" value="2.8228740301292143" />
+      <entry key="H2" value="2.9071309766508513" />
+      <entry key="H4" value="2.952435928514671" />
+      <entry key="D1" value="2.991911055349684" />
+      <entry key="W1" value="2.9988404159535307" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -93,23 +140,23 @@
       <entry key="W1" value="0.0" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="4.690170841333042E-5" />
-      <entry key="MS500" value="0.136219014026666" />
-      <entry key="S2" value="0.6075183959525079" />
-      <entry key="S5" value="0.819263814534588" />
-      <entry key="S10" value="0.9051319321151962" />
-      <entry key="S30" value="0.9673210283716122" />
-      <entry key="S60" value="0.9835330168543093" />
-      <entry key="M2" value="0.9945950399429688" />
-      <entry key="M5" value="1.0928358713958655" />
-      <entry key="M10" value="1.3084253561503187" />
-      <entry key="M15" value="1.4570216890710206" />
-      <entry key="M30" value="1.6762983623334846" />
-      <entry key="H1" value="1.8224332936967929" />
-      <entry key="H2" value="1.90689527060606" />
-      <entry key="H4" value="1.9523139515434826" />
-      <entry key="D1" value="1.991890126941459" />
-      <entry key="W1" value="1.9988374111616884" />
+      <entry key="MS100" value="0.007599223176492312" />
+      <entry key="MS500" value="0.4281656461865993" />
+      <entry key="S2" value="1.2594861411981064" />
+      <entry key="S5" value="1.650101495964158" />
+      <entry key="S10" value="1.814397942147511" />
+      <entry key="S30" value="1.935579721635907" />
+      <entry key="S60" value="1.9674665102090108" />
+      <entry key="M2" value="1.986500561202253" />
+      <entry key="M5" value="2.089434462248091" />
+      <entry key="M10" value="2.3065486939197455" />
+      <entry key="M15" value="2.455689864968947" />
+      <entry key="M30" value="2.6755729227039473" />
+      <entry key="H1" value="2.822050742229402" />
+      <entry key="H2" value="2.9066982642254975" />
+      <entry key="H4" value="2.9522139075985607" />
+      <entry key="D1" value="2.9918732291949057" />
+      <entry key="W1" value="2.9988349915867216" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -296,7 +343,7 @@
       <workItem from="1776490095872" duration="668000" />
       <workItem from="1777975829345" duration="1244000" />
       <workItem from="1782782995641" duration="11335000" />
-      <workItem from="1782910731721" duration="2708000" />
+      <workItem from="1782910731721" duration="5031000" />
     </task>
     <servers />
   </component>
@@ -323,6 +370,11 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Source/PPR301_FPS/ISellable.h</url>
+          <line>1</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
