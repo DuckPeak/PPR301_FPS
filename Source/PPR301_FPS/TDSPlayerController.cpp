@@ -301,11 +301,19 @@ void ATDSPlayerController::UpdatePreview()
     }
 }
 
+// PlacePreviewedObject sell vs place
 void ATDSPlayerController::PlacePreviewedObject()
 {
-    // Only place if we are in build mode
     if (!bIsBuildMode) return;
 
+    // Sell mode: click sells the actor under the cursor
+    if (bIsSellMode)
+    {
+        SellActorUnderCursor();
+        return;
+    }
+
+    // Normal placement
     if (!PreviewActor || !IsValid(PreviewActor))
     {
         UE_LOG(LogTemp, Warning, TEXT("[BuildMode] No valid preview actor to place!"));
@@ -396,6 +404,15 @@ void ATDSPlayerController::PlaceTurret()
 
 void ATDSPlayerController::SetSelectedBuild(TSubclassOf<AActor> NewClass)
 {
+    
+    // Exiting sell mode when the player picks something to place
+    if (bIsSellMode)
+    {
+        bIsSellMode = false;
+        UE_LOG(LogTemp, Warning, TEXT("[SellMode] Exited sell mode via build selection"));
+    }
+    
+    
     // Validate before storing — never store a stale/invalid UClass
     if (NewClass && !IsValid(NewClass))
     {
@@ -500,4 +517,72 @@ void ATDSPlayerController::AddPlayerCash(int32 Amount)
     UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Added %d cash. New total: %d"), Amount, PlayerCash);
 
     UpdateCashUI();
+}
+
+// ToggleSellMode — called by UI button
+void ATDSPlayerController::ToggleSellMode()
+{
+    bIsSellMode = !bIsSellMode;
+    UE_LOG(LogTemp, Warning, TEXT("[SellMode] Sell mode: %s"), bIsSellMode ? TEXT("ON") : TEXT("OFF"));
+
+    // Destroy any active placement preview — the two modes are mutually exclusive
+    if (bIsSellMode && PreviewActor)
+    {
+        PreviewActor->Destroy();
+        PreviewActor = nullptr;
+        SelectedBuildClass = nullptr;
+        UE_LOG(LogTemp, Warning, TEXT("[SellMode] Cleared preview actor on entering sell mode"));
+    }
+}
+
+
+// New function — traces the mouse ray, finds a sellable actor, refunds and destroys it
+void ATDSPlayerController::SellActorUnderCursor()
+{
+    FVector RayOrigin, RayDir;
+    if (!DeprojectMousePositionToWorld(RayOrigin, RayDir))
+    {
+        UE_LOG(LogTemp, Warning, TEXT("[SellMode] Could not deproject mouse position"));
+        return;
+    }
+
+    FHitResult Hit;
+    FCollisionQueryParams Params;
+    Params.AddIgnoredActor(GetPawn());   // never accidentally sell the player
+
+    const bool bHit = GetWorld()->LineTraceSingleByChannel(
+        Hit,
+        RayOrigin,
+        RayOrigin + RayDir * 10000.f,
+        ECC_Visibility,
+        Params
+    );
+
+    if (!bHit || !Hit.GetActor())
+    {
+        UE_LOG(LogTemp, Warning, TEXT("[SellMode] No actor hit"));
+        return;
+    }
+
+    AActor* HitActor = Hit.GetActor();
+
+    // Only sell actors that are Turrets (or your Wall class — extend the cast list as needed)
+    ATurret* HitTurret = Cast<ATurret>(HitActor);
+    if (!HitTurret)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("[SellMode] Hit actor '%s' is not sellable"), *GetNameSafe(HitActor));
+        return;
+    }
+
+    // Refund 75 % of the turret's cost (rounded down)
+    const int32 Refund = FMath::FloorToInt(HitTurret->Cost * 0.75f);
+    UE_LOG(LogTemp, Warning, TEXT("[SellMode] Selling '%s' for %d (cost was %d)"),
+        *GetNameSafe(HitTurret), Refund, HitTurret->Cost);
+
+    AddPlayerCash(Refund);  // updates UI automatically
+
+    // play a sound here
+    // if (SellTurretSound) UGameplayStatics::PlaySound2D(this, SellTurretSound);
+
+    HitTurret->Destroy();
 }

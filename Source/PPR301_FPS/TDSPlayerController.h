@@ -49,6 +49,13 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
 	USoundBase* PlaceTurretSound = nullptr;
+	
+	UFUNCTION(BlueprintCallable, Category = "Build | Sell")
+	void ToggleSellMode();
+
+	UPROPERTY(BlueprintReadOnly, Category = "Build | Sell")
+	bool bIsSellMode = false;
+
 
 private:
 	// ===== CAMERA =====
@@ -131,6 +138,9 @@ private:
 	// Build mode rotation
 	void RotatePreviewLeft();
 	void RotatePreviewRight();
+	
+	// Sell
+	void SellActorUnderCursor();
 
 	UPROPERTY()
 	UUserWidget* BuildMenu;
