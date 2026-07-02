@@ -86,8 +86,16 @@ void ATDSPlayerController::Tick(float DeltaTime)
     if (bIsBuildMode && BuildCamera)
     {
         MoveCamera(DeltaTime);
-        UpdatePreview();
         HandleZoom();
+
+        if (bIsSellMode)
+        {
+            UpdateSellHighlight();
+        }
+        else
+        {
+            UpdatePreview();
+        }
     }
 }
 
@@ -187,6 +195,10 @@ void ATDSPlayerController::ToggleBuildMode()
             PreviewActor = nullptr;
             UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Preview actor destroyed on exit"));
         }
+
+        // Leaving build mode entirely also means leaving sell mode - restore any tinted actor
+        ClearSellHighlight();
+        bIsSellMode = false;
 
         SelectedBuildClass = nullptr;
     }
@@ -410,6 +422,7 @@ void ATDSPlayerController::SetSelectedBuild(TSubclassOf<AActor> NewClass)
     if (bIsSellMode)
     {
         bIsSellMode = false;
+        ClearSellHighlight();
         UE_LOG(LogTemp, Warning, TEXT("[SellMode] Exited sell mode via build selection"));
     }
     
@@ -422,7 +435,8 @@ void ATDSPlayerController::SetSelectedBuild(TSubclassOf<AActor> NewClass)
     }
 
     SelectedBuildClass = NewClass;
-
+    UE_LOG(LogTemp, Warning, TEXT("[BuildMode] DEBUG bIsBuildMode=%s at selection time"), bIsBuildMode ? TEXT("true") : TEXT("false"));
+    
     if (PreviewActor)
     {
         PreviewActor->Destroy();
@@ -526,6 +540,12 @@ void ATDSPlayerController::ToggleSellMode()
     bIsSellMode = !bIsSellMode;
     UE_LOG(LogTemp, Warning, TEXT("[SellMode] Sell mode: %s"), bIsSellMode ? TEXT("ON") : TEXT("OFF"));
 
+    if (!bIsSellMode)
+    {
+        // Leaving sell mode - restore whatever was tinted
+        ClearSellHighlight();
+    }
+
     // Destroy any active placement preview — the two modes are mutually exclusive
     if (bIsSellMode && PreviewActor)
     {
@@ -536,6 +556,93 @@ void ATDSPlayerController::ToggleSellMode()
     }
 }
 
+// Restores original materials on the currently highlighted sell actor (if any) and clears state
+void ATDSPlayerController::ClearSellHighlight()
+{
+    if (HighlightedSellActor && IsValid(HighlightedSellActor))
+    {
+        TArray<UStaticMeshComponent*> MeshComponents;
+        HighlightedSellActor->GetComponents<UStaticMeshComponent>(MeshComponents);
+
+        for (UStaticMeshComponent* MeshComp : MeshComponents)
+        {
+            if (!MeshComp) continue;
+
+            if (TArray<UMaterialInterface*>* Originals = OriginalSellMaterials.Find(MeshComp))
+            {
+                for (int32 i = 0; i < Originals->Num(); i++)
+                {
+                    MeshComp->SetMaterial(i, (*Originals)[i]);
+                }
+            }
+        }
+    }
+
+    OriginalSellMaterials.Empty();
+    HighlightedSellActor = nullptr;
+}
+
+// Traces under the mouse each tick while in sell mode and tints whatever sellable actor is hovered
+void ATDSPlayerController::UpdateSellHighlight()
+{
+    FVector RayOrigin, RayDir;
+    if (!DeprojectMousePositionToWorld(RayOrigin, RayDir))
+    {
+        ClearSellHighlight();
+        return;
+    }
+
+    FHitResult Hit;
+    FCollisionQueryParams Params;
+    Params.AddIgnoredActor(GetPawn());
+
+    const bool bHit = GetWorld()->LineTraceSingleByChannel(
+        Hit,
+        RayOrigin,
+        RayOrigin + RayDir * 10000.f,
+        ECC_Visibility,
+        Params
+    );
+
+    AActor* HitActor = (bHit && Hit.GetActor() && Hit.GetActor()->Implements<USellable>())
+        ? Hit.GetActor()
+        : nullptr;
+
+    // Already highlighting this exact actor (or both null) — nothing to do
+    if (HitActor == HighlightedSellActor)
+    {
+        return;
+    }
+
+    // Hover moved to a new target (or off the old one entirely) — restore old, apply new
+    ClearSellHighlight();
+
+    if (HitActor && SellHighlightMaterial)
+    {
+        TArray<UStaticMeshComponent*> MeshComponents;
+        HitActor->GetComponents<UStaticMeshComponent>(MeshComponents);
+
+        for (UStaticMeshComponent* MeshComp : MeshComponents)
+        {
+            if (!MeshComp) continue;
+
+            TArray<UMaterialInterface*> Originals;
+            const int32 NumMats = MeshComp->GetNumMaterials();
+            Originals.Reserve(NumMats);
+
+            for (int32 i = 0; i < NumMats; i++)
+            {
+                Originals.Add(MeshComp->GetMaterial(i));
+                MeshComp->SetMaterial(i, SellHighlightMaterial);
+            }
+
+            OriginalSellMaterials.Add(MeshComp, Originals);
+        }
+
+        HighlightedSellActor = HitActor;
+        UE_LOG(LogTemp, Warning, TEXT("[SellMode] Highlighting '%s'"), *GetNameSafe(HitActor));
+    }
+}
 
 // Traces the mouse ray, finds a sellable actor, refunds and destroys it
 void ATDSPlayerController::SellActorUnderCursor()
@@ -579,6 +686,14 @@ void ATDSPlayerController::SellActorUnderCursor()
 
     UE_LOG(LogTemp, Warning, TEXT("[SellMode] Selling '%s' for %d (cost was %d)"),
         *GetNameSafe(HitActor), Refund, Cost);
+
+    // If we're about to destroy the actor we're currently highlighting, drop the reference
+    // first so ClearSellHighlight/UpdateSellHighlight never touch a dangling actor/component.
+    if (HitActor == HighlightedSellActor)
+    {
+        HighlightedSellActor = nullptr;
+        OriginalSellMaterials.Empty();
+    }
 
     AddPlayerCash(Refund);
     HitActor->Destroy();
