@@ -7,6 +7,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "InputActionValue.h"
 #include "Blueprint/UserWidget.h"
+#include "IRepairable.h"
 #include "TDSPlayerController.generated.h"
 class UInputMappingContext;
 class UInputAction;
@@ -44,10 +45,24 @@ public:
 	void ToggleSellMode();
 	UPROPERTY(BlueprintReadOnly, Category = "Build | Sell")
 	bool bIsSellMode = false;
-	
+
 	// Material applied to whatever sellable actor is currently under the cursor in sell mode
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Build | Sell")
 	UMaterialInterface* SellHighlightMaterial;
+
+	// ===== REPAIR MODE =====
+	UFUNCTION(BlueprintCallable, Category = "Build | Repair")
+	void ToggleRepairMode();
+	UPROPERTY(BlueprintReadOnly, Category = "Build | Repair")
+	bool bIsRepairMode = false;
+
+	// Material applied to whatever repairable actor is currently under the cursor in repair mode
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Build | Repair")
+	UMaterialInterface* RepairHighlightMaterial;
+
+	// Repair cost is this fraction of the actor's ISellable sell cost (0.25 = 1/4)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Build | Repair")
+	float RepairCostFraction = 0.25f;
 
 private:
 	// ===== CAMERA =====
@@ -121,6 +136,16 @@ private:
 
 	void UpdateSellHighlight();
 	void ClearSellHighlight();
+
+	// Repair highlight - mirrors the sell highlight state above
+	UPROPERTY()
+	AActor* HighlightedRepairActor = nullptr;
+
+	TMap<UStaticMeshComponent*, TArray<UMaterialInterface*>> OriginalRepairMaterials;
+
+	void UpdateRepairHighlight();
+	void ClearRepairHighlight();
+	void RepairActorUnderCursor();
 
 	// ===== ROTATION =====
 	float CurrentRotation = 0.f;

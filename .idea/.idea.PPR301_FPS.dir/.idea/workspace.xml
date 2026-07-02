@@ -14,13 +14,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b3110b6-6ed4-4bb7-a6c8-b1d178ef7446" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Build_Objects/MicroWaveTurret.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Build_Objects/MicroWaveTurret.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Fab/SciFi_Style_Generator/scifi_style_generator/StaticMeshes/scifi_style_generator.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Fab/SciFi_Style_Generator/scifi_style_generator/StaticMeshes/scifi_style_generator.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Build_Objects/MyTurret.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Build_Objects/MyTurret.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Build_Objects/Wall.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Build_Objects/Wall.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemy_Zombie/BP_Zombie_Logic_Rework_Fast.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemy_Zombie/BP_Zombie_Logic_Rework_Fast.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/Meshes/communication_shack/Materials/Ground_material_Particals.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelPrototyping/Meshes/communication_shack/Materials/Ground_material_Particals.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/MyTDSPlayerController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MyTDSPlayerController.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/UI/WBP_BuildMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/WBP_BuildMenu.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h" afterDir="false" />
     </list>
@@ -45,6 +49,7 @@
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/WaveManager.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/WaveUI.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/WaveUI.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/CoreUObject/Public/UObject/Class.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/Engine/Classes/Animation/AnimInstance.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/Engine/Classes/Components/SceneComponent.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/Engine/Classes/GameFramework/Character.h" root0="FORCE_HIGHLIGHTING" />
@@ -57,61 +62,61 @@
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0000000000000016" />
-      <entry key="MS500" value="1.001080563821379" />
-      <entry key="S2" value="1.1813205019900808" />
-      <entry key="S5" value="1.5227875908601496" />
-      <entry key="S10" value="1.9617055603943487" />
-      <entry key="S30" value="4.418699374123063" />
-      <entry key="S60" value="7.064273933985557" />
-      <entry key="M2" value="9.423842742906256" />
-      <entry key="M5" value="11.462584407415466" />
-      <entry key="M10" value="12.436560394047055" />
-      <entry key="M15" value="12.857208319594752" />
-      <entry key="M30" value="13.364353880905579" />
-      <entry key="H1" value="13.662736146927106" />
-      <entry key="H2" value="13.826003127061789" />
-      <entry key="H4" value="13.911591219615353" />
-      <entry key="D1" value="13.985063153154151" />
-      <entry key="W1" value="13.997861133998901" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0" />
+      <entry key="S5" value="1.0" />
+      <entry key="S10" value="1.0" />
+      <entry key="S30" value="1.0" />
+      <entry key="S60" value="1.0" />
+      <entry key="M2" value="1.0" />
+      <entry key="M5" value="1.0000000000420988" />
+      <entry key="M10" value="1.0000238338073448" />
+      <entry key="M15" value="1.0019836974794631" />
+      <entry key="M30" value="1.1660016280716663" />
+      <entry key="H1" value="2.522719367559986" />
+      <entry key="H2" value="5.615701828307738" />
+      <entry key="H4" value="9.037988034516054" />
+      <entry key="D1" value="13.763198484511388" />
+      <entry key="W1" value="14.816229891684458" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="5.707820461507572E-126" />
-      <entry key="MS500" value="8.939105457101735E-26" />
-      <entry key="S2" value="5.468287129441532E-7" />
-      <entry key="S5" value="0.0031927176785449757" />
-      <entry key="S10" value="0.0640256501910105" />
-      <entry key="S30" value="0.5832824308798578" />
-      <entry key="S60" value="1.0665830947683173" />
-      <entry key="M2" value="1.455850287413874" />
-      <entry key="M5" value="1.7600612028528375" />
-      <entry key="M10" value="1.8759560213998254" />
-      <entry key="M15" value="1.9163695826946907" />
-      <entry key="M30" value="1.9577101066510292" />
-      <entry key="H1" value="1.978734959888676" />
-      <entry key="H2" value="1.9893372768641628" />
-      <entry key="H4" value="1.994661065074623" />
-      <entry key="D1" value="1.9991091237343799" />
-      <entry key="W1" value="1.9998727061301325" />
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="2.6046041065311637E-115" />
+      <entry key="S60" value="7.12731755008277E-58" />
+      <entry key="M2" value="3.763417698561446E-29" />
+      <entry key="M5" value="6.464189097909298E-12" />
+      <entry key="M10" value="3.595139892757921E-6" />
+      <entry key="M15" value="2.956705232128711E-4" />
+      <entry key="M30" value="0.024317155014934783" />
+      <entry key="H1" value="0.2205310864740799" />
+      <entry key="H2" value="0.6641245211329554" />
+      <entry key="H4" value="1.1524966138581072" />
+      <entry key="D1" value="1.8244484318016785" />
+      <entry key="W1" value="1.973923072782013" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.4536102265074726E-5" />
-      <entry key="MS500" value="0.1078547398441543" />
-      <entry key="S2" value="0.6694851144303249" />
-      <entry key="S5" value="1.2071100951830611" />
-      <entry key="S10" value="1.7863848444891683" />
-      <entry key="S30" value="4.795467269529486" />
-      <entry key="S60" value="7.971313696257263" />
-      <entry key="M2" value="10.7767797570553" />
-      <entry key="M5" value="13.173655889197468" />
-      <entry key="M10" value="14.285998548841583" />
-      <entry key="M15" value="14.755271797202887" />
-      <entry key="M30" value="15.312514333494303" />
-      <entry key="H1" value="15.636575420179712" />
-      <entry key="H2" value="15.812858914015157" />
-      <entry key="H4" value="15.90500264466142" />
-      <entry key="D1" value="15.983962724286615" />
-      <entry key="W1" value="15.997703872122623" />
+      <entry key="MS100" value="1.6128815316183157E-5" />
+      <entry key="MS500" value="0.11003237669539385" />
+      <entry key="S2" value="0.5759438211746788" />
+      <entry key="S5" value="0.8019587853369635" />
+      <entry key="S10" value="0.8955215158425639" />
+      <entry key="S30" value="0.9638852657545566" />
+      <entry key="S60" value="0.9817765864770643" />
+      <entry key="M2" value="0.9908463990332025" />
+      <entry key="M5" value="0.9963284556725905" />
+      <entry key="M10" value="0.9981899178094746" />
+      <entry key="M15" value="1.001051194620234" />
+      <entry key="M30" value="1.1895873024018477" />
+      <entry key="H1" value="2.742398348985784" />
+      <entry key="H2" value="6.278844672854787" />
+      <entry key="H4" value="10.189685989651283" />
+      <entry key="D1" value="15.587442900370613" />
+      <entry key="W1" value="16.790121560761776" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -122,26 +127,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "cidr.known.project.marker": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="PPR301_FPS" type="Uproject" factoryName="rider.uproject">
       <configuration_1 setup="1">
@@ -299,7 +305,7 @@
       <workItem from="1777975829345" duration="1244000" />
       <workItem from="1782782995641" duration="11335000" />
       <workItem from="1782910731721" duration="5031000" />
-      <workItem from="1783014435943" duration="3889000" />
+      <workItem from="1783014435943" duration="9714000" />
     </task>
     <servers />
   </component>
@@ -326,11 +332,6 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Source/PPR301_FPS/ISellable.h</url>
-          <line>1</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

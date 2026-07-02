@@ -2,6 +2,7 @@
 #include "Engine/World.h"
 #include "Turret.h"
 #include "ISellable.h"
+#include "IRepairable.h"
 #include "GameFramework/Pawn.h"
 #include "Components/TextBlock.h"
 #include "Blueprint/UserWidget.h"
@@ -91,6 +92,10 @@ void ATDSPlayerController::Tick(float DeltaTime)
         if (bIsSellMode)
         {
             UpdateSellHighlight();
+        }
+        else if (bIsRepairMode)
+        {
+            UpdateRepairHighlight();
         }
         else
         {
@@ -196,9 +201,11 @@ void ATDSPlayerController::ToggleBuildMode()
             UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Preview actor destroyed on exit"));
         }
 
-        // Leaving build mode entirely also means leaving sell mode - restore any tinted actor
+        // Leaving build mode entirely also means leaving sell/repair mode - restore any tinted actor
         ClearSellHighlight();
         bIsSellMode = false;
+        ClearRepairHighlight();
+        bIsRepairMode = false;
 
         SelectedBuildClass = nullptr;
     }
@@ -326,6 +333,13 @@ void ATDSPlayerController::PlacePreviewedObject()
         return;
     }
 
+    // Repair mode: click repairs the actor under the cursor
+    if (bIsRepairMode)
+    {
+        RepairActorUnderCursor();
+        return;
+    }
+
     // Normal placement
     if (!PreviewActor || !IsValid(PreviewActor))
     {
@@ -418,12 +432,19 @@ void ATDSPlayerController::PlaceTurret()
 void ATDSPlayerController::SetSelectedBuild(TSubclassOf<AActor> NewClass)
 {
     
-    // Exiting sell mode when the player picks something to place
+    // Exiting sell/repair mode when the player picks something to place
     if (bIsSellMode)
     {
         bIsSellMode = false;
         ClearSellHighlight();
         UE_LOG(LogTemp, Warning, TEXT("[SellMode] Exited sell mode via build selection"));
+    }
+
+    if (bIsRepairMode)
+    {
+        bIsRepairMode = false;
+        ClearRepairHighlight();
+        UE_LOG(LogTemp, Warning, TEXT("[RepairMode] Exited repair mode via build selection"));
     }
     
     
@@ -435,8 +456,7 @@ void ATDSPlayerController::SetSelectedBuild(TSubclassOf<AActor> NewClass)
     }
 
     SelectedBuildClass = NewClass;
-    UE_LOG(LogTemp, Warning, TEXT("[BuildMode] DEBUG bIsBuildMode=%s at selection time"), bIsBuildMode ? TEXT("true") : TEXT("false"));
-    
+
     if (PreviewActor)
     {
         PreviewActor->Destroy();
@@ -546,13 +566,220 @@ void ATDSPlayerController::ToggleSellMode()
         ClearSellHighlight();
     }
 
-    // Destroy any active placement preview — the two modes are mutually exclusive
-    if (bIsSellMode && PreviewActor)
+    if (bIsSellMode)
     {
-        PreviewActor->Destroy();
-        PreviewActor = nullptr;
-        SelectedBuildClass = nullptr;
-        UE_LOG(LogTemp, Warning, TEXT("[SellMode] Cleared preview actor on entering sell mode"));
+        // Sell/Repair/Place are mutually exclusive - leave repair mode if it was active
+        if (bIsRepairMode)
+        {
+            bIsRepairMode = false;
+            ClearRepairHighlight();
+        }
+
+        // Destroy any active placement preview — the two modes are mutually exclusive
+        if (PreviewActor)
+        {
+            PreviewActor->Destroy();
+            PreviewActor = nullptr;
+            SelectedBuildClass = nullptr;
+            UE_LOG(LogTemp, Warning, TEXT("[SellMode] Cleared preview actor on entering sell mode"));
+        }
+    }
+}
+
+// ToggleRepairMode — called by UI button
+void ATDSPlayerController::ToggleRepairMode()
+{
+    bIsRepairMode = !bIsRepairMode;
+    UE_LOG(LogTemp, Warning, TEXT("[RepairMode] Repair mode: %s"), bIsRepairMode ? TEXT("ON") : TEXT("OFF"));
+
+    if (!bIsRepairMode)
+    {
+        // Leaving repair mode - restore whatever was tinted
+        ClearRepairHighlight();
+    }
+
+    if (bIsRepairMode)
+    {
+        // Sell/Repair/Place are mutually exclusive - leave sell mode if it was active
+        if (bIsSellMode)
+        {
+            bIsSellMode = false;
+            ClearSellHighlight();
+        }
+
+        // Destroy any active placement preview — the two modes are mutually exclusive
+        if (PreviewActor)
+        {
+            PreviewActor->Destroy();
+            PreviewActor = nullptr;
+            SelectedBuildClass = nullptr;
+            UE_LOG(LogTemp, Warning, TEXT("[RepairMode] Cleared preview actor on entering repair mode"));
+        }
+    }
+}
+
+// Restores original materials on the currently highlighted repair actor (if any) and clears state
+void ATDSPlayerController::ClearRepairHighlight()
+{
+    if (HighlightedRepairActor && IsValid(HighlightedRepairActor))
+    {
+        TArray<UStaticMeshComponent*> MeshComponents;
+        HighlightedRepairActor->GetComponents<UStaticMeshComponent>(MeshComponents);
+
+        for (UStaticMeshComponent* MeshComp : MeshComponents)
+        {
+            if (!MeshComp) continue;
+
+            if (TArray<UMaterialInterface*>* Originals = OriginalRepairMaterials.Find(MeshComp))
+            {
+                for (int32 i = 0; i < Originals->Num(); i++)
+                {
+                    MeshComp->SetMaterial(i, (*Originals)[i]);
+                }
+            }
+        }
+    }
+
+    OriginalRepairMaterials.Empty();
+    HighlightedRepairActor = nullptr;
+}
+
+// Traces under the mouse each tick while in repair mode and tints whatever repairable actor is hovered
+void ATDSPlayerController::UpdateRepairHighlight()
+{
+    FVector RayOrigin, RayDir;
+    if (!DeprojectMousePositionToWorld(RayOrigin, RayDir))
+    {
+        ClearRepairHighlight();
+        return;
+    }
+
+    FHitResult Hit;
+    FCollisionQueryParams Params;
+    Params.AddIgnoredActor(GetPawn());
+
+    const bool bHit = GetWorld()->LineTraceSingleByChannel(
+        Hit,
+        RayOrigin,
+        RayOrigin + RayDir * 10000.f,
+        ECC_Visibility,
+        Params
+    );
+
+    // Only highlight actors that implement IRepairable AND currently need repairing
+    AActor* HitActor = nullptr;
+    if (bHit && Hit.GetActor() && Hit.GetActor()->Implements<URepairable>())
+    {
+        if (IRepairable::Execute_NeedsRepair(Hit.GetActor()))
+        {
+            HitActor = Hit.GetActor();
+        }
+    }
+
+    // Already highlighting this exact actor (or both null) — nothing to do
+    if (HitActor == HighlightedRepairActor)
+    {
+        return;
+    }
+
+    // Hover moved to a new target (or off the old one entirely) — restore old, apply new
+    ClearRepairHighlight();
+
+    if (HitActor && RepairHighlightMaterial)
+    {
+        TArray<UStaticMeshComponent*> MeshComponents;
+        HitActor->GetComponents<UStaticMeshComponent>(MeshComponents);
+
+        for (UStaticMeshComponent* MeshComp : MeshComponents)
+        {
+            if (!MeshComp) continue;
+
+            TArray<UMaterialInterface*> Originals;
+            const int32 NumMats = MeshComp->GetNumMaterials();
+            Originals.Reserve(NumMats);
+
+            for (int32 i = 0; i < NumMats; i++)
+            {
+                Originals.Add(MeshComp->GetMaterial(i));
+                MeshComp->SetMaterial(i, RepairHighlightMaterial);
+            }
+
+            OriginalRepairMaterials.Add(MeshComp, Originals);
+        }
+
+        HighlightedRepairActor = HitActor;
+        UE_LOG(LogTemp, Warning, TEXT("[RepairMode] Highlighting '%s'"), *GetNameSafe(HitActor));
+    }
+}
+
+// Traces the mouse ray, finds a repairable actor that needs repair, charges 1/4 sell cost, repairs to full
+void ATDSPlayerController::RepairActorUnderCursor()
+{
+    FVector RayOrigin, RayDir;
+    if (!DeprojectMousePositionToWorld(RayOrigin, RayDir))
+    {
+        UE_LOG(LogTemp, Warning, TEXT("[RepairMode] Could not deproject mouse position"));
+        return;
+    }
+
+    FHitResult Hit;
+    FCollisionQueryParams Params;
+    Params.AddIgnoredActor(GetPawn());
+
+    const bool bHit = GetWorld()->LineTraceSingleByChannel(
+        Hit,
+        RayOrigin,
+        RayOrigin + RayDir * 10000.f,
+        ECC_Visibility,
+        Params
+    );
+
+    if (!bHit || !Hit.GetActor())
+    {
+        UE_LOG(LogTemp, Warning, TEXT("[RepairMode] No actor hit"));
+        return;
+    }
+
+    AActor* HitActor = Hit.GetActor();
+
+    if (!HitActor->Implements<URepairable>())
+    {
+        UE_LOG(LogTemp, Warning, TEXT("[RepairMode] Hit actor '%s' is not repairable"), *GetNameSafe(HitActor));
+        return;
+    }
+
+    if (!IRepairable::Execute_NeedsRepair(HitActor))
+    {
+        UE_LOG(LogTemp, Warning, TEXT("[RepairMode] '%s' is already at full health"), *GetNameSafe(HitActor));
+        return;
+    }
+
+    // Cost is derived from the same sell value ISellable already exposes, so anything
+    // that's sellable and repairable prices repair relative to what it's actually worth.
+    int32 Cost = 0;
+    if (HitActor->Implements<USellable>())
+    {
+        Cost = FMath::CeilToInt(ISellable::Execute_GetSellCost(HitActor) * RepairCostFraction);
+    }
+
+    if (PlayerCash < Cost)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("[RepairMode] Not enough money to repair '%s'! Need %d, have %d"),
+            *GetNameSafe(HitActor), Cost, PlayerCash);
+        return;
+    }
+
+    PlayerCash -= Cost;
+    UpdateCashUI();
+
+    IRepairable::Execute_Repair(HitActor);
+
+    UE_LOG(LogTemp, Warning, TEXT("[RepairMode] Repaired '%s' for %d"), *GetNameSafe(HitActor), Cost);
+
+    // The actor is now at full health, so it no longer needs highlighting - refresh state
+    if (HitActor == HighlightedRepairActor)
+    {
+        ClearRepairHighlight();
     }
 }
 
