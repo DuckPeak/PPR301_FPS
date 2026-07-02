@@ -105,6 +105,7 @@ private:
 	TSubclassOf<AActor> SelectedBuildClass;
 	UPROPERTY()
 	AActor* PreviewActor;
+	bool bIsPreviewPlacementValid = true;
 	UPROPERTY(EditAnywhere, Category="Build")
 	int32 PlayerMoney = 1000;
 	UPROPERTY(EditAnywhere, Category="Build")

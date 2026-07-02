@@ -1,5 +1,6 @@
 #include "TDSPlayerController.h"
 #include "Engine/World.h"
+#include "Engine/OverlapResult.h"
 #include "Turret.h"
 #include "ISellable.h"
 #include "IRepairable.h"
@@ -9,6 +10,7 @@
 #include "Camera/CameraActor.h"
 #include "Kismet/GameplayStatics.h"
 #include "DrawDebugHelpers.h"
+#include "TurretMicrowave.h"
 
 ATDSPlayerController::ATDSPlayerController()
 {
@@ -257,6 +259,67 @@ FVector ATDSPlayerController::SnapToGrid(FVector L)
 
 bool ATDSPlayerController::CheckValidPlacement(FVector Pos)
 {
+    if (!GetWorld()) return false;
+
+    if (Pos.Z > -20.f)
+    {
+        return false;
+    }
+
+    // Derive the overlap box from the actual PreviewActor's current bounding box -
+    FVector BoxExtent = FVector(GridSize * 0.5f - 5.f); // fallback if no preview yet
+
+    if (PreviewActor && IsValid(PreviewActor))
+    {
+        FBox Bounds = PreviewActor->GetComponentsBoundingBox(true); // true = only colliding components
+        if (Bounds.IsValid)
+        {
+            // Shrink slightly so edge-adjacent pieces don't falsely flag as overlapping
+            //BoxExtent = Bounds.GetExtent() * 0.9f;
+            BoxExtent = Bounds.GetExtent() * 1.05f;
+        }
+    }
+
+    // Bounds from GetComponentsBoundingBox is already an axis-aligned WORLD-space box,
+    const FCollisionShape Box = FCollisionShape::MakeBox(BoxExtent);
+    const FQuat Rot = FQuat::Identity;
+
+    FCollisionQueryParams Params;
+    Params.AddIgnoredActor(GetPawn());
+    if (PreviewActor)
+    {
+        Params.AddIgnoredActor(PreviewActor);
+    }
+
+    TArray<FOverlapResult> Overlaps;
+    const bool bAnyOverlap = GetWorld()->OverlapMultiByChannel(
+        Overlaps,
+        Pos,
+        Rot,
+        ECC_Visibility,
+        Box,
+        Params
+    );
+
+    if (!bAnyOverlap)
+    {
+        return true;
+    }
+
+    for (const FOverlapResult& Result : Overlaps)
+    {
+        AActor* OverlappedActor = Result.GetActor();
+        if (!OverlappedActor || OverlappedActor == PreviewActor)
+        {
+            continue;
+        }
+
+        if (OverlappedActor->Implements<USellable>())
+        {
+            return false;
+        }
+    }
+
     return true;
 }
 
@@ -307,14 +370,17 @@ void ATDSPlayerController::UpdatePreview()
         PreviewActor->SetActorLocation(Pos);
         PreviewActor->SetActorRotation(FRotator(0.f, CurrentRotation, 0.f));
 
-        // Apply ghost material to all static mesh components
+        bIsPreviewPlacementValid = CheckValidPlacement(Pos);
+
+        UMaterialInterface* PreviewMaterial = bIsPreviewPlacementValid ? GhostMaterial : SellHighlightMaterial;
+
         TArray<UStaticMeshComponent*> MeshComponents;
         PreviewActor->GetComponents<UStaticMeshComponent>(MeshComponents);
         for (UStaticMeshComponent* MeshComp : MeshComponents)
         {
-            if (GhostMaterial)
+            if (PreviewMaterial)
             {
-                MeshComp->SetMaterial(0, GhostMaterial);
+                MeshComp->SetMaterial(0, PreviewMaterial);
                 MeshComp->SetRenderCustomDepth(true);
             }
         }
@@ -354,6 +420,11 @@ void ATDSPlayerController::PlacePreviewedObject()
         SelectedBuildClass = nullptr;
         return;
     }
+    if (!bIsPreviewPlacementValid)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Cannot place here - overlapping another structure!"));
+        return;
+    }
 
     UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Placing previewed object"));
     PlaceTurret();
@@ -369,6 +440,13 @@ void ATDSPlayerController::PlaceTurret()
     }
 
     FVector Pos = GetMouseWorldPosition();
+
+    if (!CheckValidPlacement(Pos))
+    {
+        UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Placement blocked - position overlaps another structure"));
+        return;
+    }
+
     Pos.Z += 5.f;
 
     UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Attempting to place at: %s"), *Pos.ToString());
@@ -376,11 +454,16 @@ void ATDSPlayerController::PlaceTurret()
     // Get cost from class default object
     AActor* DefaultObj = SelectedBuildClass->GetDefaultObject<AActor>();
     ATurret* TurretCDO = Cast<ATurret>(DefaultObj);
+    ATurretMicrowave* MicrowaveCDO = Cast<ATurretMicrowave>(DefaultObj);
 
     int32 Cost = 0;
     if (TurretCDO)
     {
         Cost = TurretCDO->Cost;
+    }
+    else if (MicrowaveCDO)
+    {
+        Cost = 100;
     }
     else
     {

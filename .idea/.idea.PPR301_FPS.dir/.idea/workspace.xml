@@ -17,13 +17,8 @@
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Build_Objects/MicroWaveTurret.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Build_Objects/MicroWaveTurret.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Build_Objects/MyTurret.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Build_Objects/MyTurret.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Build_Objects/Wall.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Build_Objects/Wall.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Enemy_Zombie/BP_Zombie_Logic_Rework_Fast.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemy_Zombie/BP_Zombie_Logic_Rework_Fast.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/Meshes/communication_shack/Materials/Ground_material_Particals.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelPrototyping/Meshes/communication_shack/Materials/Ground_material_Particals.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MyTDSPlayerController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MyTDSPlayerController.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/WBP_BuildMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/WBP_BuildMenu.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h" afterDir="false" />
@@ -305,7 +300,7 @@
       <workItem from="1777975829345" duration="1244000" />
       <workItem from="1782782995641" duration="11335000" />
       <workItem from="1782910731721" duration="5031000" />
-      <workItem from="1783014435943" duration="9714000" />
+      <workItem from="1783014435943" duration="12441000" />
     </task>
     <servers />
   </component>
