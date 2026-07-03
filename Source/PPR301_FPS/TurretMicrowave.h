@@ -50,10 +50,10 @@ protected:
     // ===== MICROWAVE FIELD SETTINGS =====
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Microwave", meta = (ClampMin = "0.0"))
-    float EffectRadius = 800.f;
+    float EffectRadius = 700.f;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Microwave", meta = (ClampMin = "0.0", ClampMax = "1.0"))
-    float SlowMultiplier = 0.25f;
+    float SlowMultiplier = 0.35f;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Microwave", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float AttackSlowMultiplier = 0.5f;
