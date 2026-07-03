@@ -6,6 +6,7 @@
 
 class USphereComponent;
 class UStaticMeshComponent;
+class UMaterialInstanceDynamic;
 class UCharacterMovementComponent;
 
 USTRUCT()
@@ -22,7 +23,6 @@ struct FMicrowaveAffectedEnemy
     UPROPERTY()
     float OriginalAttackSpeedMultiplier = 1.f;
 
-    // Local timer for the confusion roll, decoupled from global tick.
     UPROPERTY()
     float TimeUntilNextConfusionRoll = 0.f;
     
@@ -49,67 +49,90 @@ protected:
 
     // ===== MICROWAVE FIELD SETTINGS =====
 
-    // Radius of the slow/confuse field, in cm (UE units).
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Microwave", meta = (ClampMin = "0.0"))
-    float EffectRadius = 800.f;
+    float EffectRadius = 700.f;
 
-    // Multiplier applied to MaxWalkSpeed for affected enemies. 0.5 = 50% speed.
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Microwave", meta = (ClampMin = "0.0", ClampMax = "1.0"))
-    float SlowMultiplier = 0.25f;
+    float SlowMultiplier = 0.35f;
 
-    // Multiplier applied to the enemy's AttackSpeedMultiplier variable while affected.
-    // 0.5 = attacks twice as slowly (assuming enemy BP treats this as a rate multiplier).
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Microwave", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float AttackSlowMultiplier = 0.5f;
 
-    // Chance [0-1] per confusion check that an affected enemy gets confused.
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Microwave", meta = (ClampMin = "0.0", ClampMax = "1.0"))
     float ConfusionChance = 0.1f;
 
-    // How often (seconds) each affected enemy rolls for confusion.
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Microwave", meta = (ClampMin = "0.05"))
     float ConfusionCheckInterval = 2.0f;
 
-    // How far a confused enemy will look for another enemy to target.
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Microwave", meta = (ClampMin = "0.0"))
     float ConfusionTargetSearchRadius = 800.f;
 
-    // Tag used to find enemies, matches ATurret's convention.
     UPROPERTY(EditAnywhere, Category = "Microwave")
     FName EnemyTag = FName("Enemy");
 
-    // Name of the float variable on the enemy BP used for attack-rate scaling.
     UPROPERTY(EditAnywhere, Category = "Microwave")
     FName AttackSpeedVarName = FName("AttackSpeedMultiplier");
 
-    // Name of the custom event on the enemy BP used to (re)target.
     UPROPERTY(EditAnywhere, Category = "Microwave")
     FName ChaseTargetEventName = FName("ChaseTarget");
 
-    // Name of the Actor parameter on the ChaseTarget event.
     UPROPERTY(EditAnywhere, Category = "Microwave")
     FName ChaseTargetParamName = FName("TargetActor");
 
-    // How often (seconds) we rescan for enemies entering/leaving the radius.
-    // Doesn't need to be every frame.
     UPROPERTY(EditAnywhere, Category = "Microwave", meta = (ClampMin = "0.02"))
     float ScanInterval = 0.25f;
 
-    // ===== VISUAL RADIUS INDICATOR =====
+    // ===== FORCEFIELD VISUAL =====
 
-    // Translucent sphere mesh showing the field radius, always visible in-game.
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Microwave")
-    UStaticMeshComponent* RadiusIndicatorMesh;
-
-    // Material used for the radius indicator (assign a translucent material in the editor).
-    UPROPERTY(EditAnywhere, Category = "Microwave")
+    // Assign M_ForceField (your translucent unlit material) here in the editor.
+    UPROPERTY(EditAnywhere, Category = "Forcefield")
     UMaterialInterface* RadiusIndicatorMaterial;
 
-    // Base radius of the sphere mesh asset itself (UE default sphere = 50 units radius),
-    UPROPERTY(EditAnywhere, Category = "Microwave", meta = (ClampMin = "1.0"))
+    // Base radius of the sphere mesh asset (UE default sphere = 50 units radius).
+    UPROPERTY(EditAnywhere, Category = "Forcefield", meta = (ClampMin = "1.0"))
     float RadiusIndicatorMeshBaseRadius = 50.f;
 
-    void UpdateRadiusIndicatorScale();
+    // How high above the turret root the sphere is centered.
+    // Change this in editor to move the sphere up/down without recompiling.
+    UPROPERTY(EditAnywhere, Category = "Forcefield")
+    float ForceFieldHeightOffset = -200.f;
+
+    // The cyan-blue colour of the forcefield.
+    UPROPERTY(EditAnywhere, Category = "Forcefield")
+    FLinearColor ForceFieldColor = FLinearColor(0.f, 0.8f, 1.f, 1.f);
+
+    // Base emissive intensity multiplied by the pulse wave.
+    UPROPERTY(EditAnywhere, Category = "Forcefield", meta = (ClampMin = "0.0"))
+    float PulseIntensity = 0.3f;
+
+    // How fast the pulse breathes — full cycles per second.
+    UPROPERTY(EditAnywhere, Category = "Forcefield", meta = (ClampMin = "0.1"))
+    float PulseSpeed = 1.0f;
+
+    // Minimum opacity at the trough of the pulse.
+    UPROPERTY(EditAnywhere, Category = "Forcefield", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    float OpacityMin = 0.03f;
+
+    // Maximum opacity at the peak of the pulse.
+    UPROPERTY(EditAnywhere, Category = "Forcefield", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+    float OpacityMax = 0.12f;
+
+    // The static mesh component showing the field radius.
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Forcefield")
+    UStaticMeshComponent* RadiusIndicatorMesh;
+
+    // Runtime dynamic material instance — driven every tick.
+    UPROPERTY()
+    UMaterialInstanceDynamic* ForceFieldMID;
+
+    // Accumulated time used to drive the Sin pulse.
+    float PulseTime = 0.f;
+
+    void InitForceFieldMaterial();
+    void TickForceField(float DeltaTime);
+
+    // Sets scale AND re-applies height offset so they never fight each other.
+    void UpdateRadiusIndicatorTransform();
 
 #if WITH_EDITOR
     virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
