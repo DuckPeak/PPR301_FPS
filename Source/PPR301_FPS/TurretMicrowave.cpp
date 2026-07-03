@@ -2,46 +2,37 @@
 #include "Kismet/GameplayStatics.h"
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
-#include "Materials/MaterialInstanceDynamic.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Character.h"
 #include "Engine/World.h"
+#include "DrawDebugHelpers.h"
 
 ATurretMicrowave::ATurretMicrowave()
 {
     PrimaryActorTick.bCanEverTick = true;
 
+    // Visual-only sphere. NOT used for collision/overlap
     RadiusIndicatorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("RadiusIndicatorMesh"));
     RadiusIndicatorMesh->SetupAttachment(RootComponent);
     RadiusIndicatorMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
     RadiusIndicatorMesh->SetCollisionResponseToAllChannels(ECR_Ignore);
     RadiusIndicatorMesh->SetCastShadow(false);
     RadiusIndicatorMesh->SetVisibility(true);
-
-    // Assign the built-in engine sphere mesh automatically.
-    static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereMeshAsset(
-        TEXT("/Engine/BasicShapes/Sphere.Sphere")
-    );
-    if (SphereMeshAsset.Succeeded())
-    {
-        RadiusIndicatorMesh->SetStaticMesh(SphereMeshAsset.Object);
-    }
-
-    // NOTE: Do NOT set location or scale here in the constructor.
-    // UpdateRadiusIndicatorTransform() handles both together in BeginPlay
-    // so they can never fight each other.
+    // Center it on the turret base, slightly above ground so it doesn't z-fight.
+    RadiusIndicatorMesh->SetRelativeLocation(FVector(0.f, 0.f, 5.f));
 }
 
 void ATurretMicrowave::BeginPlay()
 {
     Super::BeginPlay();
 
-    // Set scale AND location together in one call so they're always in sync.
-    UpdateRadiusIndicatorTransform();
-    InitForceFieldMaterial();
+    if (RadiusIndicatorMaterial && RadiusIndicatorMesh)
+    {
+        RadiusIndicatorMesh->SetMaterial(0, RadiusIndicatorMaterial);
+    }
 
+    UpdateRadiusIndicatorScale();
     TimeUntilNextScan = 0.f;
-    PulseTime = 0.f;
 }
 
 void ATurretMicrowave::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -50,65 +41,12 @@ void ATurretMicrowave::EndPlay(const EEndPlayReason::Type EndPlayReason)
     Super::EndPlay(EndPlayReason);
 }
 
-// ===== FORCEFIELD =====
-
-void ATurretMicrowave::UpdateRadiusIndicatorTransform()
+void ATurretMicrowave::UpdateRadiusIndicatorScale()
 {
     if (!RadiusIndicatorMesh || RadiusIndicatorMeshBaseRadius <= 0.f) return;
 
-    const float Scale = EffectRadius / RadiusIndicatorMeshBaseRadius;
-
-    // Scale and location must be set together so neither overwrites the other.
-    // SetRelativeScale3D does NOT touch location, and SetRelativeLocation does
-    RadiusIndicatorMesh->SetRelativeScale3D(FVector(Scale, Scale, Scale * 0.75f));
-    RadiusIndicatorMesh->SetRelativeLocation(FVector(0.f, 0.f, ForceFieldHeightOffset));
-}
-
-void ATurretMicrowave::InitForceFieldMaterial()
-{
-    if (!RadiusIndicatorMesh) return;
-
-    if (!RadiusIndicatorMaterial)
-    {
-        UE_LOG(LogTemp, Warning, TEXT("[TurretMicrowave] No RadiusIndicatorMaterial assigned — assign M_ForceField in the editor."));
-        return;
-    }
-
-    ForceFieldMID = UMaterialInstanceDynamic::Create(RadiusIndicatorMaterial, this);
-    if (!ForceFieldMID)
-    {
-        UE_LOG(LogTemp, Error, TEXT("[TurretMicrowave] Failed to create ForceField MID!"));
-        return;
-    }
-
-    RadiusIndicatorMesh->SetMaterial(0, ForceFieldMID);
-
-    // Colour is set once — doesn't change at runtime.
-    ForceFieldMID->SetVectorParameterValue(TEXT("Color"), ForceFieldColor);
-
-    // Sensible starting values so there's no pop on first frame.
-    ForceFieldMID->SetScalarParameterValue(TEXT("Pulse"), PulseIntensity);
-    ForceFieldMID->SetScalarParameterValue(TEXT("Opacity"), (OpacityMin + OpacityMax) * 0.5f);
-
-    UE_LOG(LogTemp, Warning, TEXT("[TurretMicrowave] ForceField MID initialised."));
-}
-
-void ATurretMicrowave::TickForceField(float DeltaTime)
-{
-    if (!ForceFieldMID) return;
-
-    PulseTime += DeltaTime;
-
-    // Sin wave normalised to [0, 1].
-    const float Wave = FMath::Sin(PulseTime * PulseSpeed * 2.f * PI) * 0.5f + 0.5f;
-    const float PulseValue = FMath::Lerp(PulseIntensity * 0.4f, PulseIntensity, Wave);
-
-    // Opacity slightly out of phase so brightness and transparency don't peak together.
-    const float OpacityWave = FMath::Sin(PulseTime * PulseSpeed * 2.f * PI + 1.f) * 0.5f + 0.5f;
-    const float OpacityValue = FMath::Lerp(OpacityMin, OpacityMax, OpacityWave);
-
-    ForceFieldMID->SetScalarParameterValue(TEXT("Pulse"), PulseValue);
-    ForceFieldMID->SetScalarParameterValue(TEXT("Opacity"), OpacityValue);
+    float Scale = EffectRadius / RadiusIndicatorMeshBaseRadius;
+    RadiusIndicatorMesh->SetWorldScale3D(FVector(Scale, Scale, Scale * 0.05f)); // flattened
 }
 
 #if WITH_EDITOR
@@ -117,32 +55,17 @@ void ATurretMicrowave::PostEditChangeProperty(FPropertyChangedEvent& PropertyCha
     Super::PostEditChangeProperty(PropertyChangedEvent);
 
     const FName ChangedProp = PropertyChangedEvent.GetPropertyName();
-
-    // Any property that affects the sphere transform — update both scale and location together.
-    if (ChangedProp == GET_MEMBER_NAME_CHECKED(ATurretMicrowave, EffectRadius)          ||
-        ChangedProp == GET_MEMBER_NAME_CHECKED(ATurretMicrowave, RadiusIndicatorMeshBaseRadius) ||
-        ChangedProp == GET_MEMBER_NAME_CHECKED(ATurretMicrowave, ForceFieldHeightOffset))
+    if (ChangedProp == GET_MEMBER_NAME_CHECKED(ATurretMicrowave, EffectRadius) ||
+        ChangedProp == GET_MEMBER_NAME_CHECKED(ATurretMicrowave, RadiusIndicatorMeshBaseRadius))
     {
-        UpdateRadiusIndicatorTransform();
-    }
-
-    if (ChangedProp == GET_MEMBER_NAME_CHECKED(ATurretMicrowave, ForceFieldColor))
-    {
-        if (ForceFieldMID)
-        {
-            ForceFieldMID->SetVectorParameterValue(TEXT("Color"), ForceFieldColor);
-        }
+        UpdateRadiusIndicatorScale();
     }
 }
 #endif
 
-// ===== TICK =====
-
 void ATurretMicrowave::Tick(float DeltaTime)
 {
     AActor::Tick(DeltaTime);
-
-    TickForceField(DeltaTime);
 
     if (bIsPreview) return;
 
@@ -154,6 +77,10 @@ void ATurretMicrowave::Tick(float DeltaTime)
     }
 
     TickAffectedEnemies(DeltaTime);
+
+#if !UE_BUILD_SHIPPING
+    DrawDebugSphere(GetWorld(), GetActorLocation(), EffectRadius, 32, FColor::Cyan, false, 0.f, 0, 1.f);
+#endif
 }
 
 // ===== SCANNING =====
@@ -171,10 +98,15 @@ void ATurretMicrowave::ScanForEnemiesInRange()
     for (AActor* Enemy : AllEnemies)
     {
         if (!IsValid(Enemy)) continue;
-        if (FVector::DistSquared(TurretLoc, Enemy->GetActorLocation()) <= RadiusSq)
+
+        const float DistSq = FVector::DistSquared(TurretLoc, Enemy->GetActorLocation());
+        if (DistSq <= RadiusSq)
+        {
             InRangeNow.Add(Enemy);
+        }
     }
 
+    // Remove effects from enemies that left range (or died/became invalid).
     for (int32 i = AffectedEnemies.Num() - 1; i >= 0; --i)
     {
         FMicrowaveAffectedEnemy& Affected = AffectedEnemies[i];
@@ -185,6 +117,7 @@ void ATurretMicrowave::ScanForEnemiesInRange()
         }
     }
 
+    // Add effects to newly-entered enemies.
     for (AActor* Enemy : InRangeNow)
     {
         const bool bAlreadyTracked = AffectedEnemies.ContainsByPredicate(
@@ -229,6 +162,7 @@ void ATurretMicrowave::ApplyEffectsToEnemy(FMicrowaveAffectedEnemy& Affected)
     AActor* Enemy = Affected.Enemy;
     if (!IsValid(Enemy)) return;
 
+    // --- Movement slow ---
     if (UCharacterMovementComponent* MoveComp = GetEnemyMovementComponent(Enemy))
     {
         Affected.OriginalMaxWalkSpeed = MoveComp->MaxWalkSpeed;
@@ -236,6 +170,9 @@ void ATurretMicrowave::ApplyEffectsToEnemy(FMicrowaveAffectedEnemy& Affected)
         Affected.bAppliedWalkSlow = true;
     }
 
+    // --- Attack speed slow ---
+    // Read/write the BP variable by name via reflection - no reparenting needed.
+    // skipped if the enemy BP doesn't have this variable.
     if (FProperty* Prop = Enemy->GetClass()->FindPropertyByName(AttackSpeedVarName))
     {
         if (FFloatProperty* FloatProp = CastField<FFloatProperty>(Prop))
@@ -256,7 +193,9 @@ void ATurretMicrowave::RemoveEffectsFromEnemy(FMicrowaveAffectedEnemy& Affected)
     if (Affected.bAppliedWalkSlow)
     {
         if (UCharacterMovementComponent* MoveComp = GetEnemyMovementComponent(Enemy))
+        {
             MoveComp->MaxWalkSpeed = Affected.OriginalMaxWalkSpeed;
+        }
     }
 
     if (Affected.bAppliedAttackSlow)
@@ -264,7 +203,9 @@ void ATurretMicrowave::RemoveEffectsFromEnemy(FMicrowaveAffectedEnemy& Affected)
         if (FProperty* Prop = Enemy->GetClass()->FindPropertyByName(AttackSpeedVarName))
         {
             if (FFloatProperty* FloatProp = CastField<FFloatProperty>(Prop))
+            {
                 FloatProp->SetPropertyValue_InContainer(Enemy, Affected.OriginalAttackSpeedMultiplier);
+            }
         }
     }
 }
@@ -272,7 +213,9 @@ void ATurretMicrowave::RemoveEffectsFromEnemy(FMicrowaveAffectedEnemy& Affected)
 void ATurretMicrowave::RemoveAllEffects()
 {
     for (FMicrowaveAffectedEnemy& Affected : AffectedEnemies)
+    {
         RemoveEffectsFromEnemy(Affected);
+    }
     AffectedEnemies.Empty();
 }
 
@@ -281,8 +224,10 @@ void ATurretMicrowave::RemoveAllEffects()
 void ATurretMicrowave::TryConfuseEnemy(AActor* Enemy)
 {
     if (!IsValid(Enemy)) return;
-    if (FMath::FRand() > ConfusionChance) return;
 
+    if (FMath::FRand() > ConfusionChance) return; // roll failed
+
+    // Find another enemy nearby to redirect targeting at.
     TArray<AActor*> AllEnemies;
     UGameplayStatics::GetAllActorsWithTag(GetWorld(), EnemyTag, AllEnemies);
 
@@ -293,6 +238,7 @@ void ATurretMicrowave::TryConfuseEnemy(AActor* Enemy)
     for (AActor* Other : AllEnemies)
     {
         if (!IsValid(Other) || Other == Enemy) continue;
+
         const float DistSq = FVector::DistSquared(EnemyLoc, Other->GetActorLocation());
         if (DistSq <= ClosestDistSq)
         {
@@ -301,13 +247,21 @@ void ATurretMicrowave::TryConfuseEnemy(AActor* Enemy)
         }
     }
 
-    if (!NewTarget) return;
+    if (!NewTarget) return; // no one nearby to be confused into attacking
 
+    // Call the enemy BP's "ChaseTarget(TargetActor)" custom event by name,
+    // without needing to reparent the enemy BP to a C++ class.
     UFunction* ChaseFunc = Enemy->FindFunction(ChaseTargetEventName);
-    if (!ChaseFunc) return;
+    if (!ChaseFunc) return; // enemy BP doesn't implement this - skip gracefully
 
-    struct FChaseTargetParams { AActor* TargetActor; };
+    // Build the parameter struct matching the function's single Actor param.
+    struct FChaseTargetParams
+    {
+        AActor* TargetActor;
+    };
+
     FChaseTargetParams Params;
     Params.TargetActor = NewTarget;
+
     Enemy->ProcessEvent(ChaseFunc, &Params);
 }

@@ -14,14 +14,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b3110b6-6ed4-4bb7-a6c8-b1d178ef7446" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Build_Objects/MicroWaveTurret.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Build_Objects/MicroWaveTurret.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Build_Objects/Wall.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Build_Objects/Wall.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/Meshes/communication_shack/Materials/Ground_material_Particals.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelPrototyping/Meshes/communication_shack/Materials/Ground_material_Particals.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UI/WBP_BuildMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/WBP_BuildMenu.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,84 +32,15 @@
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/AmbientLayeredSound.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/BaseEnemy.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/BaseEnemy.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/HealthBarComponent.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/HealthBarComponent.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/WaveManager.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/WaveManager.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/WaveUI.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/WaveUI.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/CoreUObject/Public/UObject/Class.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/Engine/Classes/Animation/AnimInstance.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/Engine/Classes/Components/SceneComponent.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/Engine/Classes/GameFramework/Character.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/UMG/Public/Blueprint/UserWidget.h" root0="FORCE_HIGHLIGHTING" />
   </component>
-  <component name="McpProjectServerCommands">
-    <commands />
-    <urls />
-  </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
-  <component name="NextEditCompletionFeaturesState">
-    <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0" />
-      <entry key="S5" value="1.0" />
-      <entry key="S10" value="1.0" />
-      <entry key="S30" value="1.0" />
-      <entry key="S60" value="1.0" />
-      <entry key="M2" value="1.0" />
-      <entry key="M5" value="1.0000000000420988" />
-      <entry key="M10" value="1.0000238338073448" />
-      <entry key="M15" value="1.0019836974794631" />
-      <entry key="M30" value="1.1660016280716663" />
-      <entry key="H1" value="2.522719367559986" />
-      <entry key="H2" value="5.615701828307738" />
-      <entry key="H4" value="9.037988034516054" />
-      <entry key="D1" value="13.763198484511388" />
-      <entry key="W1" value="14.816229891684458" />
-    </decayedCancelled>
-    <decayedSelected>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="0.0" />
-      <entry key="S2" value="0.0" />
-      <entry key="S5" value="0.0" />
-      <entry key="S10" value="0.0" />
-      <entry key="S30" value="2.6046041065311637E-115" />
-      <entry key="S60" value="7.12731755008277E-58" />
-      <entry key="M2" value="3.763417698561446E-29" />
-      <entry key="M5" value="6.464189097909298E-12" />
-      <entry key="M10" value="3.595139892757921E-6" />
-      <entry key="M15" value="2.956705232128711E-4" />
-      <entry key="M30" value="0.024317155014934783" />
-      <entry key="H1" value="0.2205310864740799" />
-      <entry key="H2" value="0.6641245211329554" />
-      <entry key="H4" value="1.1524966138581072" />
-      <entry key="D1" value="1.8244484318016785" />
-      <entry key="W1" value="1.973923072782013" />
-    </decayedSelected>
-    <decayedShown>
-      <entry key="MS100" value="1.6128815316183157E-5" />
-      <entry key="MS500" value="0.11003237669539385" />
-      <entry key="S2" value="0.5759438211746788" />
-      <entry key="S5" value="0.8019587853369635" />
-      <entry key="S10" value="0.8955215158425639" />
-      <entry key="S30" value="0.9638852657545566" />
-      <entry key="S60" value="0.9817765864770643" />
-      <entry key="M2" value="0.9908463990332025" />
-      <entry key="M5" value="0.9963284556725905" />
-      <entry key="M10" value="0.9981899178094746" />
-      <entry key="M15" value="1.001051194620234" />
-      <entry key="M30" value="1.1895873024018477" />
-      <entry key="H1" value="2.742398348985784" />
-      <entry key="H2" value="6.278844672854787" />
-      <entry key="H4" value="10.189685989651283" />
-      <entry key="D1" value="15.587442900370613" />
-      <entry key="W1" value="16.790121560761776" />
-    </decayedShown>
-  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -125,9 +52,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
@@ -298,9 +223,6 @@
       <workItem from="1776294749084" duration="289000" />
       <workItem from="1776490095872" duration="668000" />
       <workItem from="1777975829345" duration="1244000" />
-      <workItem from="1782782995641" duration="11335000" />
-      <workItem from="1782910731721" duration="5031000" />
-      <workItem from="1783014435943" duration="12441000" />
     </task>
     <servers />
   </component>
@@ -327,6 +249,11 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h</url>
+          <line>2</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
