@@ -98,19 +98,14 @@ void ATurret::RotateToTarget(float DeltaTime)
 {
     if (!GunMesh || !CurrentTarget) return;
 
-    FVector TargetLoc = CurrentTarget->GetActorLocation() + FVector(0,0,80);
+    FVector TargetLoc = GetTargetCenter(CurrentTarget);
     FVector Dir = TargetLoc - GunMesh->GetComponentLocation();
-
     Dir.Z = 0;
     if (Dir.IsNearlyZero()) return;
 
-    // pply offset HERE (to target)
     FRotator TargetRot = Dir.Rotation() + GunRotationOffset;
-
     FRotator CurrentRot = GunMesh->GetComponentRotation();
-
     FRotator NewRot = FMath::RInterpConstantTo(CurrentRot, TargetRot, DeltaTime, RotationSpeed);
-
     GunMesh->SetWorldRotation(NewRot);
 }
 
@@ -129,16 +124,36 @@ bool ATurret::IsAimedAtTarget() const
 }
 
 // ===== FIRE =====
-
 void ATurret::Fire()
 {
     if (!ProjectileClass || !MuzzlePoint || !CurrentTarget) return;
 
     FVector SpawnLocation = MuzzlePoint->GetComponentLocation();
-
-    FVector TargetLoc = CurrentTarget->GetActorLocation() + FVector(0,0,80);
-
+    FVector TargetLoc = GetTargetCenter(CurrentTarget); 
     FRotator LookAtRot = (TargetLoc - SpawnLocation).Rotation();
 
+    LookAtRot.Pitch += ProjectilePitchOffset;
+
     GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnLocation, LookAtRot);
+}
+
+FVector ATurret::GetTargetCenter(AActor* Target) const
+{
+    if (!Target) return FVector::ZeroVector;
+
+    // Try to get the skeletal mesh first, then static mesh
+    USkeletalMeshComponent* SkelMesh = Target->FindComponentByClass<USkeletalMeshComponent>();
+    if (SkelMesh)
+    {
+        return SkelMesh->Bounds.Origin;
+    }
+
+    UStaticMeshComponent* StatMesh = Target->FindComponentByClass<UStaticMeshComponent>();
+    if (StatMesh)
+    {
+        return StatMesh->Bounds.Origin;
+    }
+
+    // Fallback to actor location if no mesh found
+    return Target->GetActorLocation();
 }

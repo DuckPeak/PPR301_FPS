@@ -1,15 +1,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ISellable.h"
 #include "GameFramework/Actor.h"
 #include "Turret.generated.h"
+
 
 class USceneComponent;
 class UStaticMeshComponent;
 class AActor;
 
 UCLASS()
-class PPR301_FPS_API ATurret : public AActor
+class PPR301_FPS_API ATurret : public AActor, public ISellable
 {
 	GENERATED_BODY()
     
@@ -23,6 +25,9 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Build")
 	int32 Cost = 100;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Turret|Fire")
+	float ProjectilePitchOffset = 0.f;
 
 protected:
 	virtual void BeginPlay() override;
@@ -67,6 +72,9 @@ protected:
 	void RotateToTarget(float DeltaTime);
 	bool IsAimedAtTarget() const;
 	void Fire();
+	FVector GetTargetCenter(AActor* Target) const;
 
 	void FindNearestEnemy();
+	
+	virtual int32 GetSellCost_Implementation() override { return Cost; }
 };
