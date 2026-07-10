@@ -14,11 +14,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b3110b6-6ed4-4bb7-a6c8-b1d178ef7446" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Content/Build_Objects/MicroWaveTurret.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Build_Objects/MicroWaveTurret.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FPSTest/Core/DefencePoint.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FPSTest/Core/DefencePoint.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Fab/Megascans/3D/Cement_Rubble_rinet/High/rinet_tier_1/StaticMeshes/rinet_tier_1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Fab/Megascans/3D/Cement_Rubble_rinet/High/rinet_tier_1/StaticMeshes/rinet_tier_1.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PPR301_FPS.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelPrototyping/LevelPrototype.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TurretMicrowave.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TurretMicrowave.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MyTDSPlayerController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MyTDSPlayerController.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Tutorial/BP_TutorialManager.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Tutorial/BP_TutorialManager.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Tutorial/TutorialComponents/BP_PlayerEvents.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Tutorial/TutorialComponents/BP_PlayerEvents.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UI/Tutorial/WBP_ShootScreen.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Tutorial/WBP_ShootScreen.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PPR301_FPS/TDSPlayerController.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +31,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Scott-Tatham&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DuckPeak/PPR301_FPS.git&quot;,
+    &quot;accountId&quot;: &quot;8668a6d1-78c9-4a20-8721-ee0bedcd5586&quot;
+  }
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/AmbientLayeredSound.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/AmbientLayeredSound.h" root0="FORCE_HIGHLIGHTING" />
@@ -41,11 +56,11 @@
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/WaveManager.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/WaveUI.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/PPR301_FPS/WaveUI.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/CoreUObject/Public/UObject/Class.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/Engine/Classes/Animation/AnimInstance.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/Engine/Classes/Components/SceneComponent.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/Engine/Classes/GameFramework/Character.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/UMG/Public/Blueprint/UserWidget.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/CoreUObject/Public/UObject/Class.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/Engine/Classes/Animation/AnimInstance.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/Engine/Classes/Components/SceneComponent.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/Engine/Classes/GameFramework/Character.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Source/Runtime/UMG/Public/Blueprint/UserWidget.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="McpProjectServerCommands">
     <commands />
@@ -131,7 +146,8 @@
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Tutorial__2&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -146,12 +162,12 @@
         <option name="CONFIGURATION" value="DebugGame Editor" />
         <option name="PLATFORM" value="Linux" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
-        <option name="EXECUTABLE_PATH" value="$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/Linux/UnrealEditor-Linux-DebugGame" />
+        <option name="EXECUTABLE_PATH" value="$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/Linux/UnrealEditor-Linux-DebugGame" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;$PROJECT_DIR$/PPR301_FPS.uproject&quot;" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
-        <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3" />
+        <option name="WORKING_DIRECTORY" value="$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3" />
         <option name="PASS_PARENT_ENVS" value="1" />
-        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
         <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/PPR301_FPS.uproject" />
       </configuration_1>
@@ -159,12 +175,12 @@
         <option name="CONFIGURATION" value="DebugGame Editor" />
         <option name="PLATFORM" value="LinuxArm64" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
-        <option name="EXECUTABLE_PATH" value="$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/LinuxArm64/UnrealEditor-LinuxArm64-DebugGame" />
+        <option name="EXECUTABLE_PATH" value="$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/LinuxArm64/UnrealEditor-LinuxArm64-DebugGame" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;$PROJECT_DIR$/PPR301_FPS.uproject&quot;" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
-        <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3" />
+        <option name="WORKING_DIRECTORY" value="$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3" />
         <option name="PASS_PARENT_ENVS" value="1" />
-        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
         <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/PPR301_FPS.uproject" />
       </configuration_2>
@@ -175,9 +191,9 @@
         <option name="EXECUTABLE_PATH" value="$PROJECT_DIR$/Binaries/Linux/PPR301_FPS-Linux-DebugGame" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
-        <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3" />
+        <option name="WORKING_DIRECTORY" value="$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3" />
         <option name="PASS_PARENT_ENVS" value="1" />
-        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
         <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/PPR301_FPS.uproject" />
       </configuration_3>
@@ -188,9 +204,9 @@
         <option name="EXECUTABLE_PATH" value="$PROJECT_DIR$/Binaries/LinuxArm64/PPR301_FPS-LinuxArm64-DebugGame" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
-        <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3" />
+        <option name="WORKING_DIRECTORY" value="$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3" />
         <option name="PASS_PARENT_ENVS" value="1" />
-        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
         <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/PPR301_FPS.uproject" />
       </configuration_4>
@@ -198,12 +214,12 @@
         <option name="CONFIGURATION" value="Development Editor" />
         <option name="PLATFORM" value="Linux" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
-        <option name="EXECUTABLE_PATH" value="$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/Linux/UnrealEditor" />
+        <option name="EXECUTABLE_PATH" value="$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/Linux/UnrealEditor" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;$PROJECT_DIR$/PPR301_FPS.uproject&quot;" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
-        <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3" />
+        <option name="WORKING_DIRECTORY" value="$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3" />
         <option name="PASS_PARENT_ENVS" value="1" />
-        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
         <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/PPR301_FPS.uproject" />
       </configuration_5>
@@ -211,12 +227,12 @@
         <option name="CONFIGURATION" value="Development Editor" />
         <option name="PLATFORM" value="LinuxArm64" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
-        <option name="EXECUTABLE_PATH" value="$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/LinuxArm64/UnrealEditor" />
+        <option name="EXECUTABLE_PATH" value="$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3/Engine/Binaries/LinuxArm64/UnrealEditor" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;$PROJECT_DIR$/PPR301_FPS.uproject&quot;" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
-        <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3" />
+        <option name="WORKING_DIRECTORY" value="$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3" />
         <option name="PASS_PARENT_ENVS" value="1" />
-        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
         <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/PPR301_FPS.uproject" />
       </configuration_6>
@@ -227,9 +243,9 @@
         <option name="EXECUTABLE_PATH" value="$PROJECT_DIR$/Binaries/Linux/PPR301_FPS" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
-        <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3" />
+        <option name="WORKING_DIRECTORY" value="$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3" />
         <option name="PASS_PARENT_ENVS" value="1" />
-        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
         <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/PPR301_FPS.uproject" />
       </configuration_7>
@@ -240,9 +256,9 @@
         <option name="EXECUTABLE_PATH" value="$PROJECT_DIR$/Binaries/LinuxArm64/PPR301_FPS" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
-        <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3" />
+        <option name="WORKING_DIRECTORY" value="$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3" />
         <option name="PASS_PARENT_ENVS" value="1" />
-        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
         <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/PPR301_FPS.uproject" />
       </configuration_8>
@@ -253,9 +269,9 @@
         <option name="EXECUTABLE_PATH" value="$PROJECT_DIR$/Binaries/Linux/PPR301_FPS-Linux-Shipping" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
-        <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3" />
+        <option name="WORKING_DIRECTORY" value="$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3" />
         <option name="PASS_PARENT_ENVS" value="1" />
-        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
         <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/PPR301_FPS.uproject" />
       </configuration_9>
@@ -266,12 +282,77 @@
         <option name="EXECUTABLE_PATH" value="$PROJECT_DIR$/Binaries/LinuxArm64/PPR301_FPS-LinuxArm64-Shipping" />
         <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
         <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
-        <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../UnReal/Linux_Unreal_Engine_5.7.3" />
+        <option name="WORKING_DIRECTORY" value="$USER_HOME$/UnReal/Linux_Unreal_Engine_5.7.3" />
         <option name="PASS_PARENT_ENVS" value="1" />
-        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
         <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/PPR301_FPS.uproject" />
       </configuration_10>
+      <configuration_11 setup="1">
+        <option name="CONFIGURATION" value="DebugGame Editor" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="$PROJECT_DIR$/../../../../../Program Files/Epic Games/UE_5.7/Engine/Binaries/Win64/UnrealEditor-Win64-DebugGame.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;C:\Users\Scooter\Documents\GitHub\PPR301_FPS\PPR301_FPS.uproject&quot;" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../../../Program Files/Epic Games/UE_5.7" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/PPR301_FPS.uproject" />
+      </configuration_11>
+      <configuration_12 setup="1">
+        <option name="CONFIGURATION" value="DebugGame" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="$PROJECT_DIR$/Binaries/Win64/PPR301_FPS-Win64-DebugGame.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../../../Program Files/Epic Games/UE_5.7" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/PPR301_FPS.uproject" />
+      </configuration_12>
+      <configuration_13 setup="1">
+        <option name="CONFIGURATION" value="Development Editor" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="$PROJECT_DIR$/../../../../../Program Files/Epic Games/UE_5.7/Engine/Binaries/Win64/UnrealEditor.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;C:\Users\Scooter\Documents\GitHub\PPR301_FPS\PPR301_FPS.uproject&quot;" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../../../Program Files/Epic Games/UE_5.7" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/PPR301_FPS.uproject" />
+      </configuration_13>
+      <configuration_14 setup="1">
+        <option name="CONFIGURATION" value="Development" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="$PROJECT_DIR$/Binaries/Win64/PPR301_FPS.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../../../Program Files/Epic Games/UE_5.7" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/PPR301_FPS.uproject" />
+      </configuration_14>
+      <configuration_15 setup="1">
+        <option name="CONFIGURATION" value="Shipping" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="$PROJECT_DIR$/Binaries/Win64/PPR301_FPS-Win64-Shipping.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../../../Program Files/Epic Games/UE_5.7" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/PPR301_FPS.uproject" />
+      </configuration_15>
       <option name="DEFAULT_PROJECT_PATH" value="$PROJECT_DIR$/PPR301_FPS.uproject" />
       <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/PPR301_FPS.uproject" />
       <option name="AUTO_SELECT_PRIORITY" value="10010" />
@@ -298,6 +379,8 @@
       <workItem from="1782782995641" duration="11335000" />
       <workItem from="1782910731721" duration="5031000" />
       <workItem from="1783014435943" duration="12441000" />
+      <workItem from="1783664320741" duration="1236000" />
+      <workItem from="1783665603733" duration="4083000" />
     </task>
     <servers />
   </component>

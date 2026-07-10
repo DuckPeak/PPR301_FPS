@@ -71,6 +71,7 @@ void ATDSPlayerController::RotatePreviewLeft()
     {
         PreviewActor->SetActorRotation(FRotator(0.f, CurrentRotation, 0.f));
     }
+    OnPreviewRotatedLeft.Broadcast();
 }
 
 void ATDSPlayerController::RotatePreviewRight()
@@ -80,6 +81,7 @@ void ATDSPlayerController::RotatePreviewRight()
     {
         PreviewActor->SetActorRotation(FRotator(0.f, CurrentRotation, 0.f));
     }
+    OnPreviewRotatedRight.Broadcast();
 }
 
 void ATDSPlayerController::Tick(float DeltaTime)
@@ -131,6 +133,8 @@ void ATDSPlayerController::ToggleBuildMode()
 {
     bIsBuildMode = !bIsBuildMode;
     UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Toggled build mode: %s"), bIsBuildMode ? TEXT("ON") : TEXT("OFF"));
+
+    OnBuildModeToggled.Broadcast(bIsBuildMode);
 
     if (bIsBuildMode)
     {
@@ -391,6 +395,8 @@ void ATDSPlayerController::UpdatePreview()
 void ATDSPlayerController::PlacePreviewedObject()
 {
     if (!bIsBuildMode) return;
+
+    OnPreviewPlaced.Broadcast();
 
     // Sell mode: click sells the actor under the cursor
     if (bIsSellMode)
