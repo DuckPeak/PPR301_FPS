@@ -27,16 +27,16 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupInputComponent() override;
 
-	UPROPERTY(BlueprintAssignable, Category="Build Mode")
+	UPROPERTY(BlueprintAssignable, Category="Build | Event")
 	FOnBuildModeToggled OnBuildModeToggled;
 
-	UPROPERTY(BlueprintAssignable, Category="Build Mode")
+	UPROPERTY(BlueprintAssignable, Category="Build | Event")
 	FOnPreviewRotatedLeft OnPreviewRotatedLeft;
 
-	UPROPERTY(BlueprintAssignable, Category="Build Mode")
+	UPROPERTY(BlueprintAssignable, Category="Build | Event")
 	FOnPreviewRotatedRight OnPreviewRotatedRight;
 
-	UPROPERTY(BlueprintAssignable, Category="Build Mode")
+	UPROPERTY(BlueprintAssignable, Category="Build | Event")
 	FOnPreviewPlaced OnPreviewPlaced;
 	// UI CALL
 	UFUNCTION(BlueprintCallable)
