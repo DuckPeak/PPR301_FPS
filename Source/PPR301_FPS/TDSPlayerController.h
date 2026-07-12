@@ -81,12 +81,15 @@ public:
 	// Repair cost is this fraction of the actor's ISellable sell cost (0.25 = 1/4)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Build | Repair")
 	float RepairCostFraction = 0.25f;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Build")
+	bool bIsBuildMode;
 
 private:
 	// ===== CAMERA =====
 	UPROPERTY()
 	ACameraActor* BuildCamera;
-	bool bIsBuildMode;
+
 	UPROPERTY(EditAnywhere, Category="Camera")
 	float CameraSpeed = 2000.f;
 	UPROPERTY(EditAnywhere, Category="Camera")
