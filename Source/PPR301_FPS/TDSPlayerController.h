@@ -9,6 +9,12 @@
 #include "Blueprint/UserWidget.h"
 #include "IRepairable.h"
 #include "TDSPlayerController.generated.h"
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnBuildModeToggled, bool, bBuildModeActive);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPreviewRotatedLeft);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPreviewRotatedRight);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPreviewPlaced);
+
 class UInputMappingContext;
 class UInputAction;
 UCLASS()
@@ -20,6 +26,18 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupInputComponent() override;
+
+	UPROPERTY(BlueprintAssignable, Category="Build | Event")
+	FOnBuildModeToggled OnBuildModeToggled;
+
+	UPROPERTY(BlueprintAssignable, Category="Build | Event")
+	FOnPreviewRotatedLeft OnPreviewRotatedLeft;
+
+	UPROPERTY(BlueprintAssignable, Category="Build | Event")
+	FOnPreviewRotatedRight OnPreviewRotatedRight;
+
+	UPROPERTY(BlueprintAssignable, Category="Build | Event")
+	FOnPreviewPlaced OnPreviewPlaced;
 	// UI CALL
 	UFUNCTION(BlueprintCallable)
 	void SetSelectedBuild(TSubclassOf<AActor> NewClass);
