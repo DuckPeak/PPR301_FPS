@@ -30,6 +30,10 @@ void UTurretAim::TickComponent(const float DeltaTime, const ELevelTick TickType,
 	RotateToTarget(DeltaTime);
 }
 
+/**
+ * Sets the rotation of the gun mesh to the direction of the target.
+ * @param DeltaTime The time between ticks each frame.
+ */
 void UTurretAim::RotateToTarget(const float DeltaTime) const
 {
 	if (GunMesh && TurretTargeting && TurretTargeting->CurrentTarget)
@@ -44,6 +48,9 @@ void UTurretAim::RotateToTarget(const float DeltaTime) const
 	}
 }
 
+/**
+ * @brief Draws a line from the muzzle point directly forward.
+ */
 void UTurretAim::DebugAim() const
 {
 	if (MuzzlePoint)

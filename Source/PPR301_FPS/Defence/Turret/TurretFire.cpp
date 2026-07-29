@@ -26,11 +26,15 @@ void UTurretFire::TickComponent(const float DeltaTime, const ELevelTick TickType
 	Fire(DeltaTime);
 }
 
+/**
+ * Spawns a projectile at the muzzle point and directs it towards the target.
+ * @param DeltaTime The time between ticks each frame.
+ */
 void UTurretFire::Fire(const float DeltaTime)
 {
-	FireCooldown -= DeltaTime;
+	CurrentCooldown -= DeltaTime;
 	
-	if (FireCooldown <= 0.f && ProjectileClass && MuzzlePoint && TurretTargeting && TurretTargeting->CurrentTarget)
+	if (CurrentCooldown <= 0.f && ProjectileClass && MuzzlePoint && TurretTargeting && TurretTargeting->CurrentTarget)
 	{
 		const FVector SpawnLocation = MuzzlePoint->GetComponentLocation();
 		FRotator LookAtRotation = (TurretTargeting->CurrentTargetCenter - SpawnLocation).Rotation();
@@ -38,6 +42,7 @@ void UTurretFire::Fire(const float DeltaTime)
 		LookAtRotation.Pitch += ProjectilePitchOffset;
 
 		GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnLocation, LookAtRotation);
-		FireCooldown = FireRate;
+		
+		CurrentCooldown = FireRate;
 	}
 }

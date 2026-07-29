@@ -13,7 +13,10 @@ class PPR301_FPS_API UTurretFire : public UActorComponent
 
 public:
 	UTurretFire();
-	
+
+	/**
+	 * @brief The offset to the pitch of the projectile when firing.
+	 */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile")
 	float ProjectilePitchOffset = 0.f;
 	
@@ -21,20 +24,39 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
-	// The projectile to spawn.
+	/**
+	 * @brief The reference to the projectile for the turret.
+	 */
 	UPROPERTY(EditAnywhere, Category="Projectile")
 	TSubclassOf<AActor> ProjectileClass;
-	
+
+	/**
+	 * @brief The reference to the muzzle point component.
+	 */
 	UPROPERTY()
 	USceneComponent* MuzzlePoint = nullptr;
 	
+	/**
+	 * @brief The reference to the @ref UTurretTargeting component.
+	 */
 	UPROPERTY()
 	UTurretTargeting* TurretTargeting = nullptr;
 
+	/**
+	 * @brief The rate at which the turret can fire.
+	 */
 	UPROPERTY(EditAnywhere, Category="Firing")
 	float FireRate = 1.f;
 
-	float FireCooldown = 0.f;
-	
+	/**
+	 * @brief The cooldown time for the turret after firing.
+	 */
+	UPROPERTY(VisibleInstanceOnly, Category="Firing")
+	float CurrentCooldown = 0.f;
+
+	/**
+	 * Fires the turret if able.
+	 * @param DeltaTime The time between ticks each frame.
+	 */
 	void Fire(float DeltaTime);
 };
