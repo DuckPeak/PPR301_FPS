@@ -28,7 +28,7 @@ public:
 	/**
 	 * @brief Maximum range to search for enemies.
 	 */
-	UPROPERTY(EditAnywhere, Category="Turret")
+	UPROPERTY(EditAnywhere, Category="Targeting")
 	float MaxSearchRange = 1000.0f;
 
 	virtual void BeginPlay() override;

@@ -1,11 +1,13 @@
 #include "PlayerBuildMode.h"
 
+#include "AITestsCommon.h"
 #include "Camera/CameraActor.h"
 #include "PlayerBase.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
 #include "Engine/OverlapResult.h"
 #include "Kismet/GameplayStatics.h"
+#include "PPR301_FPS/IRepairable.h"
 #include "PPR301_FPS/Defence/DefenceBase.h"
 
 UPlayerBuildMode::UPlayerBuildMode()
@@ -42,6 +44,53 @@ void UPlayerBuildMode::BeginPlay()
 void UPlayerBuildMode::TickComponent(const float DeltaTime, const ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	
+	if (bIsBuildMode && BuildCamera)
+	{
+		MoveCamera(DeltaTime);
+		HandleZoom();
+
+		if (bIsSellMode)
+		{
+			UpdateSellHighlight();
+		}
+		
+		else if (bIsRepairMode)
+		{
+			UpdateRepairHighlight();
+		}
+		
+		else
+		{
+			UpdatePreview();
+		}
+	}
+}
+
+void UPlayerBuildMode::MoveCamera(float DeltaTime) const
+{
+	if (PlayerInputs)
+	{
+		BuildCamera->SetActorLocation(BuildCamera->GetActorLocation() + PlayerInputs->GetMovementDirection() * CameraSpeed * DeltaTime);
+	}
+}
+
+void UPlayerBuildMode::HandleZoom()
+{
+	if (PlayerInputs)
+	{
+		if (const float ScrollDelta = PlayerInputs->GetScrollDelta(); FMath::Abs(ScrollDelta) > 0.01f)
+		{
+			FVector CamLocation = BuildCamera->GetActorLocation();
+
+			// Scroll up (positive) zooms in by lowering Z; scroll down raises Z
+			CamLocation.Z = FMath::Clamp(CamLocation.Z - ScrollDelta * ZoomSpeed, MinCameraHeight, MaxCameraHeight);
+
+			BuildCamera->SetActorLocation(CamLocation);
+
+			UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Camera zoom - new height: %.1f"), CamLocation.Z);
+		}
+	}
 }
 
 void UPlayerBuildMode::ToggleBuildMode()
@@ -49,8 +98,7 @@ void UPlayerBuildMode::ToggleBuildMode()
 	bIsBuildMode = !bIsBuildMode;
 	UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Toggled build mode: %s"), bIsBuildMode ? TEXT("ON") : TEXT("OFF"));
 
-	// TODO: Do.
-	//OnBuildModeToggled.Broadcast(bIsBuildMode);
+	OnBuildModeToggledN.Broadcast(bIsBuildMode);
 
 	// Reposition build camera directly above the player's current XY position.
 	if (BuildCamera && PlayerBasePawn)
@@ -92,8 +140,7 @@ void UPlayerBuildMode::ToggleBuildMode()
 			PlayerBase->SetInputMode(FInputModeGameOnly());
 
 			// Re-enable pawn input so the player can shoot again.
-			// TODO: Do.
-			//PlayerBasePawn()->EnableInput(Cast<APlayerController>(PlayerBase));
+			PlayerBasePawn->EnableInput(Cast<APlayerController>(PlayerBase));
 			UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Pawn input restored"));
 
 			if (BuildMenuInstance)
@@ -194,8 +241,7 @@ void UPlayerBuildMode::RotatePreviewLeft()
 		PreviewDefenceActor->SetActorRotation(FRotator(0.f, CurrentRotation, 0.f));
 	}
 	
-	// TODO: Do.
-	//OnPreviewRotatedLeft.Broadcast();
+	OnPreviewRotatedLeftN.Broadcast();
 }
 
 /**
@@ -210,8 +256,7 @@ void UPlayerBuildMode::RotatePreviewRight()
 		PreviewDefenceActor->SetActorRotation(FRotator(0.f, CurrentRotation, 0.f));
 	}
 	
-	// TODO: Do.
-	//OnPreviewRotatedRight.Broadcast();
+	OnPreviewRotatedRightN.Broadcast();
 }
 
 bool UPlayerBuildMode::CheckValidPlacement(FVector Position) const
@@ -273,7 +318,7 @@ void UPlayerBuildMode::PlacePreviewedDefence()
     	// Sell mode: click sells the actor under the cursor
     	if (bIsSellMode)
     	{
-    		SellActorUnderCursor();
+    		SellDefenceUnderCursor();
     		
     		return;
     	}
@@ -281,8 +326,7 @@ void UPlayerBuildMode::PlacePreviewedDefence()
     	// Repair mode: click repairs the actor under the cursor
     	if (bIsRepairMode)
     	{
-    		// TODO: Do.
-    		//RepairActorUnderCursor();
+    		RepairDefenceUnderCursor();
     		
     		return;
     	}
@@ -314,8 +358,7 @@ void UPlayerBuildMode::PlacePreviewedDefence()
     	UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Placing previewed object"));
     	
     	PlaceDefence();
-		// TODO: Do.
-    	//OnPreviewPlaced.Broadcast();
+		OnPreviewPlacedN.Broadcast();
     }
 }
 
@@ -387,26 +430,23 @@ void UPlayerBuildMode::PlaceDefence()
 }
 
 // Traces the mouse ray, finds a sellable actor, refunds and destroys it
-void UPlayerBuildMode::SellActorUnderCursor()
+void UPlayerBuildMode::SellDefenceUnderCursor()
 {
 	FVector RayOrigin;
 	FVector RayDirection;
 	
-	//if (!DeprojectMousePositionToWorld(RayOrigin, RayDirection))
-	//{
-	//	UE_LOG(LogTemp, Warning, TEXT("[SellMode] Could not deproject mouse position"));
-	//	
-	//	return;
-	//}
+	if (!Cast<APlayerController>(PlayerBase)->DeprojectMousePositionToWorld(RayOrigin, RayDirection))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[SellMode] Could not deproject mouse position"));
+		
+		return;
+	}
 
 	FHitResult Hit;
 	FCollisionQueryParams Params;
 	Params.AddIgnoredActor(PlayerBasePawn);
 
-	const bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, RayOrigin, RayOrigin + RayDirection * 10000.f, ECC_Visibility, Params
-	);
-
-	if (!bHit || !Hit.GetActor())
+	if (const bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, RayOrigin, RayOrigin + RayDirection * 10000.f, ECC_Visibility, Params); !bHit || !Hit.GetActor())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("[SellMode] No actor hit"));
 		
@@ -419,10 +459,11 @@ void UPlayerBuildMode::SellActorUnderCursor()
 	if (!HitActor->Implements<USellable>())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("[SellMode] Hit actor '%s' is not sellable"), *GetNameSafe(HitActor));
+		
 		return;
 	}
 
-	int32 Cost = ISellable::Execute_GetSellCost(HitActor);
+	const int32 Cost = ISellable::Execute_GetSellCost(HitActor);
 	const int32 Refund = FMath::FloorToInt(Cost * 0.75f);
 
 	UE_LOG(LogTemp, Warning, TEXT("[SellMode] Selling '%s' for %d (cost was %d)"),
@@ -436,9 +477,202 @@ void UPlayerBuildMode::SellActorUnderCursor()
 		OriginalSellMaterials.Empty();
 	}
 
-	// TODO: DO.
-	//AddPlayerCash(Refund);
+	AddPlayerCash(Refund);
 	HitActor->Destroy();
+}
+
+// Traces the mouse ray, finds a repairable actor that needs repair, charges 1/4 sell cost, repairs to full
+void UPlayerBuildMode::RepairDefenceUnderCursor()
+{
+	FVector RayOrigin;
+	FVector RayDirection;
+	
+	if (!Cast<APlayerController>(PlayerBase)->DeprojectMousePositionToWorld(RayOrigin, RayDirection))
+    {
+        UE_LOG(LogTemp, Warning, TEXT("[RepairMode] Could not deproject mouse position"));
+        
+		return;
+    }
+
+    FHitResult Hit;
+    FCollisionQueryParams Params;
+    Params.AddIgnoredActor(PlayerBasePawn);
+
+    if (const bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, RayOrigin, RayOrigin + RayDirection * 10000.f, ECC_Visibility, Params); !bHit || !Hit.GetActor())
+    {
+        UE_LOG(LogTemp, Warning, TEXT("[RepairMode] No actor hit"));
+        
+    	return;
+    }
+
+    AActor* HitActor = Hit.GetActor();
+	
+	// Works for any actor that implements IRepairable — turrets, walls, microwave, anything
+    if (!HitActor->Implements<URepairable>())
+    {
+        UE_LOG(LogTemp, Warning, TEXT("[RepairMode] Hit actor '%s' is not repairable"), *GetNameSafe(HitActor));
+        
+    	return;
+    }
+
+    if (!IRepairable::Execute_NeedsRepair(HitActor))
+    {
+        UE_LOG(LogTemp, Warning, TEXT("[RepairMode] '%s' is already at full health"), *GetNameSafe(HitActor));
+        
+    	return;
+    }
+
+    // Cost is derived from the same sell value ISellable already exposes, so anything
+    // that's sellable and repairable prices repair relative to what it's actually worth.
+    int32 Cost = 0;
+    
+	if (HitActor->Implements<USellable>())
+    {
+        Cost = FMath::CeilToInt(ISellable::Execute_GetSellCost(HitActor) * RepairCostFraction);
+    }
+
+    if (PlayerCash < Cost)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("[RepairMode] Not enough money to repair '%s'! Need %d, have %d"), *GetNameSafe(HitActor), Cost, PlayerCash);
+        
+    	return;
+    }
+
+    PlayerCash -= Cost;
+    UpdateCashUI();
+
+    IRepairable::Execute_Repair(HitActor);
+
+    UE_LOG(LogTemp, Warning, TEXT("[RepairMode] Repaired '%s' for %d"), *GetNameSafe(HitActor), Cost);
+
+    // The actor is now at full health, so it no longer needs highlighting - refresh state
+    if (HitActor == HighlightedRepairActor)
+    {
+        ClearRepairHighlight();
+    }
+}
+
+// Traces under the mouse each tick while in sell mode and tints whatever sellable actor is hovered
+void UPlayerBuildMode::UpdateSellHighlight()
+{
+	FVector RayOrigin;
+	FVector RayDirection;
+	
+	if (!Cast<APlayerController>(PlayerBase)->DeprojectMousePositionToWorld(RayOrigin, RayDirection))
+	{
+		ClearSellHighlight();
+		
+		return;
+	}
+
+	FHitResult Hit;
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(PlayerBasePawn);
+
+	const bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, RayOrigin, RayOrigin + RayDirection * 10000.f, ECC_Visibility, Params);
+
+	AActor* HitActor = bHit && Hit.GetActor() && Hit.GetActor()->Implements<USellable>() ? Hit.GetActor() : nullptr;
+
+	// Already highlighting this exact actor (or both null) — nothing to do
+	if (HitActor == HighlightedSellActor)
+	{
+		return;
+	}
+
+	// Hover moved to a new target (or off the old one entirely) — restore old, apply new
+	ClearSellHighlight();
+
+	if (HitActor && SellHighlightMaterial)
+	{
+		TArray<UStaticMeshComponent*> MeshComponents;
+		HitActor->GetComponents<UStaticMeshComponent>(MeshComponents);
+
+		for (UStaticMeshComponent* MeshComp : MeshComponents)
+		{
+			if (!MeshComp) continue;
+
+			TArray<UMaterialInterface*> Originals;
+			const int32 NumMats = MeshComp->GetNumMaterials();
+			Originals.Reserve(NumMats);
+
+			for (int32 i = 0; i < NumMats; i++)
+			{
+				Originals.Add(MeshComp->GetMaterial(i));
+				MeshComp->SetMaterial(i, SellHighlightMaterial);
+			}
+
+			OriginalSellMaterials.Add(MeshComp, Originals);
+		}
+
+		HighlightedSellActor = HitActor;
+		UE_LOG(LogTemp, Warning, TEXT("[SellMode] Highlighting '%s'"), *GetNameSafe(HitActor));
+	}
+}
+
+// Traces under the mouse each tick while in repair mode and tints whatever repairable actor is hovered
+void UPlayerBuildMode::UpdateRepairHighlight()
+{
+	FVector RayOrigin;
+	FVector RayDirection;
+	
+	if (!Cast<APlayerController>(PlayerBase)->DeprojectMousePositionToWorld(RayOrigin, RayDirection))
+	{
+        ClearRepairHighlight();
+	
+        return;
+    }
+
+	FHitResult Hit;
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(PlayerBasePawn);
+
+    const bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, RayOrigin, RayOrigin + RayDirection * 10000.f, ECC_Visibility, Params);
+
+    // Only highlight actors that implement IRepairable AND currently need repairing
+    AActor* HitActor = nullptr;
+    
+	if (bHit && Hit.GetActor() && Hit.GetActor()->Implements<URepairable>())
+    {
+        if (IRepairable::Execute_NeedsRepair(Hit.GetActor()))
+        {
+            HitActor = Hit.GetActor();
+        }
+    }
+
+    // Already highlighting this exact actor (or both null) — nothing to do
+    if (HitActor == HighlightedRepairActor)
+    {
+        return;
+    }
+
+    // Hover moved to a new target (or off the old one entirely) — restore old, apply new
+    ClearRepairHighlight();
+
+    if (HitActor && RepairHighlightMaterial)
+    {
+        TArray<UStaticMeshComponent*> MeshComponents;
+        HitActor->GetComponents<UStaticMeshComponent>(MeshComponents);
+
+        for (UStaticMeshComponent* MeshComp : MeshComponents)
+        {
+            if (!MeshComp) continue;
+
+            TArray<UMaterialInterface*> Originals;
+            const int32 NumMats = MeshComp->GetNumMaterials();
+            Originals.Reserve(NumMats);
+
+            for (int32 i = 0; i < NumMats; i++)
+            {
+                Originals.Add(MeshComp->GetMaterial(i));
+                MeshComp->SetMaterial(i, RepairHighlightMaterial);
+            }
+
+            OriginalRepairMaterials.Add(MeshComp, Originals);
+        }
+
+        HighlightedRepairActor = HitActor;
+        UE_LOG(LogTemp, Warning, TEXT("[RepairMode] Highlighting '%s'"), *GetNameSafe(HitActor));
+    }
 }
 
 // Restores original materials on the currently highlighted sell actor (if any) and clears state.
@@ -491,6 +725,17 @@ void UPlayerBuildMode::ClearRepairHighlight()
 
 	OriginalRepairMaterials.Empty();
 	HighlightedRepairActor = nullptr;
+}
+
+void UPlayerBuildMode::AddPlayerCash(const int32 Amount)
+{
+	if (Amount <= 0) return;
+
+	PlayerCash += Amount;
+
+	UE_LOG(LogTemp, Warning, TEXT("[BuildMode] Added %d cash. New total: %d"), Amount, PlayerCash);
+
+	UpdateCashUI();
 }
 
 void UPlayerBuildMode::UpdateCashUI() const

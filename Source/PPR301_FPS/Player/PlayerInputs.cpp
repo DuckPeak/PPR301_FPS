@@ -55,6 +55,43 @@ FVector UPlayerInputs::GetMouseWorldPosition() const
 	return FVector::ZeroVector;
 }
 
+FVector UPlayerInputs::GetMovementDirection() const
+{
+	FVector Direction = FVector::ZeroVector;
+
+	if (const APlayerController* PlayerController = Cast<APlayerController>(PlayerOwner))
+	{
+		if (PlayerController->IsInputKeyDown(EKeys::W))
+		{
+			Direction.X += 1;
+		}
+		
+		if (PlayerController->IsInputKeyDown(EKeys::S))
+		{
+			Direction.X -= 1;
+		}
+		
+		if (PlayerController->IsInputKeyDown(EKeys::D))
+		{
+			Direction.Y += 1;
+		}
+		
+		if (PlayerController->IsInputKeyDown(EKeys::A))
+		{
+			Direction.Y -= 1;
+		}
+	}
+
+	return Direction;
+}
+
+float UPlayerInputs::GetScrollDelta() const
+{
+	const APlayerController* PlayerController = Cast<APlayerController>(PlayerOwner);
+	
+	return PlayerController ? PlayerController->GetInputAnalogKeyState(EKeys::MouseWheelAxis) : 0.f;
+}
+
 void UPlayerInputs::ToggleBuildMode()
 {
 	if (PlayerBuildMode)

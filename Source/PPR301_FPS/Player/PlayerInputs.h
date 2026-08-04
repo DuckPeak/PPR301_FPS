@@ -20,6 +20,10 @@ public:
 	
 	FVector GetMouseWorldPosition() const;
 	
+	FVector GetMovementDirection() const;
+	
+	float GetScrollDelta() const;
+	
 private:
 	UPROPERTY()
 	APlayerBase* PlayerOwner;
