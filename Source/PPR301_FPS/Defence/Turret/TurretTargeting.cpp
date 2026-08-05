@@ -83,16 +83,16 @@ FVector UTurretTargeting::GetTargetCenter() const
 {
 	if (CurrentTarget)
 	{
-		// Try to get the skeletal mesh first, then static mesh, else return the actor location.
-		if (const USkeletalMeshComponent* SkeletalMesh = CurrentTarget->FindComponentByClass<USkeletalMeshComponent>())
-		{
-			return SkeletalMesh->Bounds.Origin;
-		}
-
-		if (const UStaticMeshComponent* StaticMesh = CurrentTarget->FindComponentByClass<UStaticMeshComponent>())
-		{
-			return StaticMesh->Bounds.Origin;
-		}
+		//// Try to get the skeletal mesh first, then static mesh, else return the actor location.
+		//if (const USkeletalMeshComponent* SkeletalMesh = CurrentTarget->FindComponentByClass<USkeletalMeshComponent>())
+		//{
+		//	return SkeletalMesh->Bounds.Origin;
+		//}
+		//
+		//if (const UStaticMeshComponent* StaticMesh = CurrentTarget->FindComponentByClass<UStaticMeshComponent>())
+		//{
+		//	return StaticMesh->Bounds.Origin;
+		//}
 
 		return CurrentTarget->GetActorLocation();
 	}
