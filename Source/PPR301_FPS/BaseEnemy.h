@@ -16,4 +16,10 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, BlueprintReadWrite, Category="TD")
 	AActor* EndPoint;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, BlueprintReadWrite, Category="Health")
+	float CurrentHealth;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, BlueprintReadWrite, Category="Health")
+	float MaxHealth;
 };
