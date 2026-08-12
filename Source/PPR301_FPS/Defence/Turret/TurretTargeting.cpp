@@ -2,6 +2,7 @@
 
 #include "Kismet/GameplayStatics.h"
 #include "DrawDebugHelpers.h"
+#include "PPR301_FPS/BaseEnemy.h"
 
 UTurretTargeting::UTurretTargeting()
 {
@@ -30,8 +31,7 @@ void UTurretTargeting::FindNearestEnemy()
 
 	TArray<AActor*> Enemies;
 	
-	// TODO: Consider updating to find by class for better optimisation.
-	UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName("Enemy"), Enemies);
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABaseEnemy::StaticClass(), Enemies);
 
 	const FVector TurretLocation = GetOwner()->GetActorLocation();
 
@@ -39,13 +39,18 @@ void UTurretTargeting::FindNearestEnemy()
 	{
 		if (IsValid(Enemy))
 		{
-			// Check if enemy is within max search range and has line of sight
-			if (const float Distance = FVector::Dist(TurretLocation, Enemy->GetActorLocation()); Distance <= MaxSearchRange && HasLineOfSightTo(Enemy))
+			ABaseEnemy* CurrentEnemy = Cast<ABaseEnemy>(Enemy);
+			
+			if (CurrentEnemy->CurrentHealth > 0.0f)
 			{
-				if (Distance < ClosestDistance)
+				// Check if enemy is within max search range and has line of sight
+				if (const float Distance = FVector::Dist(TurretLocation, Enemy->GetActorLocation()); Distance <= MaxSearchRange && HasLineOfSightTo(Enemy))
 				{
-					ClosestDistance = Distance;
-					CurrentTarget = Enemy;
+					if (Distance < ClosestDistance)
+					{
+						ClosestDistance = Distance;
+						CurrentTarget = Enemy;
+					}
 				}
 			}
 		}
@@ -62,12 +67,17 @@ bool UTurretTargeting::HasLineOfSightTo(const AActor* Target) const
 		const FVector TargetLocation = Target->GetActorLocation();
 
 		FHitResult HitResult;
+		FCollisionObjectQueryParams ObjectQueryParams;
+		ObjectQueryParams.AddObjectTypesToQuery(ECC_Visibility);
+		ObjectQueryParams.AddObjectTypesToQuery(ECC_WorldStatic);
+		ObjectQueryParams.AddObjectTypesToQuery(ECC_Pawn);
+		
 		FCollisionQueryParams Params;
 		Params.AddIgnoredActor(GetOwner());
 		Params.AddIgnoredActor(Target);
 
 		// Perform line trace from turret to Target.
-		const bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult, TurretLocation, TargetLocation, ECC_Visibility, Params);
+		const bool bHit = GetWorld()->LineTraceSingleByObjectType(HitResult, TurretLocation, TargetLocation, ObjectQueryParams, Params);
 
 		return !bHit || HitResult.GetActor() == Target;
 	}
