@@ -19,7 +19,7 @@ public class PPR301_FPS : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new string[] {
 			"Slate",
-			"SlateCore", "AITestSuite"
+			"SlateCore"
 		});
 
 		// Uncomment if you are using Slate UI
