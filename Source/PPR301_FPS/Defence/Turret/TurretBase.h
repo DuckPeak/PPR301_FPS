@@ -2,40 +2,43 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "PPR301_FPS/ISellable.h"
+#include "PPR301_FPS/Defence/DefenceBase.h"
 #include "TurretBase.generated.h"
 
 UCLASS()
-class PPR301_FPS_API ATurretBase : public AActor, public ISellable
+class PPR301_FPS_API ATurretBase : public ADefenceBase
 {
 	GENERATED_BODY()
 	
 public:
 	ATurretBase();
 	
-	// Mesh components.
+	/**
+	 * @brief The root scene component.
+	 */
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* Root;
-
+	
+	/**
+	 * @brief The base mesh component. This is the legs of the turret.
+	 */
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* BaseMesh;
 
+	/**
+	 * @brief The gun mesh component. This is the gun top of the turret.
+	 */
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* GunMesh;
 
+	// TODO: Fix the bullet colliding with the turret.
+	/**
+	 * @brief The muzzle point component. This is the point where the bullet exits the gun.
+	 */
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* MuzzlePoint;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bIsPreview = false;
-	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Build")
-	int32 Cost = 100;
-	
 	virtual void Tick(float DeltaTime) override;
-
-	// ISellable interface implementation.
-	virtual int32 GetSellCost_Implementation() override { return Cost; }
 
 protected:
 	virtual void BeginPlay() override;
