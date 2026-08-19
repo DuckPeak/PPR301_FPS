@@ -1,6 +1,6 @@
 #include "PlayerBuildMode.h"
 
-#include "AITestsCommon.h"
+//#include "AITestsCommon.h"
 #include "Camera/CameraActor.h"
 #include "PlayerBase.h"
 #include "Blueprint/UserWidget.h"
